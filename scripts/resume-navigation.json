@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "aliases": {
+    "8-earlier-work--have-a-one-liner-each": "8-behavioral-bank",
+    "9-behavioral-bank": "8-behavioral-bank",
+    "10-questions-to-ask-them": "9-questions-to-ask-them"
+  },
+  "chapterMap": {
+    "9-behavioral-bank": "8-behavioral-bank",
+    "10-questions-to-ask-them": "9-questions-to-ask-them"
+  }
+}

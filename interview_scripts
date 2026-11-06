@@ -1,0 +1,192 @@
+# Interview Script — Research Scientist/SDE (New Grad PhD)
+
+================================================================================
+## 1. Self Introduction (~2 minutes)
+================================================================================
+
+Hi, I'm Lingzhi Zhao, a fifth-year PhD candidate in Computer Science at UIUC,
+advised by Professor Klara Nahrstedt. My research sits at the intersection of
+networked multimedia systems and machine learning.
+Specifically, I am interested in designing and building emerging interactive systems like XR, AI-mediated streaming systems with focus on better users experience and less system cost.
+
+
+During my internship at ByteDance, I built Trinity, a cloud VR gaming system
+where I first ran a user study with a first-person shooter VR game to
+characterize how players tolerate latency differently across action types — head
+rotation, hand motion, and background updates. That study showed that humans are
+fundamentally non-uniform in their latency sensitivity depending on action
+context, and we can exploit this to design smarter rendering pipelines.
+
+I also built MARS, which takes a similar human-behavior-first approach — I
+modeled how users' dynamic visual acuity drops during fast head motion, and
+built a motion-aware bitrate adaptation system around that perceptual insight.
+We ran a 31-person user study and showed we can save 10–19% bandwidth with no
+perceptible quality degradation.
+
+More recently, I led AquaVLM, where I instruction-tuned a vision-language model
+to collaborate with human users in extreme environments. Critically, I built an
+end-to-end VR simulation platform as the evaluation testbed — a framework for
+studying how AI agents and humans communicate and cooperate when the interaction
+channel is constrained. That work made me excited about using VR as a controlled
+environment to study human-AI interaction more broadly.
+
+I'm excited to bring this combination of systems expertise, human behavior
+modeling, and VR/AI experience to research that pushes the boundary of how AI
+systems understand and collaborate with people.
+
+[Closing] These are the projects I'm most excited to discuss. Which of them
+resonates most with what you're working on? I'm happy to go deeper on any.
+
+
+================================================================================
+## 2. Project Descriptions
+================================================================================
+
+--------------------------------------------------------------------------------
+### 2.1 Trinity — ACM MMSys 2026
+--------------------------------------------------------------------------------
+
+TOPIC: Cloud VR gaming QoE via action-type-aware latency exploitation.
+
+CORE INSIGHT:
+In an FPS VR game, users do NOT have uniform latency tolerance across different
+action types. There are at least three distinct interactions:
+  - Head rotation (looking/aiming): most latency-sensitive
+  - Hand/gun motion (aiming fine adjustments): moderately sensitive
+  - Background/body updates: least sensitive
+
+We validated this through a user study with ~30 participants using an
+open-source FPS VR game.
+
+SYSTEM DESIGN:
+  - Head motion: send a "super panorama" frame to the client and do late
+    warping on-device, decoupling viewport updates from network round-trip.
+  - Hand/gun: rendered on the headset with an intentionally injected delay
+    that keeps it temporally coherent with server-rendered background.
+  - Background: rendered server-side, accepts the full network round-trip.
+
+The injected delay for the gun is the key trick — it bridges the latency gap
+between head motion (client-side, ~instant) and background (server-side, ~slow),
+preventing the perceptual mismatch that breaks immersion.
+
+RESULT: Comparable QoE to local streaming while reducing bandwidth by 60% and
+GPU utilization by 40%.
+
+KEY TAKEAWAY:
+Human behavioral measurement in an interactive context (FPS game) directly
+drives system design decisions. The "measure humans first, optimize second"
+approach opened up a design space that pure systems thinking would miss.
+
+
+--------------------------------------------------------------------------------
+### 2.2 MARS — ACM Multimedia 2026
+--------------------------------------------------------------------------------
+
+TOPIC: Motion-aware adaptive bitrate for real-time VR streaming.
+
+CORE QUESTION:
+Given that users' dynamic visual acuity decreases during fast head rotation
+(a well-established perceptual phenomenon), can we systematically exploit this
+to reduce streaming bandwidth in real-time VR without perceptible quality loss?
+
+TWO CORE CHALLENGES:
+  1. Synchronization: bitrate adaptation must be precisely timed with head motion
+     phases, accounting for MTP latency (70–80ms end-to-end).
+  2. Magnitude: how aggressively to reduce quality — too much breaks QoE.
+
+SOLUTIONS:
+  - Kinematics-based state machine: tracks head acceleration/deceleration to
+    identify motion phases (Slow / Speed-up / Fast / Decelerate) and proactively
+    triggers bitrate changes ahead of the MTP delay.
+  - Perceptually-guided rate adaptation: uses the JND (Just Noticeable
+    Difference) principle — maps head rotation speed to the minimum bitrate
+    that preserves perceived quality (measured via PSPNR metric).
+
+EVALUATION:
+  - 31-participant user study with bias-controlled design: fraction of users
+    perceiving a difference between MARS and Fixed barely increases from 47%
+    (Fixed vs Fixed baseline) to 53%, confirming perceptual transparency.
+  - Emulation benchmark: 150 real network traces (4G/WiFi/5G).
+  - Result: 10–19% bandwidth savings, zero perceptible quality degradation.
+
+MARS is plug-and-play — integrates into ALVR with no game engine modification.
+
+KEY TAKEAWAY:
+A human perceptual model (JND + motion masking) directly translates into an
+engineering decision (bitrate reduction schedule). The challenge is not the
+model itself but the real-time synchronization problem under system latency.
+
+
+--------------------------------------------------------------------------------
+### 2.3 AquaVLM — arXiv 2025
+--------------------------------------------------------------------------------
+
+TOPIC: VLM-powered human-AI cooperative communication + VR simulation testbed.
+
+CORE QUESTION:
+How can an AI agent understand a human's intent and context when the
+communication channel is severely constrained — limited bandwidth, high error
+rates, no internet connectivity?
+
+We tackled this in the underwater scenario (acoustic communication between
+divers), but the framework generalizes to any bandwidth/latency-constrained
+human-AI interaction setting.
+
+SYSTEM DESIGN:
+  - Instruction-tuned MobileVLM-V2 on multimodal data (underwater images +
+    sensor readings) using LoRA fine-tuning.
+  - Hierarchical message generation: purpose-conditioned generation (safety /
+    navigation / environment / equipment) reduces output from 8 candidates to 2
+    while maintaining intent alignment.
+  - Error-resilient fine-tuning: VLM fine-tuned on corrupted message pairs to
+    recover transmission errors; maintains >90% semantic similarity up to 20m.
+  - iOS prototype: on-device inference via LLMFarm (GGUF format), chirp-based
+    acoustic physical layer.
+
+VR SIMULATION PLATFORM (Unity, Meta Quest 3):
+  - 4 randomized underwater events: Shark Encounter, Tank Leakage,
+    Shipwreck Discovery, Kelp Forest Exploration.
+  - Virtual phone UI inside headset; AirLink streaming for high-FPS rendering.
+  - Hand gesture "swimming" navigation — no controllers needed.
+  - Logs all interaction data for post-hoc analysis and model iteration.
+
+USER STUDY (N=20) — KEY INSIGHTS:
+  1. VLM alignment is intent-dependent (70–80% overall):
+     - Casual/environmental: ~80% — VLM naturally describes what it sees.
+     - Navigation: lowest — VLM can't infer spatial "backtrack" intent
+       from image + sensor data alone. Users' goal-directed intent is a gap.
+  2. Responsiveness rated lowest (mental model mismatch):
+     - Users expected phone-call-like immediacy. Once the tap-and-send
+       paradigm was clarified, most accepted the latency.
+     → Interface affordances must communicate the AI's interaction model upfront.
+  3. VR simulation caught corner cases real-world tests would miss:
+     - SOS triggered out of curiosity → misaligned urgent messages generated.
+     - Distant shark too small for vision encoder to detect.
+     → User feedback drove design iteration (added "Go back" intent,
+       "Generate more candidates" button). VR found real bugs.
+  4. Personalization opportunity: preference data from the simulation could
+     fine-tune VLM output to individual user communication styles over time.
+
+KEY TAKEAWAY:
+VR simulation is not just a convenient demo environment — it is a scientific
+instrument that surfaces edge cases through controlled scenario injection.
+The human-AI interaction loop (intent → AI response → user feedback → model
+update) is the core research object, and VR is what makes it measurable.
+
+
+--------------------------------------------------------------------------------
+### 2.4 AquaScope — ACM MobiSys 2026
+--------------------------------------------------------------------------------
+
+TOPIC: Generative codec-based image transmission on mobile devices.
+
+The first acoustic-based mobile system enabling reliable image transmission
+between mobile devices via generative compression (TiTok, VQGAN) in
+resource-constrained environments.
+
+Key results:
+  - 40% bandwidth efficiency improvement over PNG/JPEG/neural codecs.
+  - BER reduced from 19% to below 2% via token clustering and fine-tuning.
+  - Works entirely on commodity smartphones — no specialized hardware.
+
+

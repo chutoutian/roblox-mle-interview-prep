@@ -1,0 +1,79 @@
+{
+  "version": 3,
+  "videoAliases": {
+    "8-real-time-vr360-and-cloud-gaming": "7-360--vr-video",
+    "81-the-latency-budget": "71-motion-to-photon-and-reprojection",
+    "82-360--panoramic-video": "72-360--panoramic-video",
+    "9-video-quality-assessment": "8-video-quality-assessment",
+    "91-full-reference-metrics": "81-full-reference-metrics",
+    "92-vmaf-internals": "82-vmaf-internals",
+    "93-no-reference-blind-quality": "83-no-reference-blind-quality",
+    "94-subjective-testing": "84-subjective-testing",
+    "95-correlating-an-objective-metric-with-subjective-scores": "85-correlating-an-objective-metric-with-subjective-scores",
+    "10-systems-hardware-and-tooling": "9-systems-hardware-and-tooling",
+    "101-ffmpeg": "91-ffmpeg",
+    "102-hardware-encodedecode": "92-hardware-encodedecode",
+    "103-transcoding-at-scale": "93-transcoding-at-scale",
+    "11-rapid-fire-drill--video": "10-rapid-fire-drill--video",
+    "12-coding-reverse-index--video": "11-coding-reverse-index--video"
+  },
+  "redirects": {
+    "7-streaming--delivery": "05_networking_streaming.html#4-hls-dash-and-cmaf",
+    "71-hls-dash-cmaf": "05_networking_streaming.html#41-hls-dash-and-cmaf",
+    "72-low-latency": "05_networking_streaming.html#43-low-latency-streaming",
+    "73-webrtc--rtp-stack": "05_networking_streaming.html#61-webrtc-and-the-rtp-stack",
+    "74-loss-recovery-and-error-resilience": "05_networking_streaming.html#64-loss-recovery-and-error-resilience",
+    "75-congestion-control": "05_networking_streaming.html#65-congestion-control-for-real-time-media",
+    "76-abr-algorithms": "05_networking_streaming.html#51-abr-algorithms",
+    "77-qoe-metrics-in-production": "05_networking_streaming.html#52-qoe-metrics-in-production",
+    "78-cdn-and-scale": "05_networking_streaming.html#71-cdn-and-scale",
+    "83-cloud-gaming--cloud-vr-pipeline": "05_networking_streaming.html#66-interactive-media-pipeline",
+    "coding-throughput--buffer-abr-selector-todo": "05_networking_streaming.html#coding-throughput--buffer-abr-selector-todo"
+  },
+  "chapterMap": {
+    "8-real-time-vr360-and-cloud-gaming": "7-360--vr-video",
+    "9-video-quality-assessment": "8-video-quality-assessment",
+    "10-systems-hardware-and-tooling": "9-systems-hardware-and-tooling",
+    "11-rapid-fire-drill--video": "10-rapid-fire-drill--video",
+    "12-coding-reverse-index--video": "11-coding-reverse-index--video"
+  },
+  "deliveryQuestions": [
+    {
+      "index": 31,
+      "text": "HLS vs DASH vs CMAF; why did CMAF win?"
+    },
+    {
+      "index": 32,
+      "text": "How does LL-HLS get to 2 s?"
+    },
+    {
+      "index": 33,
+      "text": "Walk the WebRTC stack; what does RTCP feed back?"
+    },
+    {
+      "index": 34,
+      "text": "NACK vs FEC — how do you decide?"
+    },
+    {
+      "index": 35,
+      "text": "Why is loss-based congestion control wrong for real-time media?",
+      "currentText": "Why can loss-only congestion control build delay, and how do delay and loss signals complement each other?"
+    },
+    {
+      "index": 36,
+      "text": "Compare rate-based / buffer-based / MPC / RL ABR. Why hasn't RL taken over?"
+    },
+    {
+      "index": 37,
+      "text": "Write the standard QoE objective and explain each term."
+    },
+    {
+      "index": 38,
+      "text": "Which QoE metric matters most in production, and why?"
+    },
+    {
+      "index": 39,
+      "text": "Why is a segment 4 s and not 0.5 s or 30 s?"
+    }
+  ]
+}

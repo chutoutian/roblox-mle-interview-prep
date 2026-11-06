@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>Mock 2 — Game Genre Classification from Scratch · Video &amp; ML</title><link rel="stylesheet" href="../../assets/book.css"><link rel="stylesheet" href="../../assets/katex/katex.min.css"><link rel="stylesheet" href="../../assets/cv-modeling.css"><script src="../../assets/cv-modeling.js" defer></script></head>
+<body data-page="ml-design" data-design="02_game_genre" data-mode="questions"><a class="skip-link" href="#main-content">Skip to content</a>
+<header class="design-topbar"><a href="../../index.html">Video &amp; ML</a><span>/</span><a href="index.html">ML Modeling Knowledge</a><div><button type="button" data-design-theme aria-label="Toggle color theme">Theme</button><button type="button" data-design-print>Print / PDF</button></div></header>
+<div class="design-layout"><aside class="design-sidebar"><a class="design-home" href="index.html">CV design practice</a><section class="case-nav"><p>01 · Visual safety moderation</p><a href="01_visual_moderation_questions.html">Questions</a><a href="01_visual_moderation_solution.html">Reference answer</a><a href="01_visual_moderation_detailed.html">Detailed walkthrough</a></section><section class="case-nav"><p>02 · Game genre classification</p><a href="02_game_genre_questions.html" aria-current="page">Questions</a><a href="02_game_genre_solution.html">Reference answer</a><a href="02_game_genre_detailed.html">Detailed walkthrough</a></section><section class="case-nav"><p>03 · Text / image asset retrieval</p><a href="03_multimodal_asset_retrieval_questions.html">Questions</a><a href="03_multimodal_asset_retrieval_solution.html">Reference answer</a><a href="03_multimodal_asset_retrieval_detailed.html">Detailed walkthrough</a></section><div class="source-nav"><a href="../../08_company_interviews.html#13-system-design">Company interview topics ↗</a><a href="../../02_ml_domain.html#26-interview-questions--computer-vision">CV foundations · 2.6 ↗</a></div></aside>
+<main id="main-content"><header class="design-header"><p class="eyebrow">PRACTICE · QUESTIONS ONLY</p><h1>Mock 2 — Game Genre Classification from Scratch</h1><p class="design-meta">45 minutes · 35-minute technical core · English · CV / multimodal</p><div class="document-tabs"><a href="02_game_genre_questions.html" aria-current="page">Question document</a><a href="02_game_genre_solution.html">Reference answer</a><a href="02_game_genre_detailed.html">Detailed walkthrough</a></div><a class="source-download" href="02_game_genre_questions.md" download>Download Markdown source ↗</a><p class="design-review-count" aria-live="polite">Review checks are available when JavaScript is enabled.</p></header><article class="prose design-prose"><p><strong>Question document · 45-minute ML Modeling Knowledge interview · Computer Vision / Multimodal</strong></p>
+<p>This is an original practice adaptation of a collected game-genre-classification topic, not a verbatim company question. The reported level was not stated. The data, budgets, taxonomy and follow-ups below are illustrative interview assumptions.</p>
+<h2 id="interviewer-prompt">Interviewer prompt<a class="heading-anchor" href="#interviewer-prompt" aria-label="Link to section">#</a></h2>
+<p>Design an ML system that assigns useful genre labels to newly published user-created games. Product wants these labels for discovery filters and recommendation features. There is no trusted genre-classification service today.</p>
+<p>Explain the complete path from raw game content and annotations to training, evaluation and inference. Make and justify your choices rather than listing model names. No coding is required; draw the architecture and write the important tensor shapes and loss equations.</p>
+<h2 id="information-available-if-you-ask">Information available if you ask<a class="heading-anchor" href="#information-available-if-you-ask" aria-label="Link to section">#</a></h2>
+<ul>
+<li>The mock catalog contains 100,000 experiences. Each may have an icon, up to three screenshots, a title, a description and creator-supplied tags. Some fields are missing or misleading.</li>
+<li>Assume product can agree on an initial taxonomy of approximately 20 genres. Decide whether one or several labels may apply, and how ambiguous cases should be represented.</li>
+<li>An initial human-labeling budget covers 5,000 experiences. Existing creator tags are not guaranteed to follow the taxonomy.</li>
+<li>A result is needed within five minutes of publishing or a content update; it is not a per-keystroke request. Compute is limited, and new games have no interaction history.</li>
+<li>The service must support unfamiliar creators and visual styles. These numbers and requirements are mock constraints, not Roblox measurements.</li>
+</ul>
+<p>Use about five minutes for introduction, the 35 technical minutes below for the design, and five minutes for your questions. The interviewer chooses follow-ups; you are not expected to answer every question in the bank during one mock.</p>
+<h2 id="1-problem-formulation-04-min">1. Problem formulation (0–4 min)<a class="heading-anchor" href="#1-problem-formulation-04-min" aria-label="Link to section">#</a></h2>
+<p>What exactly is the system predicting, what does one training example represent, and when is the prediction made? Translate discovery usefulness into an output contract and measurable success criteria. State what remains outside your initial scope.</p>
+<p><strong>ML basics and follow-ups</strong></p>
+<ul>
+<li class="design-question" id="q1"><label class="design-check"><input type="checkbox" data-question="q1" aria-label="Mark follow-up Q1 as reviewed"></label><strong>Q1.</strong> Is genre prediction multiclass or multi-label? What observation determines the choice?</li>
+<li class="design-question" id="q2"><label class="design-check"><input type="checkbox" data-question="q2" aria-label="Mark follow-up Q2 as reviewed"></label><strong>Q2.</strong> Why should the prediction unit be an experience version rather than an individual screenshot?</li>
+<li class="design-question" id="q3"><label class="design-check"><input type="checkbox" data-question="q3" aria-label="Mark follow-up Q3 as reviewed"></label><strong>Q3.</strong> Is agreement with creator tags the same thing as improving discovery?</li>
+</ul>
+<h2 id="2-data-and-labels-410-min">2. Data and labels (4–10 min)<a class="heading-anchor" href="#2-data-and-labels-410-min" aria-label="Link to section">#</a></h2>
+<p>How would you create the first reliable dataset? Describe annotation, ambiguous labels, weak supervision, missing content and evaluation splits. Explain which fields exist at publishing time.</p>
+<p><strong>ML basics and follow-ups</strong></p>
+<ul>
+<li class="design-question" id="q4"><label class="design-check"><input type="checkbox" data-question="q4" aria-label="Mark follow-up Q4 as reviewed"></label><strong>Q4.</strong> What is the difference between a weak label and a human-reviewed gold label?</li>
+<li class="design-question" id="q5"><label class="design-check"><input type="checkbox" data-question="q5" aria-label="Mark follow-up Q5 as reviewed"></label><strong>Q5.</strong> How could a random screenshot split make the model appear better than it is?</li>
+<li class="design-question" id="q6"><label class="design-check"><input type="checkbox" data-question="q6" aria-label="Mark follow-up Q6 as reviewed"></label><strong>Q6.</strong> If a creator did not provide a genre tag, can you treat that genre as a negative label?</li>
+</ul>
+<h2 id="3-baseline-1015-min">3. Baseline (10–15 min)<a class="heading-anchor" href="#3-baseline-1015-min" aria-label="Link to section">#</a></h2>
+<p>Propose a small first system and explain what it establishes. How would you decide whether visual information adds value? Explain what “from scratch” means in your assumed scope.</p>
+<p><strong>ML basics and follow-ups</strong></p>
+<ul>
+<li class="design-question" id="q7"><label class="design-check"><input type="checkbox" data-question="q7" aria-label="Mark follow-up Q7 as reviewed"></label><strong>Q7.</strong> Why build a baseline when you already know a more powerful architecture?</li>
+<li class="design-question" id="q8"><label class="design-check"><input type="checkbox" data-question="q8" aria-label="Mark follow-up Q8 as reviewed"></label><strong>Q8.</strong> Does “build the system from scratch” require randomly initialized model weights?</li>
+<li class="design-question" id="q9"><label class="design-check"><input type="checkbox" data-question="q9" aria-label="Mark follow-up Q9 as reviewed"></label><strong>Q9.</strong> Could total play time or next-week retention be useful inputs at publishing time?</li>
+</ul>
+<h2 id="4-model-design-1520-min">4. Model design (15–20 min)<a class="heading-anchor" href="#4-model-design-1520-min" aria-label="Link to section">#</a></h2>
+<p>Draw a candidate model from raw inputs to genre predictions. Explain multiple images, text, missing modalities and any trainable fusion layers. Show the shape of the representation at each boundary and name one alternative you would compare.</p>
+<p><strong>ML basics and follow-ups</strong></p>
+<ul>
+<li class="design-question" id="q10"><label class="design-check"><input type="checkbox" data-question="q10" aria-label="Mark follow-up Q10 as reviewed"></label><strong>Q10.</strong> How would you choose between a CNN and a Vision Transformer for the visual encoder?</li>
+<li class="design-question" id="q11"><label class="design-check"><input type="checkbox" data-question="q11" aria-label="Mark follow-up Q11 as reviewed"></label><strong>Q11.</strong> How would you combine several screenshots without treating them as independent labeled games?</li>
+<li class="design-question" id="q12"><label class="design-check"><input type="checkbox" data-question="q12" aria-label="Mark follow-up Q12 as reviewed"></label><strong>Q12.</strong> What is early versus late fusion, and what happens when the description is missing?</li>
+</ul>
+<h2 id="5-loss-and-training-2026-min">5. Loss and training (20–26 min)<a class="heading-anchor" href="#5-loss-and-training-2026-min" aria-label="Link to section">#</a></h2>
+<p>Write the objective for your output contract. Describe optimizer choice, which components you train first, and what you would change when training and validation diverge. Consider rare genres and partially annotated examples.</p>
+<p><strong>ML basics and follow-ups</strong></p>
+<ul>
+<li class="design-question" id="q13"><label class="design-check"><input type="checkbox" data-question="q13" aria-label="Mark follow-up Q13 as reviewed"></label><strong>Q13.</strong> Why would you choose independent sigmoid outputs or a softmax output? How does unknown-label masking affect gradients?</li>
+<li class="design-question" id="q14"><label class="design-check"><input type="checkbox" data-question="q14" aria-label="Mark follow-up Q14 as reviewed"></label><strong>Q14.</strong> Why freeze a pretrained encoder initially, and when would you unfreeze it or use adapters?</li>
+<li class="design-question" id="q15"><label class="design-check"><input type="checkbox" data-question="q15" aria-label="Mark follow-up Q15 as reviewed"></label><strong>Q15.</strong> How would you address rare genres without destroying the meaning of the labels through augmentation?</li>
+</ul>
+<h2 id="6-offline-and-online-evaluation-2631-min">6. Offline and online evaluation (26–31 min)<a class="heading-anchor" href="#6-offline-and-online-evaluation-2631-min" aria-label="Link to section">#</a></h2>
+<p>Select offline metrics and explain the intended operating point. Describe ablations, unfamiliar-style evaluation and a limited online rollout. How would you decide whether model complexity is justified?</p>
+<p><strong>ML basics and follow-ups</strong></p>
+<ul>
+<li class="design-question" id="q16"><label class="design-check"><input type="checkbox" data-question="q16" aria-label="Mark follow-up Q16 as reviewed"></label><strong>Q16.</strong> What would macro-F1, micro-F1 and mean average precision tell you here?</li>
+<li class="design-question" id="q17"><label class="design-check"><input type="checkbox" data-question="q17" aria-label="Mark follow-up Q17 as reviewed"></label><strong>Q17.</strong> Must every genre use threshold 0.5? Where should thresholds be chosen?</li>
+<li class="design-question" id="q18"><label class="design-check"><input type="checkbox" data-question="q18" aria-label="Mark follow-up Q18 as reviewed"></label><strong>Q18.</strong> Why might better offline classification fail to improve recommendation engagement?</li>
+</ul>
+<h2 id="7-serving-and-trade-offs-3135-min">7. Serving and trade-offs (31–35 min)<a class="heading-anchor" href="#7-serving-and-trade-offs-3135-min" aria-label="Link to section">#</a></h2>
+<p>Walk one new experience version through inference and into the product. Discuss latency, cost, content updates, failure behavior and monitoring. Close with the main trade-off and the next experiment.</p>
+<p><strong>ML basics and follow-ups</strong></p>
+<ul>
+<li class="design-question" id="q19"><label class="design-check"><input type="checkbox" data-question="q19" aria-label="Mark follow-up Q19 as reviewed"></label><strong>Q19.</strong> Which work belongs at publishing time, and which work belongs on a discovery request?</li>
+<li class="design-question" id="q20"><label class="design-check"><input type="checkbox" data-question="q20" aria-label="Mark follow-up Q20 as reviewed"></label><strong>Q20.</strong> How could caching or quantization reduce cost, and what could go wrong?</li>
+<li class="design-question" id="q21"><label class="design-check"><input type="checkbox" data-question="q21" aria-label="Mark follow-up Q21 as reviewed"></label><strong>Q21.</strong> What should change when product adds a new genre or creators adopt a new rendering style?</li>
+</ul>
+<h2 id="optional-interviewer-changes">Optional interviewer changes<a class="heading-anchor" href="#optional-interviewer-changes" aria-label="Link to section">#</a></h2>
+<ul>
+<li><strong>E1.</strong> Creator descriptions are untrustworthy and often keyword-stuffed. How would the data and architecture change?</li>
+<li><strong>E2.</strong> The model has strong average results but poor recall on a rare genre with only 50 reviewed examples. What do you investigate first?</li>
+<li><strong>E3.</strong> Product asks for an explanation of each genre decision and requires a fivefold reduction in GPU cost. What would you promise, measure and change?</li>
+</ul>
+<h2 id="source-boundary-and-related-notes">Source boundary and related notes<a class="heading-anchor" href="#source-boundary-and-related-notes" aria-label="Link to section">#</a></h2>
+<ul>
+<li>Collected topic: <a href="../../08_company_interviews.html#game-genre-classification-from-scratch">Game genre classification from scratch</a>, linked locally to report <a href="https://www.1point3acres.com/bbs/thread-1173576-1-1.html" target="_blank" rel="noopener noreferrer">1173576</a>. Its short reported prompt does not establish the mock&#39;s data availability or taxonomy assumptions.</li>
+<li>Foundations: <a href="../../02_ml_domain.html#cv-q10">classification, detection and segmentation</a>, <a href="../../02_ml_domain.html#cv-q09">transfer learning</a>, <a href="../../02_ml_domain.html#cv-q39">multi-modal fusion</a>, and <a href="../../02_ml_domain.html#cv-q20">class imbalance</a>.</li>
+<li>The complete questions and answers in this pack are original teaching material. The user-supplied interview guide establishes the format, not these exact questions or a guarantee about the assigned specialization.</li>
+</ul>
+</article><footer class="design-footer"><a href="index.html">All three mocks</a><a href="#main-content">Back to top ↑</a></footer></main>
+<nav class="design-toc" aria-label="Document sections"><p class="nav-label">ON THIS PAGE</p><a href="#interviewer-prompt">Interviewer prompt</a><a href="#information-available-if-you-ask">Information available if you ask</a><a href="#1-problem-formulation-04-min">1. Problem formulation (0–4 min)</a><a href="#2-data-and-labels-410-min">2. Data and labels (4–10 min)</a><a href="#3-baseline-1015-min">3. Baseline (10–15 min)</a><a href="#4-model-design-1520-min">4. Model design (15–20 min)</a><a href="#5-loss-and-training-2026-min">5. Loss and training (20–26 min)</a><a href="#6-offline-and-online-evaluation-2631-min">6. Offline and online evaluation (26–31 min)</a><a href="#7-serving-and-trade-offs-3135-min">7. Serving and trade-offs (31–35 min)</a><a href="#optional-interviewer-changes">Optional interviewer changes</a><a href="#source-boundary-and-related-notes">Source boundary and related notes</a></nav></div>
+</body></html>

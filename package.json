@@ -1,0 +1,31 @@
+{
+  "name": "interview-study-book",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "python3 -m http.server 8765 --bind 127.0.0.1",
+    "check": "node scripts/check.mjs",
+    "check:binary-search": "python3 scripts/check-binary-search.py",
+    "check:linked-list": "python3 scripts/check-linked-list.py",
+    "check:tree-dfs": "python3 scripts/check-tree-dfs.py",
+    "check:backtracking": "python3 scripts/check-backtracking.py",
+    "check:dijkstra": "python3 scripts/check-dijkstra.py",
+    "check:dfs-memo": "python3 scripts/check-dfs-memo.py",
+    "check:transformer": ".venv-transformer/bin/python -m unittest -v test_transformer_encoder_decoder",
+    "check:vlm": ".venv-transformer/bin/python -m unittest -v test_vlm_vit_projector_llm",
+    "check:lora": ".venv-transformer/bin/python -m unittest -v test_lora_linear",
+    "check:inference": ".venv-transformer/bin/python -m unittest -v test_inference_kv_cache",
+    "check:decoder": ".venv-transformer/bin/python -m unittest -v test_decoder_only_llm",
+    "check:vision": ".venv-transformer/bin/python -m unittest -v test_vision_transformers",
+    "check:transformer-ui": "node scripts/check-transformer.mjs",
+    "check:company-interviews": "python3 scripts/check-company-interviews.py"
+  },
+  "devDependencies": {
+    "highlight.js": "11.11.1",
+    "katex": "^0.16.22",
+    "marked": "15.0.12",
+    "playwright": "1.55.0"
+  }
+}

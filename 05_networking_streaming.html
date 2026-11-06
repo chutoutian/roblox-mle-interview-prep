@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>Networking &amp; Streaming · Video & ML</title><meta name="description" content="Follow a packet from sender to screen. Learn TCP, UDP, QUIC, adaptive streaming, and real-time media through diagrams and worked examples."><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/code.css"><link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/network.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('study-theme')||'light'}catch{}</script><script src="assets/book-data.js" defer></script><script src="assets/book.js" defer></script><script src="assets/network.js" defer></script></head>
+<body data-page="network"><a class="skip-link" href="#main-content">Skip to content</a><div class="read-progress" aria-hidden="true"><div class="track-fill" id="read-progress"></div></div>
+<aside class="sidebar" id="sidebar"><a href="index.html" class="brand"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4z"/><path d="M13 7a3 3 0 0 1 3-3h5v15h-5a4 4 0 0 0-3 2"/></svg><span>Video & ML<br><small>Lingzhi’s study book</small></span></a>
+    <button class="nav-search" type="button" data-open-search><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><span>Search all notes</span><kbd>⌘ K</kbd></button>
+    <nav aria-label="Book navigation"><p class="nav-label">WORKSPACE</p><a class="nav-link "  href="index.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4z"/><path d="M13 7a3 3 0 0 1 3-3h5v15h-5a4 4 0 0 0-3 2"/></svg><span>Home</span></a><a class="nav-link "  href="01_video_domain.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m10 8 6 4-6 4zM7 4v16M17 4v16"/></svg><span>Video domain</span><small>3</small></a><a class="nav-link "  href="02_ml_domain.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="3"/><path d="M12 3v4M2 12h2m16 0h2M9 16h6"/><circle cx="8" cy="11" r=".7"/><circle cx="16" cy="11" r=".7"/></svg><span>ML & LLMs</span><small>14</small></a><a class="nav-link "  href="04_resume_drill.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/></svg><span>Research & resume</span><small>9</small></a><a class="nav-link "  href="06_leetcode_notes.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 5-6 7 6 7m8-14 6 7-6 7M14 3l-4 18"/></svg><span>LeetCode Notes</span><small>5</small></a><a class="nav-link "  href="07_system_design.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M5 17v-5h14v5"/></svg><span>System Design</span><small>7</small></a><a class="nav-link "  href="08_company_interviews.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h7v7H4zM13 11h7v7h-7zM7 16v4h10M17 8V4H7"/></svg><span>Company Interviews</span><small>1</small></a><a class="nav-link active" aria-current="page" href="05_networking_streaming.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M5 17v-5h14v5"/></svg><span>Networking & Streaming</span><small>10</small></a>
+    <p class="nav-label">YOUR PRACTICE</p><button class="nav-link" type="button" data-search-preset="Coding"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/></svg><span>Coding exercises</span></button><button class="nav-link" type="button" data-search-preset="Rapid-Fire"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Oral self-test</span></button></nav>
+    <div class="sidebar-progress"><div><span>Reading progress</span><strong data-total-progress>0%</strong></div><div class="progress-track"><div class="track-fill" data-total-bar></div></div><small data-total-count>0 chapters read</small></div>
+    <div class="sidebar-footer"><a class="nav-link" href="https://alisawuffles.notion.site/alisa-s-book-of-llms" target="_blank" rel="noopener noreferrer"><span>↗</span><span>Alisa’s book of LLMs</span></a><small>Read offline · Progress saved in this browser</small></div></aside><button class="sidebar-backdrop" aria-label="Close navigation" type="button" data-close-menu></button>
+<header class="topbar"><div class="breadcrumb"><button class="icon-button mobile-menu" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar" type="button" data-menu><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><a href="index.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4z"/><path d="M13 7a3 3 0 0 1 3-3h5v15h-5a4 4 0 0 0-3 2"/></svg><span>Study book</span></a><span class="breadcrumb-divider">/</span><span>Networking &amp; Streaming</span></div><div class="topbar-actions"><button class="icon-button" type="button" data-open-search aria-label="Search notes"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg></button><button class="icon-button" type="button" data-focus aria-label="Focus mode" aria-pressed="false" title="Focus mode"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button><button class="icon-button" type="button" data-theme-toggle aria-label="Switch to dark mode" title="Toggle color theme"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10Z"/></svg></button><button class="button print-button" type="button" data-print>Print / PDF</button></div></header>
+<main class="main" id="main-content"><div class="page-shell"><header class="page-header"><div class="page-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M5 17v-5h14v5"/></svg></div><p class="eyebrow">09 / PACKETS → PROTOCOLS → PLAYBACK</p><h1>Networking &amp; Streaming</h1><p class="page-description">Follow a packet from sender to screen. Learn TCP, UDP, QUIC, adaptive streaming, and real-time media through diagrams and worked examples.</p><div class="page-meta"><span>10 CHAPTERS</span><span>·</span><a href="05_networking_streaming.md" download>Download source ↗</a><span>·</span><span data-page-progress>0 chapters read</span></div></header>
+
+
+<div class="page-actions"><button class="button primary-button" type="button" data-resume>Start reading <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button><div><button class="button" type="button" data-font-size aria-label="Adjust reading font size">Text · Default</button><button class="button" type="button" data-expand>Expand all</button><button class="button" type="button" data-collapse>Collapse all</button></div></div>
+<div class="reading-layout"><article class="reading-content"><details class="chapter overview" id="reading-overview"><summary class="chapter-summary"><span class="chapter-title">Reading guide & contents</span></summary><div class="chapter-body prose"><blockquote>
+<p>A beginner-friendly path from packets and transport protocols to HTTP video, adaptive playback, WebRTC, CDNs, and production debugging. Codec internals remain in
+<a href="01_video_domain.html">01_video_domain.md</a>; ML systems remain in
+<a href="02_ml_domain.html">02_ml_domain.md</a> and <a href="02_ml_domain.html#6-generative-models--learned-compression">02_ml_domain.md#6-generative-models--learned-compression</a>.</p>
+</blockquote>
+<p><strong>How to use these notes</strong></p>
+<ul>
+<li>Read Chapters 1–3 in order if TCP, DNS, TLS, and HTTP are new to you.</li>
+<li>Chapters 4–5 follow one on-demand segment from a manifest into the playback buffer.</li>
+<li>Chapters 6–7 contrast deadline-driven real-time media with cache-friendly HTTP delivery.</li>
+<li>Chapter 8 turns metrics and traces into a repeatable debugging method.</li>
+<li>Numbers are worked examples, not universal production targets; measure the actual path and product.</li>
+</ul>
+<p><strong>Contents</strong></p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>§</th><th>Topic</th><th>What you should be able to explain</th></tr></thead><tbody><tr><td>1</td><td>Network foundations</td><td>Packets, addresses, queues, latency, loss, and bandwidth-delay product</td></tr><tr><td>2</td><td>UDP, TCP, and QUIC</td><td>Reliability, ordering, handshakes, congestion control, and trade-offs</td></tr><tr><td>3</td><td>HTTP and the request path</td><td>DNS → connection → TLS → HTTP → cache/origin response</td></tr><tr><td>4</td><td>HLS, DASH, and CMAF</td><td>Manifests, segments, timelines, switching, and low-latency delivery</td></tr><tr><td>5</td><td>Adaptive bitrate and QoE</td><td>Throughput, buffer, MPC/RL approaches, and player outcomes</td></tr><tr><td>6</td><td>Real-time media and WebRTC</td><td>ICE, RTP/RTCP, latency budgets, recovery, and congestion control</td></tr><tr><td>7</td><td>Delivery at scale</td><td>CDN hierarchy, cache keys, origin protection, and live-event resilience</td></tr><tr><td>8</td><td>Debugging</td><td>Layered triage, measurements, symptoms, and incident reasoning</td></tr><tr><td>9</td><td>Rapid-fire drill</td><td>Networking and streaming oral self-test</td></tr><tr><td>10</td><td>Coding reverse index</td><td>Prompt → knowledge point → implementation status</td></tr></tbody></table></div><hr>
+</div></details><details class="chapter" id="chapter-1-network-foundations" data-chapter="1-network-foundations" open>
+      <summary class="chapter-summary" id="1-network-foundations"><span class="chapter-number">01</span><span class="chapter-title">Network Foundations</span><span class="chapter-state">4 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="1-network-foundations" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#1-network-foundations">Chapter link ↗</a></div><div class="prose"><h3 id="11-from-an-application-message-to-packets">1.1 From an application message to packets<a class="heading-anchor" href="#11-from-an-application-message-to-packets" aria-label="Link to 1.1 From an application message to packets">#</a></h3>
+<p><strong>TCP belongs to the transport layer; it is not the whole network stack.</strong> We use the five-layer
+Internet teaching model below, separating the physical layer from the link layer. These are five
+different jobs applied to the same application data, not five alternative ways to send it.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Layer</th><th>Question it answers</th><th>Protocol / technology in our example</th><th>Data at this layer</th></tr></thead><tbody><tr><td><strong>5. Application</strong></td><td>What does the application want to say?</td><td>HTTP/1.1</td><td>A request message: “get <code>/hello</code>”</td></tr><tr><td><strong>4. Transport</strong></td><td>Which application connection, and how are its bytes delivered?</td><td>TCP</td><td>A segment: TCP header + application bytes</td></tr><tr><td><strong>3. Network</strong></td><td>Which destination host, across which networks?</td><td>IPv4</td><td>A packet: IP header + TCP segment</td></tr><tr><td><strong>2. Link</strong></td><td>Which next interface on this local link?</td><td>Ethernet</td><td>A frame: Ethernet header + IP packet + error-check trailer</td></tr><tr><td><strong>1. Physical</strong></td><td>How do the bits cross this medium?</td><td>An Ethernet physical interface over copper</td><td>Encoded electrical signals representing the frame bits</td></tr></tbody></table></div><p><strong>One concrete example:</strong> a client at <code>192.0.2.10:51514</code> requests <code>/hello</code> from a server at
+<code>198.51.100.20:80</code>, through one router. These are documentation addresses. DNS, next-hop MAC
+resolution (ARP), and the TCP handshake have already finished. We use <strong>plain HTTP</strong>, two Ethernet
+links, and no NAT so the envelopes remain visible.</p>
+<p>The redraw below follows the five-layer and encapsulation teaching structure in Romit Roy
+Choudhury&#39;s UIUC CS/ECE 438
+<a href="https://courses.grainger.illinois.edu/cs438/fa2020/slides/1-overview-annotated.pdf#page=58" target="_blank" rel="noopener noreferrer">overview slides, PDF pages 58–59</a>.
+The concrete request, header fields, and byte counts are added here; this is not a screenshot of the slides.</p>
+<figure class="network-diagram" id="net-packet-path" data-network-diagram="packet-path" aria-labelledby="net-packet-path-title">
+  <figcaption><strong id="net-packet-path-title">Five layers: one HTTP request, nested envelopes</strong><span>NETWORK LAB · PACKET PATH</span></figcaption>
+  <p class="network-intro">Plain HTTP/1.1 over an established TCP connection, IPv4, and two Ethernet links. Read the sender downward; read the receiver upward.</p>
+    <div class="network-stack-map">
+      <section class="network-protocol-stack" data-protocol-stack="sender"><div class="network-stack-heading"><strong>CLIENT · SEND ↓</strong><span>192.0.2.10:51514</span></div><div class="network-stack-cell network-layer-application" data-stack-layer="application"><strong>5 · Application</strong><span>HTTP · message</span></div><div class="network-stack-cell network-layer-transport" data-stack-layer="transport"><strong>4 · Transport</strong><span>TCP · segment</span></div><div class="network-stack-cell network-layer-network" data-stack-layer="network"><strong>3 · Network</strong><span>IPv4 · packet</span></div><div class="network-stack-cell network-layer-link" data-stack-layer="link"><strong>2 · Link</strong><span>Ethernet · frame</span></div><div class="network-stack-cell network-layer-physical" data-stack-layer="physical"><strong>1 · Physical</strong><span>Encoded signals</span></div></section>
+      <section class="network-protocol-stack" data-protocol-stack="router"><div class="network-stack-heading"><strong>ROUTER · FORWARD</strong><span>Network / Link / Physical</span></div><div class="network-peer-line"><span>HTTP peers</span><small>logical relationship</small></div><div class="network-peer-line"><span>TCP peers</span><small>logical relationship</small></div><div class="network-stack-cell network-layer-network" data-stack-layer="network"><strong>3 · Network</strong><span>Choose next hop</span></div><div class="network-stack-cell network-layer-link" data-stack-layer="link"><strong>2 · Link</strong><span>Replace link envelope</span></div><div class="network-stack-cell network-layer-physical" data-stack-layer="physical"><strong>1 · Physical</strong><span>Receive / transmit</span></div></section>
+      <section class="network-protocol-stack" data-protocol-stack="receiver"><div class="network-stack-heading"><strong>SERVER · RECEIVE ↑</strong><span>198.51.100.20:80</span></div><div class="network-stack-cell network-layer-application" data-stack-layer="application"><strong>5 · Application</strong><span>HTTP · message</span></div><div class="network-stack-cell network-layer-transport" data-stack-layer="transport"><strong>4 · Transport</strong><span>TCP · segment</span></div><div class="network-stack-cell network-layer-network" data-stack-layer="network"><strong>3 · Network</strong><span>IPv4 · packet</span></div><div class="network-stack-cell network-layer-link" data-stack-layer="link"><strong>2 · Link</strong><span>Ethernet · frame</span></div><div class="network-stack-cell network-layer-physical" data-stack-layer="physical"><strong>1 · Physical</strong><span>Encoded signals</span></div></section>
+    </div>
+    <p class="network-stack-legend">Dashed lines connect logical peers; HTTP and TCP do not travel directly across them. For this transit packet, the router does not pass the payload up to TCP or HTTP.</p>
+    <div class="network-actual-route"><strong>Actual data path</strong><span>Client: 5 ↓ 1</span><span class="network-arrow" aria-hidden="true">→</span><span>Link A → Router: 1 ↑ 3 ↓ 1</span><span class="network-arrow" aria-hidden="true">→</span><span>Link B → Server: 1 ↑ 5</span></div>
+    <p class="network-subfigure-title">What the sender hands to each lower layer</p>
+    <p class="network-stack-legend">M = message bytes · H = header · FCS = frame check sequence. Colors identify layers; block widths are not byte-scaled.</p>
+    <div class="network-encapsulation"><section class="network-encapsulation-row" data-encapsulation-layer="application"><div class="network-layer-label"><strong>5 · Application</strong><span>HTTP message · 43 B</span></div><div class="network-layer-content"><div class="network-layer-bytes"><span class="network-byte-piece network-layer-application"><b>M · HTTP bytes</b><small>43 B</small></span></div><p><code>GET /hello HTTP/1.1\r\nHost: example.test\r\n\r\n</code><br>The entire request above is M. HTTP headers are part of M; they are not the TCP header.</p></div></section><section class="network-encapsulation-row" data-encapsulation-layer="transport"><div class="network-layer-label"><strong>4 · Transport</strong><span>TCP segment · 63 B</span></div><div class="network-layer-content"><div class="network-layer-bytes"><span class="network-byte-piece network-layer-transport"><b>Hₜ · TCP</b><small>20 B</small></span><span class="network-byte-piece network-layer-application"><b>M · HTTP bytes</b><small>43 B</small></span></div><p><code>src port=51514 · dst port=80 · seq=1001</code><br>Hₜ also carries ACK, flags, receive window and checksum. After these 43 bytes arrive contiguously, the server can return <code>ACK=1044</code>. TCP treats M as bytes, not as an HTTP command.</p></div></section><section class="network-encapsulation-row" data-encapsulation-layer="network"><div class="network-layer-label"><strong>3 · Network</strong><span>IPv4 packet · 83 B</span></div><div class="network-layer-content"><div class="network-layer-bytes"><span class="network-byte-piece network-layer-network"><b>Hₙ · IPv4</b><small>20 B</small></span><span class="network-byte-piece network-layer-transport"><b>Hₜ · TCP</b><small>20 B</small></span><span class="network-byte-piece network-layer-application"><b>M · HTTP bytes</b><small>43 B</small></span></div><p><code>src=192.0.2.10 · dst=198.51.100.20 · TTL=64 · protocol=6 (TCP)</code><br>Hₙ supplies the destination used for routing. The complete TCP segment is its payload.</p></div></section><section class="network-encapsulation-row" data-encapsulation-layer="link"><div class="network-layer-label"><strong>2 · Link</strong><span>Ethernet frame · 101 B</span></div><div class="network-layer-content"><div class="network-layer-bytes"><span class="network-byte-piece network-layer-link"><b>Hₗ · Ethernet</b><small>14 B</small></span><span class="network-byte-piece network-layer-network"><b>Hₙ · IPv4</b><small>20 B</small></span><span class="network-byte-piece network-layer-transport"><b>Hₜ · TCP</b><small>20 B</small></span><span class="network-byte-piece network-layer-application"><b>M · HTTP bytes</b><small>43 B</small></span><span class="network-byte-piece network-layer-link"><b>FCS</b><small>4 B</small></span></div><p><code>src MAC=Client · dst MAC=Router-in · EtherType=0x0800 (IPv4)</code><br>Hₗ addresses this link; the FCS trailer detects frame corruption. The server is not the first frame’s MAC destination.</p></div></section><section class="network-encapsulation-row" data-encapsulation-layer="physical"><div class="network-layer-label"><strong>1 · Physical</strong><span>Bits carried as signals</span></div><div class="network-layer-content"><div class="network-layer-bytes"><span class="network-signal-chain"><b>Frame bits</b><span>→ encode →</span><b>Electrical signal</b><span>→ recover →</span><b>Frame bits</b></span></div><p><code>One byte inside M: G = 0x47 = 01000111</code><br>This is a byte representation, not an Ethernet waveform or wire-bit ordering. Each interface encodes frame bits into signals for its link; the coding depends on the physical standard. There is no universal extra header.</p></div></section></div>
+    <div class="network-hop-comparison">
+      <section><strong>Link A · Client → Router</strong><p>Ethernet: <b>Client MAC → Router-in MAC</b></p><p>IP: <b>192.0.2.10 → 198.51.100.20</b><br>TTL = 64</p></section>
+      <section><strong>Link B · Router → Server</strong><p>Ethernet: <b>Router-out MAC → Server MAC</b></p><p>IP: <b>192.0.2.10 → 198.51.100.20</b><br>TTL = 63</p></section>
+    </div>
+    <p class="network-stack-legend">At the router: new Ethernet header and FCS; updated TTL and IPv4 header checksum. The TCP segment and HTTP bytes stay intact. MAC names above are labels for four distinct interface addresses.</p><p class="network-note">Teaching assumptions: DNS and ARP already resolved; one request fits one TCP segment; no NAT, fragmentation, TLS, VLAN tags, or IP/TCP options. Sizes exclude Ethernet preamble/SFD and the inter-frame gap. A large request need not fit one segment, and TCP does not preserve application-message boundaries.</p>
+</figure><p><strong>Walk through the five layers:</strong></p>
+<ol>
+<li><p><strong>Application — create the message.</strong> The HTTP client creates
+<code>GET /hello HTTP/1.1\r\nHost: example.test\r\n\r\n</code>. Here <code>\r\n</code> represents two bytes
+(carriage return and line feed), not four printable characters. The complete request is <strong>43 ASCII
+bytes</strong>. It contains an HTTP request line and HTTP headers; those are all <em>payload</em> from TCP&#39;s
+perspective. The client writes these bytes to a socket.</p>
+</li>
+<li><p><strong>Transport — TCP adds connection and delivery information.</strong> The example segment has source
+port <code>51514</code>, destination port <code>80</code>, and sequence number <code>1001</code>. The ports, endpoint IPs, and
+transport protocol identify the connection. TCP also carries acknowledgment, flags, receive-window,
+and checksum fields. If these 43 bytes arrive contiguously with no earlier gap, the server can
+acknowledge <strong><code>1001 + 43 = 1044</code></strong>, the next byte it expects. TCP handles loss recovery, ordered
+delivery, flow control, and congestion control; it does not understand <code>/hello</code>. A TCP ACK confirms
+byte receipt, <strong>not</strong> that the HTTP request was successfully processed.</p>
+</li>
+<li><p><strong>Network — IP adds the end-to-end addresses.</strong> The IPv4 packet carries source <code>192.0.2.10</code>,
+destination <code>198.51.100.20</code>, a TTL, and <code>protocol=6</code> to identify TCP as its payload. A router uses
+the destination IP to select a next hop. IP itself does not promise delivery, ordering, or
+retransmission; those TCP behaviors are implemented at the endpoints.</p>
+</li>
+<li><p><strong>Link — Ethernet adds the local-hop addresses.</strong> On the first link, the destination MAC is the
+<strong>router&#39;s incoming interface</strong>, not the remote server. The frame also carries <code>EtherType=0x0800</code>
+to identify IPv4 and ends with a four-byte FCS error check. At the router, that link envelope ends:
+the outgoing frame uses <strong>router-out MAC → server MAC</strong>. In this no-NAT example, the IP endpoints
+and TCP segment stay the same, but TTL changes from <code>64</code> to <code>63</code>, the IPv4 header checksum is
+updated, and a new Ethernet header/FCS is generated.</p>
+</li>
+<li><p><strong>Physical — send a signal, not a printed string of 0s and 1s.</strong> The interface encodes the frame&#39;s
+bits into electrical signaling on the copper link. The next interface recovers bits from that
+signal. The router transmits a new signal on its outgoing link. Different physical technologies
+encode bits differently; physical transmission does not add a universal “physical header.”</p>
+</li>
+</ol>
+<p><strong>At the receiver, run the process upward:</strong> recover bits → validate and remove the Ethernet
+envelope → process the IPv4 header → let TCP validate, order, and deliver stream bytes → let the HTTP
+server parse the request. TCP may deliver the request through several socket reads: <strong>one HTTP
+message, one TCP segment, and one <code>read()</code> are not generally the same unit</strong>. Our one-segment request
+is deliberately small. See <a href="https://www.rfc-editor.org/rfc/rfc9293.html" target="_blank" rel="noopener noreferrer">TCP&#39;s specification</a> for
+byte-stream semantics and <a href="https://www.rfc-editor.org/rfc/rfc1812.html#section-5.2.1" target="_blank" rel="noopener noreferrer">IPv4 router forwarding</a>
+for the per-hop processing rules.</p>
+<p><strong>Why the byte counts grow:</strong> with 20-byte TCP and IPv4 headers and no options, the segment is
+<code>20 + 43 = 63 B</code>, the IP packet is <code>20 + 63 = 83 B</code>, and the Ethernet frame is
+<code>14 + 83 + 4 = 101 B</code>. The last count includes FCS but excludes preamble/SFD and the inter-frame gap;
+it is not the full physical-link time cost. No Ethernet padding is needed for this example.</p>
+<blockquote>
+<p><strong>HTTPS caveat:</strong> the example is plain HTTP so you can see the bytes. With HTTPS over HTTP/1.1 or
+HTTP/2, TLS protects the HTTP content before TCP carries it, so TCP payload is TLS record bytes,
+not readable <code>GET</code> text. HTTP/3 uses QUIC over UDP instead. Encapsulation still applies, but the
+protocol stack and byte counts differ.</p>
+</blockquote>
+<p><strong>Names, addresses, and endpoints:</strong></p>
+<ul>
+<li>A domain name such as <code>video.example.com</code> is stable application-facing identity.</li>
+<li>DNS resolves that name to one or more addresses. A cached record normally expires after its TTL;
+<a href="https://www.rfc-editor.org/rfc/rfc1034.html" target="_blank" rel="noopener noreferrer">RFC 1034</a> defines this cache lifetime model.</li>
+<li>An IP address locates an interface or service route at the network layer.</li>
+<li>A port identifies a transport endpoint on a host.</li>
+<li>A socket is the operating-system object an application reads from and writes to.</li>
+<li>A flow is commonly identified by protocol plus source/destination address and port (the five-tuple).</li>
+</ul>
+<blockquote>
+<p><strong>Interview pitfall:</strong> DNS does not “connect to the server,” and an IP address does not identify a
+process. DNS supplies candidate addresses; transport establishment and ports come afterward.</p>
+</blockquote>
+<h3 id="12-latency-bandwidth-throughput-jitter-and-loss">1.2 Latency, bandwidth, throughput, jitter, and loss<a class="heading-anchor" href="#12-latency-bandwidth-throughput-jitter-and-loss" aria-label="Link to 1.2 Latency, bandwidth, throughput, jitter, and loss">#</a></h3>
+<p>These quantities are related but not interchangeable:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Term</th><th>Meaning</th><th>Typical measurement</th></tr></thead><tbody><tr><td><strong>One-way delay</strong></td><td>send time to receive time</td><td>requires synchronized clocks</td></tr><tr><td><strong>RTT</strong></td><td>request/packet out plus acknowledgment back</td><td>ping, transport telemetry</td></tr><tr><td><strong>Bandwidth/capacity</strong></td><td>maximum rate a path can sustain</td><td>bottleneck property</td></tr><tr><td><strong>Throughput</strong></td><td>bytes delivered at a stated measurement layer per unit time</td><td>response or transport bytes / time</td></tr><tr><td><strong>Goodput</strong></td><td>unique useful application payload rate, excluding headers/retries</td><td>compressed media payload bytes / time</td></tr><tr><td><strong>Jitter</strong></td><td>variation in packet arrival spacing or delay</td><td>RTP/RTCP or arrival trace</td></tr><tr><td><strong>Loss</strong></td><td>sent data not delivered before the observer gives up</td><td>sequence gaps, retransmission data</td></tr></tbody></table></div><p>Propagation delay is bounded by distance and medium. Transmission delay is packet bits divided by
+link rate. Queueing delay appears when arrivals temporarily exceed service rate. Processing delay
+comes from hosts and network devices. A useful decomposition is:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code>end-to-end delay = propagation + transmission + queueing + processing</code></pre></div>
+<p><strong>Worked example:</strong> a 1,500-byte packet is 12,000 bits. Serialization takes <code>12,000 / 10 Mb/s = 1.2 ms</code> on a 10 Mb/s bottleneck, but only <code>0.012 ms</code> on a 1 Gb/s link. If the path also has 30 ms
+of propagation and 40 ms of queueing, upgrading the gigabit access link cannot remove the other
+70 ms.</p>
+<blockquote>
+<p><strong>Interview pitfall:</strong> a speed test&#39;s “100 Mb/s” is a rate, not a latency. A high-bandwidth path can
+still have a large RTT, and a low-RTT path can still be too narrow for the selected rendition.</p>
+</blockquote>
+<h3 id="13-queues-buffers-and-the-bandwidth-delay-product">1.3 Queues, buffers, and the bandwidth-delay product<a class="heading-anchor" href="#13-queues-buffers-and-the-bandwidth-delay-product" aria-label="Link to 1.3 Queues, buffers, and the bandwidth-delay product">#</a></h3>
+<p>A sender can have data “in flight” until acknowledgments return. The amount required to fill a path
+is approximately its <strong>bandwidth-delay product</strong>:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code>BDP (bits) = bottleneck bandwidth (bits/s) × RTT (s)</code></pre></div>
+<p><strong>Worked example:</strong> on a <code>20 Mb/s</code>, <code>80 ms</code> path, <code>BDP = 20,000,000 × 0.08 = 1,600,000 bits = 200 KB</code>. A reliable sender limited to a 50 KB receive/congestion window can use at most about
+<code>50 KB / 0.08 s = 625 KB/s ≈ 5 Mb/s</code>, even though the path could carry 20 Mb/s.</p>
+<p>Buffers absorb bursts, but oversized unmanaged queues create <strong>bufferbloat</strong>: packets are not lost,
+yet RTT rises by hundreds of milliseconds. That may look acceptable to a bulk download and terrible
+to a call. Streaming therefore needs both rate and delay telemetry.</p>
+<h3 id="14-mtu-fragmentation-and-packetization">1.4 MTU, fragmentation, and packetization<a class="heading-anchor" href="#14-mtu-fragmentation-and-packetization" aria-label="Link to 1.4 MTU, fragmentation, and packetization">#</a></h3>
+<p>Each link has a maximum transmission unit (MTU). If an IP packet is too large for the path, it may be
+fragmented where supported or dropped so the sender can learn a smaller path MTU. Losing one IP
+fragment loses the whole original packet, so media transports normally packetize below the path MTU.
+<a href="https://www.rfc-editor.org/rfc/rfc8085.html" target="_blank" rel="noopener noreferrer">RFC 8085</a> explicitly advises UDP applications to avoid
+IP fragmentation because it reduces reliability and efficiency.</p>
+<p><strong>Worked example:</strong> with a 1,200-byte safe UDP payload budget and a 48 KB encoded frame, the sender
+needs roughly <code>48,000 / 1,200 = 40</code> packets before transport extensions. If independent packet-loss
+probability were 0.5%, the chance that at least one of those 40 packets is lost would be
+<code>1 − 0.995^40 ≈ 18.2%</code>. Frame assembly and codec recovery determine whether that becomes visible.</p>
+<blockquote>
+<p><strong>Interview pitfall:</strong> “one frame equals one packet” is usually false. A video frame is commonly packetized across many datagrams, and one datagram may also contain only part of a codec unit.</p>
+</blockquote>
+<hr>
+</div></div></details>
+<details class="chapter" id="chapter-2-udp-tcp-and-quic" data-chapter="2-udp-tcp-and-quic">
+      <summary class="chapter-summary" id="2-udp-tcp-and-quic"><span class="chapter-number">02</span><span class="chapter-title">UDP, TCP, and QUIC</span><span class="chapter-state">4 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="2-udp-tcp-and-quic" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#2-udp-tcp-and-quic">Chapter link ↗</a></div><div class="prose"><p>Transport protocols answer different application needs. The handshake diagram first shows what TCP
+must establish before ordinary reliable byte delivery begins.</p>
+<figure class="network-diagram" id="net-tcp-handshake" data-network-diagram="tcp-handshake" aria-labelledby="net-tcp-handshake-title">
+  <figcaption><strong id="net-tcp-handshake-title">A TCP connection starts with sequence numbers</strong><span>NETWORK LAB · TCP HANDSHAKE</span></figcaption>
+  <p class="network-intro">Select each exchange. Assume no application data is carried in these three segments.</p><div class="network-controls" role="group" aria-label="Inspect a handshake exchange"><button type="button" data-network-choice="syn" aria-pressed="true" aria-controls="net-tcp-handshake-syn">1 · SYN</button><button type="button" data-network-choice="synack" aria-pressed="false" aria-controls="net-tcp-handshake-synack">2 · SYN + ACK</button><button type="button" data-network-choice="ack" aria-pressed="false" aria-controls="net-tcp-handshake-ack">3 · ACK</button></div><div class="network-sequence" aria-label="TCP client and server handshake; read downward in time"><div class="network-sequence-heading"><b>CLIENT</b><span>time ↓</span><b>SERVER</b></div><div class="network-sequence-row" data-network-highlight="syn"><span>SYN-SENT</span><div class="network-sequence-message network-direction-right"><strong>1 · SYN</strong><code>seq=100</code><span class="network-message-line" aria-hidden="true">→</span></div><span>SYN-RECEIVED</span></div><div class="network-sequence-row" data-network-highlight="synack"><span>Receives SYN + ACK</span><div class="network-sequence-message network-direction-left"><strong>2 · SYN + ACK</strong><code>seq=500 · ack=101</code><span class="network-message-line" aria-hidden="true">←</span></div><span>Sends SYN + ACK</span></div><div class="network-sequence-row" data-network-highlight="ack"><span>ESTABLISHED</span><div class="network-sequence-message network-direction-right"><strong>3 · ACK</strong><code>seq=101 · ack=501</code><span class="network-message-line" aria-hidden="true">→</span></div><span>ESTABLISHED after ACK</span></div></div><div class="network-states"><section class="network-state" id="net-tcp-handshake-syn" data-network-panel="syn" aria-labelledby="net-tcp-handshake-syn-title"><p class="network-state-title" id="net-tcp-handshake-syn-title">Client proposes its initial sequence number</p><div class="network-equation"><code>100 + 1 SYN = 101</code></div><p class="network-explanation" data-network-explanation>The SYN consumes one sequence number even though it carries no application byte. The server next expects client sequence number 101.</p></section><section class="network-state" id="net-tcp-handshake-synack" data-network-panel="synack" aria-labelledby="net-tcp-handshake-synack-title"><p class="network-state-title" id="net-tcp-handshake-synack-title">Server acknowledges and proposes its own sequence number</p><div class="network-equation"><code>ack=101</code><span>acknowledges the client SYN</span><code>500 + 1 SYN = 501</code></div><p class="network-explanation" data-network-explanation>The two directions have independent sequence spaces. Server ack=101 acknowledges the client SYN; the server SYN starts its own sequence space at 500.</p></section><section class="network-state" id="net-tcp-handshake-ack" data-network-panel="ack" aria-labelledby="net-tcp-handshake-ack-title"><p class="network-state-title" id="net-tcp-handshake-ack-title">Client acknowledges the server SYN</p><div class="network-equation"><code>seq=101 · ack=501</code></div><p class="network-explanation" data-network-explanation>An ACK without payload, SYN or FIN consumes no sequence number. The next client data can start at 101; the next server data can start at 501.</p></section></div><p class="network-live network-sr-only" data-network-live aria-live="polite" aria-atomic="true"></p><p class="network-note">ACK means “next sequence number expected.” This is the ordinary three-way handshake, without TCP Fast Open or simultaneous open.</p>
+</figure><p>The next comparison follows one lost packet. TCP hides the gap from the application by retransmitting
+and preserving byte order; UDP exposes whatever datagrams arrive; QUIC reliably orders bytes within
+each stream while allowing unrelated streams to keep progressing.</p>
+<figure class="network-diagram" id="net-tcp-udp-loss" data-network-diagram="tcp-udp-loss" aria-labelledby="net-tcp-udp-loss-title">
+  <figcaption><strong id="net-tcp-udp-loss-title">The same loss, different delivery rules</strong><span>NETWORK LAB · TCP UDP LOSS</span></figcaption>
+  <p class="network-intro">A, B and C denote consecutive application chunks. For simplicity, each chunk fits one packet or datagram here.</p><div class="network-controls" role="group" aria-label="Inspect a loss scenario"><button type="button" data-network-choice="sent" aria-pressed="true" aria-controls="net-tcp-udp-loss-sent">1 · No loss</button><button type="button" data-network-choice="gap" aria-pressed="false" aria-controls="net-tcp-udp-loss-gap">2 · B is lost</button><button type="button" data-network-choice="recovered" aria-pressed="false" aria-controls="net-tcp-udp-loss-recovered">3 · Recovery</button></div><div class="network-states"><section class="network-state" id="net-tcp-udp-loss-sent" data-network-panel="sent" aria-labelledby="net-tcp-udp-loss-sent-title"><p class="network-state-title" id="net-tcp-udp-loss-sent-title">Baseline: all three arrive</p><div class="network-loss-layout"><section class="network-loss-lane"><p class="network-lane-title">TCP byte stream</p><div class="network-labeled-row"><b>Send</b><div class="network-packets"><span class="network-packet ">A</span><span class="network-packet ">B</span><span class="network-packet ">C</span></div></div><div class="network-wire-label">Three chunks leave the sender<span aria-hidden="true">↓</span></div><div class="network-labeled-row"><b>Receive</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet ">B</span><span class="network-packet network-good">C</span></div></div><div class="network-labeled-row"><b>App sees</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet network-good">B</span><span class="network-packet network-good">C</span></div></div><p>TCP exposes an ordered byte stream; these chunk labels are teaching units.</p></section><section class="network-loss-lane"><p class="network-lane-title">UDP datagrams</p><div class="network-labeled-row"><b>Send</b><div class="network-packets"><span class="network-packet ">A</span><span class="network-packet ">B</span><span class="network-packet ">C</span></div></div><div class="network-wire-label">Three chunks leave the sender<span aria-hidden="true">↓</span></div><div class="network-labeled-row"><b>Receive</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet ">B</span><span class="network-packet network-good">C</span></div></div><div class="network-labeled-row"><b>App sees</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet network-good">B</span><span class="network-packet network-good">C</span></div></div><p>Each datagram is independent. These are datagram boundaries, unlike TCP.</p></section></div><p class="network-explanation" data-network-explanation>Both applications receive all data in this illustrative arrival order. UDP does not promise this order or successful delivery.</p></section><section class="network-state" id="net-tcp-udp-loss-gap" data-network-panel="gap" aria-labelledby="net-tcp-udp-loss-gap-title"><p class="network-state-title" id="net-tcp-udp-loss-gap-title">C arrives while B is missing</p><div class="network-loss-layout"><section class="network-loss-lane"><p class="network-lane-title">TCP byte stream</p><div class="network-labeled-row"><b>Send</b><div class="network-packets"><span class="network-packet ">A</span><span class="network-packet network-lost">B</span><span class="network-packet ">C</span></div></div><div class="network-wire-label">B is lost on the path ×<span aria-hidden="true">↓</span></div><div class="network-labeled-row"><b>Receive</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet network-lost">B missing</span><span class="network-packet network-waiting">C</span></div></div><div class="network-labeled-row"><b>App sees</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet network-waiting">C waits</span></div></div><p>C can be buffered, but cannot pass the missing bytes of B in this stream.</p></section><section class="network-loss-lane"><p class="network-lane-title">UDP datagrams</p><div class="network-labeled-row"><b>Send</b><div class="network-packets"><span class="network-packet ">A</span><span class="network-packet network-lost">B</span><span class="network-packet ">C</span></div></div><div class="network-wire-label">B is lost on the path ×<span aria-hidden="true">↓</span></div><div class="network-labeled-row"><b>Receive</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet network-lost">B missing</span><span class="network-packet network-good">C</span></div></div><div class="network-labeled-row"><b>App sees</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet network-good">C</span></div></div><p>C can be delivered despite missing B. UDP itself does not request B again.</p></section></div><p class="network-explanation" data-network-explanation>TCP preserves order within the connection byte stream, so the gap blocks later bytes from application delivery. UDP provides no built-in ordered delivery or recovery.</p></section><section class="network-state" id="net-tcp-udp-loss-recovered" data-network-panel="recovered" aria-labelledby="net-tcp-udp-loss-recovered-title"><p class="network-state-title" id="net-tcp-udp-loss-recovered-title">TCP retransmits B</p><div class="network-loss-layout"><section class="network-loss-lane"><p class="network-lane-title">TCP byte stream</p><div class="network-labeled-row"><b>Send</b><div class="network-packets"><span class="network-packet ">A</span><span class="network-packet network-lost">B</span><span class="network-packet ">C</span></div></div><div class="network-wire-label">B is lost on the path ×<span aria-hidden="true">↓</span></div><div class="network-labeled-row"><b>Receive</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet network-good">B retry</span><span class="network-packet network-good">C</span></div></div><div class="network-labeled-row"><b>App sees</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet network-good">B</span><span class="network-packet network-good">C</span></div></div><p>Retransmitted B closes the gap. The application receives ordered bytes A, B, C.</p></section><section class="network-loss-lane"><p class="network-lane-title">UDP datagrams</p><div class="network-labeled-row"><b>Send</b><div class="network-packets"><span class="network-packet ">A</span><span class="network-packet network-lost">B</span><span class="network-packet ">C</span></div></div><div class="network-wire-label">B is lost on the path ×<span aria-hidden="true">↓</span></div><div class="network-labeled-row"><b>Receive</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet network-lost">B missing</span><span class="network-packet network-good">C</span></div></div><div class="network-labeled-row"><b>App sees</b><div class="network-packets"><span class="network-packet network-good">A</span><span class="network-packet network-good">C</span></div></div><p>C can be delivered despite missing B. UDP itself does not request B again.</p></section></div><p class="network-explanation" data-network-explanation>Once B arrives, TCP can release the contiguous bytes. A UDP application needs its own recovery or loss-tolerance mechanism if missing B matters.</p></section></div><p class="network-live network-sr-only" data-network-live aria-live="polite" aria-atomic="true"></p><p class="network-note">QUIC runs over UDP and adds reliable, ordered streams. Loss in one QUIC stream need not block delivery in another, although congestion control and shared network capacity still couple their performance.</p>
+</figure><p>These are abstractions, not statements that one protocol is always faster. The application workload,
+implementation, path, connection reuse, and deadline determine the outcome.</p>
+<h3 id="21-udp-messages-with-minimal-transport-machinery">2.1 UDP: messages with minimal transport machinery<a class="heading-anchor" href="#21-udp-messages-with-minimal-transport-machinery" aria-label="Link to 2.1 UDP: messages with minimal transport machinery">#</a></h3>
+<p>UDP preserves message boundaries: one send creates a datagram, and a receive obtains one datagram
+(or a truncated one if the supplied buffer is too small). UDP itself does not establish a connection,
+retransmit, order, pace, or estimate congestion.</p>
+<p>That makes UDP a useful substrate when an application needs custom deadlines or recovery:</p>
+<ul>
+<li>late real-time video may be less useful than a fresh frame;</li>
+<li>the application can add sequence numbers, timestamps, FEC, NACK, and pacing selectively;</li>
+<li>multicast is possible where the network supports it;</li>
+<li>a single lost datagram need not stall later datagrams.</li>
+</ul>
+<p>But “UDP is unreliable” does <strong>not</strong> mean “send without restraint.”
+<a href="https://www.rfc-editor.org/rfc/rfc8085.html" target="_blank" rel="noopener noreferrer">RFC 8085</a> requires UDP applications to provide suitable
+congestion control for Internet use and to consider message size, checksums, middleboxes, and path
+behavior.</p>
+<blockquote>
+<p><strong>Interview pitfall:</strong> UDP does not guarantee lower end-to-end latency. An unpaced UDP sender can
+fill queues, cause its own loss, and make latency worse than a congestion-controlled transport.</p>
+</blockquote>
+<h3 id="22-tcp-a-reliable-ordered-byte-stream">2.2 TCP: a reliable ordered byte stream<a class="heading-anchor" href="#22-tcp-a-reliable-ordered-byte-stream" aria-label="Link to 2.2 TCP: a reliable ordered byte stream">#</a></h3>
+<p>TCP presents an ordered byte stream, not application messages. It assigns sequence numbers, uses
+cumulative acknowledgments, retransmits missing data, rejects corrupt segments, and regulates how
+much data is in flight. <a href="https://www.rfc-editor.org/rfc/rfc9293.html" target="_blank" rel="noopener noreferrer">RFC 9293</a> is the current core
+TCP specification.</p>
+<p>The three-way handshake synchronizes both peers&#39; initial sequence numbers:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code>Client                                         Server
+  | --- SYN, seq=x --------------------------&gt; |
+  | &lt;--- SYN+ACK, seq=y, ack=x+1 ------------- |
+  | --- ACK, ack=y+1 ------------------------&gt; |
+  |             connection established         |</code></pre></div>
+<p>The client can then write <code>5 KB</code>, while TCP may transmit that as several segments and the receiver
+may return it through one or many reads. Applications therefore need framing such as HTTP message
+syntax or an explicit length prefix.</p>
+<p>TCP has two independent windows:</p>
+<ul>
+<li><strong>Receive window (<code>rwnd</code>)</strong> protects the receiver from an application that consumes bytes slowly.</li>
+<li><strong>Congestion window (<code>cwnd</code>)</strong> protects the network by limiting unacknowledged data.</li>
+<li>Usable flight size is approximately <code>min(rwnd, cwnd)</code>.</li>
+</ul>
+<p>When a segment is missing, later bytes can arrive at the host but are normally not delivered past the
+gap to the application. This transport-level head-of-line blocking is useful for exact files but can
+turn one loss into a deadline miss for live media.</p>
+<blockquote>
+<p><strong>Interview pitfall:</strong> TCP does not send “packets in order.” IP packets may reorder. TCP reconstructs
+an ordered byte stream before exposing it to the application.</p>
+</blockquote>
+<h3 id="23-tcp-startup-recovery-and-congestion-control">2.3 TCP startup, recovery, and congestion control<a class="heading-anchor" href="#23-tcp-startup-recovery-and-congestion-control" aria-label="Link to 2.3 TCP startup, recovery, and congestion control">#</a></h3>
+<p>A new connection does not instantly transmit at path capacity. Its congestion window begins finite
+and grows as acknowledgments demonstrate delivery. Loss or explicit congestion signals cause the
+sender to reduce flight. Modern stacks use retransmission timers and acknowledgment patterns to infer
+missing data; the exact congestion-control algorithm is an implementation choice, not fixed by
+RFC 9293.</p>
+<p>For segmented video, reusing a warm connection avoids repeated handshakes and startup behavior;
+long idle gaps can make a later burst behave differently from a continuous transfer.</p>
+<p><strong>Worked example:</strong> a 2 MB segment delivered in 1.6 s has measured application throughput of
+<code>2 × 8 / 1.6 = 10 Mb/s</code>. That estimate includes all startup, loss recovery, and sharing that occurred;
+it is not proof that bottleneck capacity equals 10 Mb/s.</p>
+<h3 id="24-quic-secure-multiplexed-streams-over-udp">2.4 QUIC: secure multiplexed streams over UDP<a class="heading-anchor" href="#24-quic-secure-multiplexed-streams-over-udp" aria-label="Link to 2.4 QUIC: secure multiplexed streams over UDP">#</a></h3>
+<p>QUIC builds reliable streams, connection migration, loss recovery, congestion control, and TLS-based
+security in user space over UDP. QUIC version 1 integrates TLS 1.3 and multiplexes streams inside one
+connection; see <a href="https://www.rfc-editor.org/rfc/rfc9000.html" target="_blank" rel="noopener noreferrer">RFC 9000</a>.</p>
+<p>The important ordering boundary is the <strong>stream</strong>:</p>
+<ul>
+<li>bytes within one stream are delivered reliably and in order;</li>
+<li>loss affecting stream A need not stop application progress on stream B;</li>
+<li>packets and congestion control are still shared at the connection/path level;</li>
+<li>a lost packet can therefore reduce sending rate for the whole connection even when stream delivery
+is independent.</li>
+</ul>
+<p>QUIC can resume a known server quickly and can support 0-RTT application data. However, early data can
+be replayed; <a href="https://www.rfc-editor.org/rfc/rfc8446.html#section-8" target="_blank" rel="noopener noreferrer">TLS 1.3 §8</a> requires applications
+to use it only for operations safe under replay.</p>
+<blockquote>
+<p><strong>Interview pitfall:</strong> QUIC does not make packet loss free and is not “unreliable UDP.” It implements
+reliable streams and congestion control above UDP, while avoiding cross-stream delivery blocking.</p>
+</blockquote>
+<hr>
+</div></div></details>
+<details class="chapter" id="chapter-3-http-and-the-request-path" data-chapter="3-http-and-the-request-path">
+      <summary class="chapter-summary" id="3-http-and-the-request-path"><span class="chapter-number">03</span><span class="chapter-title">HTTP and the Request Path</span><span class="chapter-state">4 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="3-http-and-the-request-path" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#3-http-and-the-request-path">Chapter link ↗</a></div><div class="prose"><p>A video segment request is the visible end of several dependent systems. The diagram separates name
+resolution, route/edge selection, connection security, cache lookup, and origin work so failures can
+be localized rather than called “the network.”</p>
+<figure class="network-diagram" id="net-http-path" data-network-diagram="http-path" aria-labelledby="net-http-path-title">
+  <figcaption><strong id="net-http-path-title">Before the first response byte</strong><span>NETWORK LAB · HTTP PATH</span></figcaption>
+  <p class="network-intro">A conceptual path for an HTTPS request when there is no usable browser-cache entry and no reusable connection.</p><ol class="network-flow "><li><strong>1 · Resolve</strong><span>DNS: name → server address. A cached DNS result can shorten this phase.</span></li><li><strong>2 · Connect + secure</strong><span>HTTP/1.1 or HTTP/2: TCP + TLS. HTTP/3: QUIC, with TLS 1.3 integrated.</span></li><li><strong>3 · Request</strong><span>Send HTTP method, target and headers; include a request body if needed.</span></li><li><strong>4 · Serve</strong><span>A CDN/cache or origin handles the request and begins the response.</span></li><li><strong>5 · Receive + use</strong><span>Receive headers/body; cache if policy permits; parse, decode or render.</span></li></ol><div class="network-bracket"><span>DNS / connection setup</span><span class="network-arrow" aria-hidden="true">→</span><span>Request → first byte</span><span class="network-arrow" aria-hidden="true">→</span><span>Body transfer → useful output</span></div><p class="network-note">This is a dependency map, not a fixed timing formula. Reused connections, cached results, cache revalidation, retries and protocol choices change the critical path. HTTP semantics remain separate from the video codec.</p>
+</figure><p>A cache hit can end the request at the edge. A miss may traverse an origin shield and object store;
+those extra stages affect time to first byte even when the client-to-edge RTT is excellent.</p>
+<h3 id="31-one-https-request-step-by-step">3.1 One HTTPS request, step by step<a class="heading-anchor" href="#31-one-https-request-step-by-step" aria-label="Link to 3.1 One HTTPS request, step by step">#</a></h3>
+<p>For a cold <code>https://video.example.com/seg-104.m4s</code> request:</p>
+<ol>
+<li>The client checks local and recursive DNS caches, then resolves the host if needed.</li>
+<li>Routing takes packets toward a selected address, often an anycast or DNS-selected CDN edge.</li>
+<li>The client establishes TCP then TLS, or establishes QUIC with integrated TLS.</li>
+<li>It sends an HTTP request with method, target, and fields such as <code>Host</code>/<code>:authority</code> and <code>Range</code>.</li>
+<li>The edge constructs a cache key and checks freshness.</li>
+<li>On a hit, the edge returns stored bytes; on a miss, it forwards upstream and may store the result.</li>
+<li>The player appends media bytes, demuxes, decodes, and advances its buffer.</li>
+</ol>
+<p><a href="https://www.rfc-editor.org/rfc/rfc8446.html" target="_blank" rel="noopener noreferrer">TLS 1.3</a> provides peer authentication, confidentiality,
+and integrity after its handshake. It does not conceal all metadata, packet sizes, or timing.</p>
+<h3 id="32-http11-http2-and-http3">3.2 HTTP/1.1, HTTP/2, and HTTP/3<a class="heading-anchor" href="#32-http11-http2-and-http3" aria-label="Link to 3.2 HTTP/1.1, HTTP/2, and HTTP/3">#</a></h3>
+<p>HTTP defines request/response semantics; its versions map those semantics to transports differently:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Version</th><th>Transport shape</th><th>Loss consequence</th></tr></thead><tbody><tr><td>HTTP/1.1</td><td>usually one in-flight request per connection unless pipelined</td><td>TCP gap blocks that connection</td></tr><tr><td>HTTP/2</td><td>many HTTP streams multiplexed over one TCP connection</td><td>TCP gap temporarily blocks all streams&#39; bytes</td></tr><tr><td>HTTP/3</td><td>HTTP streams mapped to QUIC streams</td><td>one blocked stream need not block other streams</td></tr></tbody></table></div><p><a href="https://www.rfc-editor.org/rfc/rfc9114.html" target="_blank" rel="noopener noreferrer">RFC 9114</a> defines HTTP/3 over QUIC, including HEADERS and
+DATA frames and QPACK field compression. HTTP/3 improves cross-stream independence; it does not erase
+RTT, server time, radio loss, or application buffering.</p>
+<p><strong>Worked example:</strong> suppose requests A and B share a connection and a packet carrying A is lost. With
+HTTP/2 over TCP, bytes for B behind the TCP gap wait for recovery. With HTTP/3, B can be delivered if
+its QUIC stream&#39;s data arrived, although both streams may slow because congestion control observed loss.</p>
+<h3 id="33-cache-semantics-for-media">3.3 Cache semantics for media<a class="heading-anchor" href="#33-cache-semantics-for-media" aria-label="Link to 3.3 Cache semantics for media">#</a></h3>
+<p>HTTP caching reuses a stored response only when the cache key and reuse conditions match. Freshness,
+validation, <code>Age</code>, <code>Cache-Control</code>, <code>ETag</code>, and <code>Vary</code> are protocol semantics, not merely CDN settings;
+see <a href="https://www.rfc-editor.org/rfc/rfc9111.html" target="_blank" rel="noopener noreferrer">RFC 9111</a>.</p>
+<p>Practical media policy:</p>
+<ul>
+<li>Immutable VOD segments can use content-versioned URLs and long freshness.</li>
+<li>A live manifest changes frequently and needs short freshness or carefully controlled revalidation.</li>
+<li>Completed live segments can often become immutable even while the playlist remains dynamic.</li>
+<li>Signed query parameters can fragment the cache unless the CDN deliberately normalizes its key.</li>
+<li><code>Range</code> requests help seeking and partial retrieval, but cache support for partial objects must be
+tested rather than assumed.</li>
+<li>CORS controls whether browser JavaScript may read a cross-origin response; it does not make a video
+object cacheable or encrypt it.</li>
+</ul>
+<blockquote>
+<p><strong>Interview pitfall:</strong> “a CDN caches GETs” is incomplete. Method, status, freshness, authorization,
+<code>Vary</code>, range behavior, query handling, and product configuration all affect reuse.</p>
+</blockquote>
+<h3 id="34-a-cold-start-latency-budget">3.4 A cold-start latency budget<a class="heading-anchor" href="#34-a-cold-start-latency-budget" aria-label="Link to 3.4 A cold-start latency budget">#</a></h3>
+<p>If DNS costs 25 ms, client-edge RTT is 40 ms, new TCP and TLS 1.3 establishment each cost roughly one
+RTT, and a sequential HTTP request/first-byte exchange costs one RTT plus 5 ms of edge work, the teaching estimate is
+<code>25 + 40 + 40 + 40 + 5 = 150 ms</code>. Operations may overlap; resumption changes the cost; HTTP/3 combines
+transport and cryptographic establishment; and an origin miss adds another path. Draw dependencies
+before summing numbers.</p>
+<hr>
+</div></div></details>
+<details class="chapter" id="chapter-4-hls-dash-and-cmaf" data-chapter="4-hls-dash-and-cmaf">
+      <summary class="chapter-summary" id="4-hls-dash-and-cmaf"><span class="chapter-number">04</span><span class="chapter-title">HLS, DASH, and CMAF</span><span class="chapter-state">3 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="4-hls-dash-and-cmaf" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#4-hls-dash-and-cmaf">Chapter link ↗</a></div><div class="prose"><h3 id="41-hls-dash-and-cmaf">4.1 HLS, DASH, and CMAF<a class="heading-anchor" href="#41-hls-dash-and-cmaf" aria-label="Link to 4.1 HLS, DASH, and CMAF">#</a></h3>
+<p>HLS and MPEG-DASH are <strong>segment-based adaptive media delivery systems commonly carried over HTTP</strong>.
+The client fetches a manifest, then requests media objects while choosing among aligned representations.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th></th><th>HLS</th><th>MPEG-DASH</th></tr></thead><tbody><tr><td>Manifest</td><td><code>.m3u8</code>, line-oriented text</td><td><code>.mpd</code>, XML</td></tr><tr><td>Organization</td><td>multivariant/master + media playlists</td><td>Period → AdaptationSet → Representation</td></tr><tr><td>Common media</td><td>MPEG-2 TS or fragmented MP4</td><td>commonly fragmented MP4; other profiles exist</td></tr><tr><td>Standards home</td><td>Apple/IETF publication</td><td>ISO/IEC, with DASH-IF interoperability guidance</td></tr><tr><td>Player decision</td><td>client chooses variant/rendition</td><td>client chooses representation</td></tr></tbody></table></div><p><a href="https://www.rfc-editor.org/rfc/rfc8216.html" target="_blank" rel="noopener noreferrer">RFC 8216</a> describes HLS playlists, segments, variant
+streams, and client responsibilities. DASH is broader and profile-driven; the current
+<a href="https://dashif.org/guidelines/iop-v5/" target="_blank" rel="noopener noreferrer">DASH-IF IOP v5</a> constrains DASH delivery to interoperable CMAF
+media profiles and separates guidance for on-demand, live, and low-latency live services.</p>
+<p><strong>CMAF</strong> defines interoperable fragmented MP4 media structures. It can let compatible HLS and DASH
+presentations reference the same encoded media objects. It does <strong>not</strong> automatically make any HLS
+ladder interchangeable with any DASH ladder: codec, encryption, segment boundaries, timestamps, and
+profile constraints must align.</p>
+<blockquote>
+<p><strong>Correction to a common answer:</strong> HLS does not inherently mean FairPlay, and DASH does not
+inherently mean Widevine or PlayReady. Manifest ecosystems often pair with those DRMs, but delivery
+format, encryption scheme, key signaling, and license system are separate design dimensions.</p>
+</blockquote>
+<h3 id="42-manifests-segments-and-switching">4.2 Manifests, segments, and switching<a class="heading-anchor" href="#42-manifests-segments-and-switching" aria-label="Link to 4.2 Manifests, segments, and switching">#</a></h3>
+<p>The diagram follows a DASH-style flow: an MPD advertises representations, the player requests an
+initialization object and media segments, measures downloads, then chooses the next representation.
+The HLS flow is analogous even though playlist syntax and terminology differ.</p>
+<figure class="network-diagram" id="net-dash-flow" data-network-diagram="dash-flow" aria-labelledby="net-dash-flow-title">
+  <figcaption><strong id="net-dash-flow-title">DASH: choose bytes for the next interval</strong><span>NETWORK LAB · DASH FLOW</span></figcaption>
+  <p class="network-intro">The MPD manifest describes the presentation, representations and segment addressing. In this simplified switching set, all representations share aligned 4-second intervals.</p><ol class="network-flow "><li><strong>Read MPD</strong><span>Discover representations and segment locations.</span></li><li><strong>Choose a rung</strong><span>Use throughput, buffer and device constraints.</span></li><li><strong>Fetch segment</strong><span>An HTTP request downloads the chosen interval.</span></li><li><strong>Buffer → decode</strong><span>Queue media time, then present it on schedule.</span></li></ol><div class="network-scroll" tabindex="0" role="region" aria-label="Aligned DASH representation timeline; scroll horizontally on small screens"><table class="network-timeline-table"><caption>One possible selection across four media intervals</caption><thead><tr><th scope="col">Representation</th><th scope="col">0–4 s</th><th scope="col">4–8 s</th><th scope="col">8–12 s</th><th scope="col">12–16 s</th></tr></thead><tbody><tr><th scope="row">8 Mb/s</th><td class="">available<small>segment 1</small></td><td class="">available<small>segment 2</small></td><td class="network-selected-cell">✓ FETCH<small>segment 3</small></td><td class="">available<small>segment 4</small></td></tr><tr><th scope="row">4 Mb/s</th><td class="">available<small>segment 1</small></td><td class="network-selected-cell">✓ FETCH<small>segment 2</small></td><td class="">available<small>segment 3</small></td><td class="network-selected-cell">✓ FETCH<small>segment 4</small></td></tr><tr><th scope="row">2 Mb/s</th><td class="network-selected-cell">✓ FETCH<small>segment 1</small></td><td class="">available<small>segment 2</small></td><td class="">available<small>segment 3</small></td><td class="">available<small>segment 4</small></td></tr></tbody></table></div><p class="network-axis-label">Media time → · each column describes the same content interval</p><p class="network-note">Alignment alone is not every switching requirement: usable random-access points, decoder configuration and manifest constraints also matter. This ladder and selection are illustrative, not a mandated DASH algorithm.</p>
+</figure><p>For safe switching, representations in an adaptation set need aligned timing and compatible random
+access points. A player cannot decode arbitrary bytes from a higher rung merely because the URL exists;
+it needs the correct initialization state and a decodable boundary.</p>
+<p><strong>Small HLS media-playlist example:</strong></p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">m3u8</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-m3u8">#EXTM3U
+#EXT-X-VERSION:6
+#EXT-X-TARGETDURATION:4
+#EXT-X-MEDIA-SEQUENCE:104
+#EXT-X-MAP:URI=&quot;init.mp4&quot;
+#EXTINF:4.000,
+seg-104.m4s
+#EXTINF:4.000,
+seg-105.m4s</code></pre></div>
+<p><code>BANDWIDTH</code> is a declared requirement used for selection; actual segment size can vary. The player&#39;s
+measured sample is <code>downloaded bits / transfer time</code>, so variable-size chunks create noisy estimates.</p>
+<p><strong>Segment-duration trade-off:</strong></p>
+<ul>
+<li>longer segments reduce request overhead and permit longer compression structures;</li>
+<li>shorter segments expose new choices sooner and can reduce live latency;</li>
+<li>very short independently decodable segments may require more frequent random-access frames;</li>
+<li>segment duration alone does not set latency: hold-back, encoder pipeline, publication timing,
+network transfer, player buffer, and decoder scheduling all contribute.</li>
+</ul>
+<blockquote>
+<p><strong>Interview pitfall:</strong> “the player switches resolution when bandwidth changes” skips the hard parts:
+estimate future delivery, protect the buffer, switch only at valid aligned boundaries, and avoid
+oscillation when measurements hover near a rung.</p>
+</blockquote>
+<h3 id="43-low-latency-streaming">4.3 Low-latency streaming<a class="heading-anchor" href="#43-low-latency-streaming" aria-label="Link to 4.3 Low-latency streaming">#</a></h3>
+<p>Classic live HTTP playback often waits for complete segments and keeps several segments of safety.
+Low-latency designs publish smaller independently addressable or progressively available units so the
+player can stay closer to the live edge.</p>
+<p>The diagram shows why latency is a pipeline, not simply <code>segment duration × N</code>. Media must be captured,
+encoded, packaged, published, transferred, buffered, decoded, and rendered.</p>
+<figure class="network-diagram" id="net-low-latency" data-network-diagram="low-latency" aria-labelledby="net-low-latency-title">
+  <figcaption><strong id="net-low-latency-title">Publish useful media before the segment ends</strong><span>NETWORK LAB · LOW LATENCY</span></figcaption>
+  <p class="network-intro">A deliberately simplified comparison: one 2-second segment contains four 0.5-second parts. The clock starts when production of that segment begins.</p><div class="network-controls" role="group" aria-label="Choose how much media has been produced"><button type="button" data-network-choice="part1" aria-pressed="true" aria-controls="net-low-latency-part1">0.5 s produced</button><button type="button" data-network-choice="part2" aria-pressed="false" aria-controls="net-low-latency-part2">1.0 s produced</button><button type="button" data-network-choice="part3" aria-pressed="false" aria-controls="net-low-latency-part3">1.5 s produced</button><button type="button" data-network-choice="part4" aria-pressed="false" aria-controls="net-low-latency-part4">2.0 s produced</button></div><div class="network-states"><section class="network-state" id="net-low-latency-part1" data-network-panel="part1" aria-labelledby="net-low-latency-part1-title"><p class="network-state-title" id="net-low-latency-part1-title">Production time: 0.5 seconds</p><div class="network-availability"><p class="network-lane-title">COMPLETE-SEGMENT DELIVERY</p><div class="network-whole-segment network-waiting"><strong>One 2 s segment</strong><span>Wait until 2.0 s · 0.5 s produced</span></div><p class="network-lane-title">PART / CHUNK DELIVERY</p><div class="network-parts"><div class="network-part network-good"><strong>P1</strong><span>available</span><small>0–0.5 s</small></div><div class="network-part network-future"><strong>P2</strong><span>producing later</span><small>0.5–1 s</small></div><div class="network-part network-future"><strong>P3</strong><span>producing later</span><small>1–1.5 s</small></div><div class="network-part network-future"><strong>P4</strong><span>producing later</span><small>1.5–2 s</small></div></div><p class="network-startup">Example startup buffer: <strong>1 s = two parts</strong>. One part does not meet that target yet.</p></div><p class="network-explanation" data-network-explanation>Making partial media available during production removes the wait for the whole segment. It does not remove transport time, decoding time or the player’s safety buffer.</p></section><section class="network-state" id="net-low-latency-part2" data-network-panel="part2" aria-labelledby="net-low-latency-part2-title"><p class="network-state-title" id="net-low-latency-part2-title">Production time: 1.0 seconds</p><div class="network-availability"><p class="network-lane-title">COMPLETE-SEGMENT DELIVERY</p><div class="network-whole-segment network-waiting"><strong>One 2 s segment</strong><span>Wait until 2.0 s · 1.0 s produced</span></div><p class="network-lane-title">PART / CHUNK DELIVERY</p><div class="network-parts"><div class="network-part network-good"><strong>P1</strong><span>available</span><small>0–0.5 s</small></div><div class="network-part network-good"><strong>P2</strong><span>available</span><small>0.5–1 s</small></div><div class="network-part network-future"><strong>P3</strong><span>producing later</span><small>1–1.5 s</small></div><div class="network-part network-future"><strong>P4</strong><span>producing later</span><small>1.5–2 s</small></div></div><p class="network-startup">Example startup buffer: <strong>1 s = two parts</strong>. Enough media has been produced for that target; transfer and player processing still take time.</p></div><p class="network-explanation" data-network-explanation>Making partial media available during production removes the wait for the whole segment. It does not remove transport time, decoding time or the player’s safety buffer.</p></section><section class="network-state" id="net-low-latency-part3" data-network-panel="part3" aria-labelledby="net-low-latency-part3-title"><p class="network-state-title" id="net-low-latency-part3-title">Production time: 1.5 seconds</p><div class="network-availability"><p class="network-lane-title">COMPLETE-SEGMENT DELIVERY</p><div class="network-whole-segment network-waiting"><strong>One 2 s segment</strong><span>Wait until 2.0 s · 1.5 s produced</span></div><p class="network-lane-title">PART / CHUNK DELIVERY</p><div class="network-parts"><div class="network-part network-good"><strong>P1</strong><span>available</span><small>0–0.5 s</small></div><div class="network-part network-good"><strong>P2</strong><span>available</span><small>0.5–1 s</small></div><div class="network-part network-good"><strong>P3</strong><span>available</span><small>1–1.5 s</small></div><div class="network-part network-future"><strong>P4</strong><span>producing later</span><small>1.5–2 s</small></div></div><p class="network-startup">Example startup buffer: <strong>1 s = two parts</strong>. Enough media has been produced for that target; transfer and player processing still take time.</p></div><p class="network-explanation" data-network-explanation>Making partial media available during production removes the wait for the whole segment. It does not remove transport time, decoding time or the player’s safety buffer.</p></section><section class="network-state" id="net-low-latency-part4" data-network-panel="part4" aria-labelledby="net-low-latency-part4-title"><p class="network-state-title" id="net-low-latency-part4-title">Production time: 2.0 seconds</p><div class="network-availability"><p class="network-lane-title">COMPLETE-SEGMENT DELIVERY</p><div class="network-whole-segment network-good"><strong>One 2 s segment</strong><span>Available now</span></div><p class="network-lane-title">PART / CHUNK DELIVERY</p><div class="network-parts"><div class="network-part network-good"><strong>P1</strong><span>available</span><small>0–0.5 s</small></div><div class="network-part network-good"><strong>P2</strong><span>available</span><small>0.5–1 s</small></div><div class="network-part network-good"><strong>P3</strong><span>available</span><small>1–1.5 s</small></div><div class="network-part network-good"><strong>P4</strong><span>available</span><small>1.5–2 s</small></div></div><p class="network-startup">Example startup buffer: <strong>1 s = two parts</strong>. Enough media has been produced for that target; transfer and player processing still take time.</p></div><p class="network-explanation" data-network-explanation>Making partial media available during production removes the wait for the whole segment. It does not remove transport time, decoding time or the player’s safety buffer.</p></section></div><p class="network-live network-sr-only" data-network-live aria-live="polite" aria-atomic="true"></p><p class="network-note">“Part” is a teaching label here: LL-HLS parts and low-latency DASH/CMAF chunks have different signaling and delivery details. Availability assumes each unit is published promptly; startup does not happen at zero buffer.</p>
+</figure><div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Approach</th><th>Typical product order</th><th>Main mechanism</th></tr></thead><tbody><tr><td>conventional HLS/DASH</td><td>seconds to tens of seconds</td><td>complete segments plus safety buffer</td></tr><tr><td>tuned short-segment HLS/DASH</td><td>several seconds</td><td>shorter segments and smaller hold-back</td></tr><tr><td>LL-HLS</td><td>low single-digit seconds when well operated</td><td>partial segments, blocking reload, preload hints, delta updates</td></tr><tr><td>low-latency DASH</td><td>low single-digit seconds when well operated</td><td>CMAF chunks available before a full segment completes</td></tr><tr><td>WebRTC</td><td>sub-second is a common goal</td><td>deadline-driven RTP media and a small jitter buffer</td></tr><tr><td>MOQT (work in progress)</td><td>designed for low latency at scale</td><td>publish/subscribe objects over QUIC/WebTransport and relays</td></tr></tbody></table></div><p>Apple&#39;s <a href="https://developer.apple.com/documentation/http-live-streaming/enabling-low-latency-http-live-streaming-hls" target="_blank" rel="noopener noreferrer">Low-Latency HLS documentation</a>
+defines Partial Segments, blocking playlist reloads, preload hints, rendition reports, and delta
+updates. These features reduce polling and publication delay; they do not guarantee one fixed latency.</p>
+<p>For low-latency DASH, CMAF chunks can be made available progressively; HTTP/2 and HTTP/3 do not use HTTP/1.1 “chunked transfer encoding.” The <a href="https://dashif.org/guidelines/iop-v5/" target="_blank" rel="noopener noreferrer">DASH-IF live guideline</a> is the interoperability reference. The IETF&#39;s active <a href="https://datatracker.ietf.org/doc/draft-ietf-moq-transport/" target="_blank" rel="noopener noreferrer">Media over QUIC work</a> targets scalable low-latency publication through relays, but remains an Internet-Draft rather than an RFC.</p>
+<p><strong>The fundamental tension:</strong> a smaller buffer leaves less time to absorb throughput variation. On a
+variable path, lowering latency without changing anything else raises rebuffer risk or forces more
+conservative quality. The product chooses a point among latency, quality, continuity, and cost.</p>
+<hr>
+</div></div></details>
+<details class="chapter" id="chapter-5-adaptive-bitrate-and-qoe" data-chapter="5-adaptive-bitrate-and-qoe">
+      <summary class="chapter-summary" id="5-adaptive-bitrate-and-qoe"><span class="chapter-number">05</span><span class="chapter-title">Adaptive Bitrate and QoE</span><span class="chapter-state">2 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="5-adaptive-bitrate-and-qoe" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#5-adaptive-bitrate-and-qoe">Chapter link ↗</a></div><div class="prose"><h3 id="51-abr-algorithms">5.1 ABR algorithms<a class="heading-anchor" href="#51-abr-algorithms" aria-label="Link to 5.1 ABR algorithms">#</a></h3>
+<p>The client picks a bitrate per segment. Four families:</p>
+<p><strong>1. Rate-based (throughput prediction).</strong> Estimate future throughput from past segment download rates (a harmonic mean is common and dampens optimistic high samples, though one low sample pulls it down sharply), then pick the highest bitrate below the estimate × a safety factor.</p>
+<ul>
+<li>Fails on: throughput estimation bias (a low-bitrate segment downloads fast and <em>underestimates</em> capacity), and on/off cycling interacting with TCP.</li>
+</ul>
+<p><strong>2. Buffer-based.</strong> Make buffer occupancy the primary signal and map buffer → bitrate.</p>
+<ul>
+<li><strong>BBA</strong> (Huang et al.): a piecewise-linear reservoir/cushion map. Buffer level directly measures playback safety; the published deployment also used capacity information during startup.</li>
+<li><strong>BOLA</strong> (Spiteri et al.): formulates utility maximization as Lyapunov optimization, giving a principled buffer→bitrate rule with provable bounds; an updated form was incorporated into dash.js.</li>
+</ul>
+<p><strong>3. Control-theoretic / hybrid.</strong></p>
+<ul>
+<li><strong>MPC / RobustMPC</strong> (Yin et al.): at each step, solve a QoE maximization over a horizon of the next ~5 chunks, using a throughput prediction and the buffer model, then apply the first decision (receding horizon). RobustMPC uses a conservative throughput estimate to hedge prediction error.</li>
+<li>Strong research results; cost is a short-horizon optimization for each choice, often made tractable by the small discrete ladder.</li>
+</ul>
+<p><strong>4. Learning-based.</strong></p>
+<ul>
+<li><strong>Pensieve</strong> (Mao et al., SIGCOMM &#39;17): A3C reinforcement learning. State = past throughput measurements, download times, buffer level, remaining chunks, chunk sizes; action = next bitrate; reward = the QoE function. Learns a policy without a hand-tuned model.</li>
+<li>Later: Comyco (imitation learning from an oracle, much better sample efficiency), Karma (causal sequence modeling / decision-transformer style), Genet (curriculum over network traces).</li>
+<li><strong>The standard critique</strong> — and you should raise it before they do: a learned policy can fail outside its training-trace distribution and is harder to debug or constrain. Published trace/simulation gains do not by themselves prove a broad production advantage; the real deployment mix is mostly proprietary. Your TMM paper (lower-layer information exposure + online tuning) is a response to that generalization problem — frame it that way.</li>
+</ul>
+<p>The original work is worth reading directly: <a href="https://web.stanford.edu/class/cs244/papers/sigcomm2014-video.pdf" target="_blank" rel="noopener noreferrer">BBA</a>,
+<a href="https://arxiv.org/abs/1601.06748" target="_blank" rel="noopener noreferrer">BOLA</a>,
+<a href="https://web.stanford.edu/class/cs244/papers/videostreaming-sigcomm2015.pdf" target="_blank" rel="noopener noreferrer">MPC</a>, and
+<a href="https://web.mit.edu/pensieve/" target="_blank" rel="noopener noreferrer">Pensieve</a>.</p>
+<p><strong>A canonical QoE objective</strong> used to evaluate or tune these approaches is:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code>QoE = Σ q(R_n)  −  μ · Σ T_rebuf,n  −  Σ |q(R_{n+1}) − q(R_n)|
+       ↑                ↑                    ↑
+   quality of        rebuffering        smoothness
+   each chunk        penalty            (switching penalty)</code></pre></div>
+<p><code>q(·)</code> maps bitrate to a quality utility—linear, log, or a measured-quality mapping such as VMAF where appropriate. <strong>Choosing <code>q</code> and <code>μ</code> is the actual product decision</strong>, and interviewers like candidates who notice that the &quot;algorithm&quot; question is downstream of the &quot;what do users care about&quot; question.</p>
+<p>The buffer diagram connects the variables: a download adds media seconds, playback drains one second
+per second, and a stall occurs when the buffer reaches zero before the next usable segment arrives.</p>
+<figure class="network-diagram" id="net-abr-buffer" data-network-diagram="abr-buffer" aria-labelledby="net-abr-buffer-title">
+  <figcaption><strong id="net-abr-buffer-title">ABR trades quality against buffer survival</strong><span>NETWORK LAB · ABR BUFFER</span></figcaption>
+  <p class="network-intro">Select a measured throughput and starting buffer. This toy policy chooses the highest of 2 / 4 / 8 Mb/s within 80% of throughput, then requests a 4-second segment.</p><div class="network-controls" role="group" aria-label="Choose throughput and initial buffer"><button type="button" data-network-choice="t2-b6" aria-pressed="true" aria-controls="net-abr-buffer-t2-b6">2 Mb/s · 6 s buffer</button><button type="button" data-network-choice="t5-b6" aria-pressed="false" aria-controls="net-abr-buffer-t5-b6">5 Mb/s · 6 s buffer</button><button type="button" data-network-choice="t10-b6" aria-pressed="false" aria-controls="net-abr-buffer-t10-b6">10 Mb/s · 6 s buffer</button><button type="button" data-network-choice="t2-b2" aria-pressed="false" aria-controls="net-abr-buffer-t2-b2">2 Mb/s · 2 s buffer</button><button type="button" data-network-choice="t5-b2" aria-pressed="false" aria-controls="net-abr-buffer-t5-b2">5 Mb/s · 2 s buffer</button><button type="button" data-network-choice="t10-b2" aria-pressed="false" aria-controls="net-abr-buffer-t10-b2">10 Mb/s · 2 s buffer</button></div><div class="network-states"><section class="network-state" id="net-abr-buffer-t2-b6" data-network-panel="t2-b6" aria-labelledby="net-abr-buffer-t2-b6-title"><p class="network-state-title" id="net-abr-buffer-t2-b6-title">2 Mb/s throughput; 6 seconds initially buffered</p><div class="network-abr-ladder" aria-label="Available bitrates and selected representation"><span class="network-rung network-chosen">2 Mb/s<b>CHOSEN</b></span><span class="network-rung ">4 Mb/s</span><span class="network-rung ">8 Mb/s</span></div><div class="network-calculation"><p><span>80% budget</span><code>0.8 × 2 = 1.6 Mb/s</code></p><p><span>Segment size</span><code>2 Mb/s × 4 s = 8 Mb</code></p><p><span>Download time</span><code>8 Mb ÷ 2 Mb/s = 4 s</code></p></div><div class="network-buffer-equation"><div><span>Before request</span><strong>6 s</strong></div><span aria-hidden="true">−</span><div><span>Playback while downloading</span><strong>4 s</strong></div><span aria-hidden="true">+</span><div><span>New media</span><strong>4 s</strong></div><span aria-hidden="true">=</span><div class="network-good"><span>New buffer</span><strong>6 s</strong></div></div><p class="network-stall network-good">NO STALL: the download finishes before the existing buffer runs out.</p><p class="network-explanation" data-network-explanation>No rung fits the 80% budget, so this toy player falls back to the 2 Mb/s minimum. That fallback has no throughput headroom. Buffer after download = max(0, B − download time) + 4 s. An adequate long-term bitrate does not guarantee a stall-free download when the starting buffer is thin.</p></section><section class="network-state" id="net-abr-buffer-t5-b6" data-network-panel="t5-b6" aria-labelledby="net-abr-buffer-t5-b6-title"><p class="network-state-title" id="net-abr-buffer-t5-b6-title">5 Mb/s throughput; 6 seconds initially buffered</p><div class="network-abr-ladder" aria-label="Available bitrates and selected representation"><span class="network-rung ">2 Mb/s</span><span class="network-rung network-chosen">4 Mb/s<b>CHOSEN</b></span><span class="network-rung ">8 Mb/s</span></div><div class="network-calculation"><p><span>80% budget</span><code>0.8 × 5 = 4 Mb/s</code></p><p><span>Segment size</span><code>4 Mb/s × 4 s = 16 Mb</code></p><p><span>Download time</span><code>16 Mb ÷ 5 Mb/s = 3.2 s</code></p></div><div class="network-buffer-equation"><div><span>Before request</span><strong>6 s</strong></div><span aria-hidden="true">−</span><div><span>Playback while downloading</span><strong>3.2 s</strong></div><span aria-hidden="true">+</span><div><span>New media</span><strong>4 s</strong></div><span aria-hidden="true">=</span><div class="network-good"><span>New buffer</span><strong>6.8 s</strong></div></div><p class="network-stall network-good">NO STALL: the download finishes before the existing buffer runs out.</p><p class="network-explanation" data-network-explanation>The largest rung within the 80% budget is 4 Mb/s. Buffer after download = max(0, B − download time) + 4 s. An adequate long-term bitrate does not guarantee a stall-free download when the starting buffer is thin.</p></section><section class="network-state" id="net-abr-buffer-t10-b6" data-network-panel="t10-b6" aria-labelledby="net-abr-buffer-t10-b6-title"><p class="network-state-title" id="net-abr-buffer-t10-b6-title">10 Mb/s throughput; 6 seconds initially buffered</p><div class="network-abr-ladder" aria-label="Available bitrates and selected representation"><span class="network-rung ">2 Mb/s</span><span class="network-rung ">4 Mb/s</span><span class="network-rung network-chosen">8 Mb/s<b>CHOSEN</b></span></div><div class="network-calculation"><p><span>80% budget</span><code>0.8 × 10 = 8 Mb/s</code></p><p><span>Segment size</span><code>8 Mb/s × 4 s = 32 Mb</code></p><p><span>Download time</span><code>32 Mb ÷ 10 Mb/s = 3.2 s</code></p></div><div class="network-buffer-equation"><div><span>Before request</span><strong>6 s</strong></div><span aria-hidden="true">−</span><div><span>Playback while downloading</span><strong>3.2 s</strong></div><span aria-hidden="true">+</span><div><span>New media</span><strong>4 s</strong></div><span aria-hidden="true">=</span><div class="network-good"><span>New buffer</span><strong>6.8 s</strong></div></div><p class="network-stall network-good">NO STALL: the download finishes before the existing buffer runs out.</p><p class="network-explanation" data-network-explanation>The largest rung within the 80% budget is 8 Mb/s. Buffer after download = max(0, B − download time) + 4 s. An adequate long-term bitrate does not guarantee a stall-free download when the starting buffer is thin.</p></section><section class="network-state" id="net-abr-buffer-t2-b2" data-network-panel="t2-b2" aria-labelledby="net-abr-buffer-t2-b2-title"><p class="network-state-title" id="net-abr-buffer-t2-b2-title">2 Mb/s throughput; 2 seconds initially buffered</p><div class="network-abr-ladder" aria-label="Available bitrates and selected representation"><span class="network-rung network-chosen">2 Mb/s<b>CHOSEN</b></span><span class="network-rung ">4 Mb/s</span><span class="network-rung ">8 Mb/s</span></div><div class="network-calculation"><p><span>80% budget</span><code>0.8 × 2 = 1.6 Mb/s</code></p><p><span>Segment size</span><code>2 Mb/s × 4 s = 8 Mb</code></p><p><span>Download time</span><code>8 Mb ÷ 2 Mb/s = 4 s</code></p></div><div class="network-buffer-equation"><div><span>Before request</span><strong>2 s</strong></div><span aria-hidden="true">−</span><div><span>Playback while downloading</span><strong>2 s</strong></div><span aria-hidden="true">+</span><div><span>New media</span><strong>4 s</strong></div><span aria-hidden="true">=</span><div class="network-good"><span>New buffer</span><strong>4 s</strong></div></div><p class="network-stall network-warning">STALL: download takes 4 s, but only 2 s was buffered. Playback pauses for 2 s.</p><p class="network-explanation" data-network-explanation>No rung fits the 80% budget, so this toy player falls back to the 2 Mb/s minimum. That fallback has no throughput headroom. Buffer after download = max(0, B − download time) + 4 s. An adequate long-term bitrate does not guarantee a stall-free download when the starting buffer is thin.</p></section><section class="network-state" id="net-abr-buffer-t5-b2" data-network-panel="t5-b2" aria-labelledby="net-abr-buffer-t5-b2-title"><p class="network-state-title" id="net-abr-buffer-t5-b2-title">5 Mb/s throughput; 2 seconds initially buffered</p><div class="network-abr-ladder" aria-label="Available bitrates and selected representation"><span class="network-rung ">2 Mb/s</span><span class="network-rung network-chosen">4 Mb/s<b>CHOSEN</b></span><span class="network-rung ">8 Mb/s</span></div><div class="network-calculation"><p><span>80% budget</span><code>0.8 × 5 = 4 Mb/s</code></p><p><span>Segment size</span><code>4 Mb/s × 4 s = 16 Mb</code></p><p><span>Download time</span><code>16 Mb ÷ 5 Mb/s = 3.2 s</code></p></div><div class="network-buffer-equation"><div><span>Before request</span><strong>2 s</strong></div><span aria-hidden="true">−</span><div><span>Playback while downloading</span><strong>2 s</strong></div><span aria-hidden="true">+</span><div><span>New media</span><strong>4 s</strong></div><span aria-hidden="true">=</span><div class="network-good"><span>New buffer</span><strong>4 s</strong></div></div><p class="network-stall network-warning">STALL: download takes 3.2 s, but only 2 s was buffered. Playback pauses for 1.2 s.</p><p class="network-explanation" data-network-explanation>The largest rung within the 80% budget is 4 Mb/s. Buffer after download = max(0, B − download time) + 4 s. An adequate long-term bitrate does not guarantee a stall-free download when the starting buffer is thin.</p></section><section class="network-state" id="net-abr-buffer-t10-b2" data-network-panel="t10-b2" aria-labelledby="net-abr-buffer-t10-b2-title"><p class="network-state-title" id="net-abr-buffer-t10-b2-title">10 Mb/s throughput; 2 seconds initially buffered</p><div class="network-abr-ladder" aria-label="Available bitrates and selected representation"><span class="network-rung ">2 Mb/s</span><span class="network-rung ">4 Mb/s</span><span class="network-rung network-chosen">8 Mb/s<b>CHOSEN</b></span></div><div class="network-calculation"><p><span>80% budget</span><code>0.8 × 10 = 8 Mb/s</code></p><p><span>Segment size</span><code>8 Mb/s × 4 s = 32 Mb</code></p><p><span>Download time</span><code>32 Mb ÷ 10 Mb/s = 3.2 s</code></p></div><div class="network-buffer-equation"><div><span>Before request</span><strong>2 s</strong></div><span aria-hidden="true">−</span><div><span>Playback while downloading</span><strong>2 s</strong></div><span aria-hidden="true">+</span><div><span>New media</span><strong>4 s</strong></div><span aria-hidden="true">=</span><div class="network-good"><span>New buffer</span><strong>4 s</strong></div></div><p class="network-stall network-warning">STALL: download takes 3.2 s, but only 2 s was buffered. Playback pauses for 1.2 s.</p><p class="network-explanation" data-network-explanation>The largest rung within the 80% budget is 8 Mb/s. Buffer after download = max(0, B − download time) + 4 s. An adequate long-term bitrate does not guarantee a stall-free download when the starting buffer is thin.</p></section></div><p class="network-live network-sr-only" data-network-live aria-live="polite" aria-atomic="true"></p><p class="network-note">Model assumptions: constant throughput during one download; media size = bitrate × duration; playback consumes 1 second of buffer per second until empty. No request, header, RTT, decode or scheduling overhead. Whole segments become usable only after download. Real ABR also responds to uncertainty, content, latency and device limits.</p>
+</figure><p><strong>Fixed-rate worked example:</strong> a four-second, 2 MB segment is encoded at 4 Mb/s. At 8 Mb/s goodput it takes two seconds
+to download, so the buffer gains roughly <code>4 − 2 = 2 s</code>; at 2 Mb/s it takes eight seconds, so any starting buffer below eight seconds drains first. An interactive ABR would instead consider a 2 Mb/s rung whose four-second segment is about 1 MB and takes four seconds at 2 Mb/s, before overhead and variance.</p>
+<details class="coding-drill" id="coding-throughput--buffer-abr-selector-todo"><summary><span>Coding: throughput + buffer ABR selector <code>[TODO]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><p><strong>Task:</strong> Take the harmonic mean of the latest <code>K</code> throughput samples, multiply it by a safety factor, then combine it with a low-buffer guardrail to select the highest ladder rung within budget.<br><strong>Complexity:</strong> <code>O(K + L)</code> time for <code>K</code> samples and <code>L</code> bitrate rungs, with <code>O(1)</code> auxiliary space.<br><strong>Pitfalls:</strong> Zero/invalid throughput, units, segment-size bias, hysteresis for upgrades versus fast downgrades, and avoiding oscillation between adjacent rungs.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">select_representation</span>(<span class="hljs-params">throughputs, buffer_s, ladder_bps</span>):
+    <span class="hljs-string">&quot;&quot;&quot;TODO: harmonic estimate + safety margin + buffer guardrail.
+
+    Tests: sudden bandwidth collapse, gradual recovery, empty history,
+    low-buffer emergency downgrade, and no oscillation near a boundary.
+    &quot;&quot;&quot;</span>
+    <span class="hljs-keyword">raise</span> NotImplementedError</code></pre></div>
+<p>Full implementation: TODO (suggested file: <code>streaming.py</code>).</p>
+</div></details><h3 id="52-qoe-metrics-in-production">5.2 QoE metrics in production<a class="heading-anchor" href="#52-qoe-metrics-in-production" aria-label="Link to 5.2 QoE metrics in production">#</a></h3>
+<p>What streaming companies actually watch on dashboards:</p>
+<ul>
+<li><strong>Play delay / startup time</strong>: request-to-first-render or play-to-first-frame, with an exact event definition.</li>
+<li><strong>Rebuffer ratio</strong> = rebuffer time / eligible watch time.</li>
+<li><strong>Rebuffer frequency</strong> and time to first rebuffer.</li>
+<li><strong>Average delivered bitrate or quality score</strong>, weighted by watched duration.</li>
+<li><strong>Bitrate/quality switches</strong>, including direction and magnitude.</li>
+<li><strong>Playback failure rate</strong>, error code, and failed pipeline stage.</li>
+<li><strong>Video start failure</strong> and exit-before-video-start.</li>
+<li><strong>Live latency</strong> and drift from the target live edge.</li>
+</ul>
+<p>Ordering matters, but no universal metric is always “the most important.” For many entertainment
+products, a stall receives a larger QoE penalty than a modest quality reduction; for an interactive
+auction, latency may dominate; for offline download, continuity is trivial. Define the product outcome,
+then validate metric weights against experiments or observed engagement.</p>
+<p><strong>Worked aggregation:</strong> ten sessions contain 1,000 total watched seconds and 20 rebuffer seconds, so
+the global rebuffer ratio is 2%. Averaging per-session ratios can give a different result because a
+10-second session and a 300-second session receive equal weight. State which aggregation you use.</p>
+<blockquote>
+<p><strong>Interview pitfall:</strong> telemetry is not ground truth if events are dropped when playback fails.
+Monitor event delivery, join keys, clock consistency, and censoring alongside the QoE metric.</p>
+</blockquote>
+<hr>
+</div></div></details>
+<details class="chapter" id="chapter-6-real-time-media-and-webrtc" data-chapter="6-real-time-media-and-webrtc">
+      <summary class="chapter-summary" id="6-real-time-media-and-webrtc"><span class="chapter-number">06</span><span class="chapter-title">Real-Time Media and WebRTC</span><span class="chapter-state">6 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="6-real-time-media-and-webrtc" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#6-real-time-media-and-webrtc">Chapter link ↗</a></div><div class="prose"><h3 id="61-webrtc-and-the-rtp-stack">6.1 WebRTC and the RTP stack<a class="heading-anchor" href="#61-webrtc-and-the-rtp-stack" aria-label="Link to 6.1 WebRTC and the RTP stack">#</a></h3>
+<p>WebRTC combines several protocols rather than replacing them with one:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code>Application signaling (your HTTPS/WebSocket design; not standardized by WebRTC)
+   ↓ exchanges session descriptions and ICE candidates
+ICE + STUN + TURN                 ← finds a viable network path
+DTLS                              ← authenticates peers and derives media keys
+SRTP / SRTCP                      ← protects RTP media and RTCP control
+RTP media + RTCP feedback         ← timing, sequence, reports, repair requests
+UDP in the common case            ← other ICE transports/fallbacks may be attempted</code></pre></div>
+<p><a href="https://www.rfc-editor.org/rfc/rfc3550.html" target="_blank" rel="noopener noreferrer">RFC 3550</a> defines RTP sequence numbers, timestamps,
+payload identification, marker bit, SSRCs, and RTCP reports. Sequence numbers reveal gaps/reordering;
+video payloads commonly use a 90 kHz media clock and payload-defined marker semantics, not wall time.</p>
+<p>Useful RTCP information includes:</p>
+<ul>
+<li>Sender/Receiver Reports: packet counts, loss fields, interarrival jitter, and timing relationships.</li>
+<li>NACK feedback: identifies missing packets worth retransmitting.</li>
+<li>PLI/FIR feedback: asks an encoder for picture refresh when decoder state cannot recover.</li>
+<li>transport-wide arrival feedback in supporting profiles: input to sender bandwidth estimation.</li>
+</ul>
+<p>SDP offer/answer negotiates media descriptions, codecs, and extensions. It does not transport media,
+discover a NAT path, or prescribe the application&#39;s signaling channel.</p>
+<h3 id="62-ice-stun-and-turn-connection-establishment">6.2 ICE, STUN, and TURN connection establishment<a class="heading-anchor" href="#62-ice-stun-and-turn-connection-establishment" aria-label="Link to 6.2 ICE, STUN, and TURN connection establishment">#</a></h3>
+<p>Browsers often sit behind NATs and firewalls, so a private address is not enough. ICE gathers candidate
+addresses, exchanges them through application signaling, tests candidate pairs, and nominates a working
+pair. <a href="https://www.rfc-editor.org/rfc/rfc8445.html" target="_blank" rel="noopener noreferrer">RFC 8445</a> defines ICE&#39;s use of STUN and TURN.</p>
+<p>The diagram separates discovery from selection. STUN can reveal a server-reflexive mapping; TURN
+allocates a relay address when direct connectivity is unavailable or undesirable.</p>
+<figure class="network-diagram" id="net-webrtc-connect" data-network-diagram="webrtc-connect" aria-labelledby="net-webrtc-connect-title">
+  <figcaption><strong id="net-webrtc-connect-title">Find a working path, then secure the media</strong><span>NETWORK LAB · WEBRTC CONNECT</span></figcaption>
+  <p class="network-intro">The application coordinates the peers. ICE discovers and checks candidate paths; media then follows the selected path.</p>
+    <div class="network-signaling"><strong>Application signaling service</strong><div class="network-peer-exchange"><b>Peer A</b><span>↔ SDP + ICE candidates ↔</span><b>Peer B</b></div><p>Exchange session descriptions and candidates over an application-defined channel. Candidate gathering may use STUN and TURN.</p></div>
+    <div class="network-down" aria-hidden="true">↓</div>
+    <ol class="network-flow "><li><strong>ICE connectivity checks</strong><span>Test candidate pairs and select a working pair.</span></li><li><strong>DTLS handshake</strong><span>Authenticate the peer transport and establish keying material.</span></li><li><strong>SRTP / SRTCP media</strong><span>Send protected RTP media and RTCP control on the selected path.</span></li></ol>
+    <div class="network-route-options"><section><p class="network-lane-title">IF A DIRECT PAIR WORKS</p><div class="network-peer-exchange"><b>Peer A</b><span>← protected media →</span><b>Peer B</b></div></section><section><p class="network-lane-title">IF A RELAY PAIR IS SELECTED</p><div class="network-relay-path"><b>Peer A</b><span class="network-arrow" aria-hidden="true">→</span><strong>TURN relay</strong><span class="network-arrow" aria-hidden="true">→</span><b>Peer B</b></div><p>TURN relays transport traffic. It does not need to decode the media.</p></section></div><p class="network-note">Signaling is not the media path. Candidate exchange can overlap gathering (trickle ICE). TURN allocation enables relay candidates before they can be checked; a direct path is not guaranteed. This figure focuses on WebRTC media, not data channels.</p>
+</figure><p>Typical candidate types:</p>
+<ul>
+<li><strong>host</strong>: an address on a local interface (often privacy-obscured in browsers);</li>
+<li><strong>server reflexive</strong>: a public mapping observed through STUN;</li>
+<li><strong>peer reflexive</strong>: a mapping discovered during connectivity checks;</li>
+<li><strong>relay</strong>: an address allocated on a TURN server.</li>
+</ul>
+<p>TURN is not “signaling.” It relays media/data and therefore consumes bandwidth, adds a path, and needs
+capacity planning. For a visual protocol walkthrough, use the implementer-maintained
+<a href="https://webrtcforthecurious.com/docs/03-connecting/" target="_blank" rel="noopener noreferrer">WebRTC for the Curious — Connecting</a>.</p>
+<blockquote>
+<p><strong>Interview pitfall:</strong> STUN cannot force every NAT pair to communicate directly. TURN exists because
+some mappings, firewalls, and enterprise policies require relay.</p>
+</blockquote>
+<h3 id="63-capture-to-playout-latency-budget">6.3 Capture-to-playout latency budget<a class="heading-anchor" href="#63-capture-to-playout-latency-budget" aria-label="Link to 6.3 Capture-to-playout latency budget">#</a></h3>
+<p>The diagram is a <strong>capture-to-display</strong> media budget; an interactive input-to-visible-response budget
+also includes uplink and application/render response before the captured output frame exists.</p>
+<figure class="network-diagram" id="net-realtime-budget" data-network-diagram="realtime-budget" aria-labelledby="net-realtime-budget-title">
+  <figcaption><strong id="net-realtime-budget-title">Where a 150 ms example budget goes</strong><span>NETWORK LAB · REALTIME BUDGET</span></figcaption>
+  <p class="network-intro">An illustrative additive capture-to-display budget. These numbers are chosen for arithmetic, not performance promises or universal targets.</p><div class="network-budget-bar" role="img" aria-label="Capture 16 milliseconds, encode 20, pacing and network 35, jitter buffer 50, decode and render 29; total 150 milliseconds"><span class="network-budget-piece network-color-0" style="flex:16">1</span><span class="network-budget-piece network-color-1" style="flex:20">2</span><span class="network-budget-piece network-color-2" style="flex:35">3</span><span class="network-budget-piece network-color-3" style="flex:50">4</span><span class="network-budget-piece network-color-4" style="flex:29">5</span></div><ol class="network-budget-stages"><li><span class="network-stage-number network-color-0">1</span><div><strong>Capture</strong><span>16 ms · cumulative 0 → 16 ms</span></div><div class="network-stage-meter"><span class="network-color-0" style="width:32%"></span></div></li><li><span class="network-stage-number network-color-1">2</span><div><strong>Encode</strong><span>20 ms · cumulative 16 → 36 ms</span></div><div class="network-stage-meter"><span class="network-color-1" style="width:40%"></span></div></li><li><span class="network-stage-number network-color-2">3</span><div><strong>Pacing + network</strong><span>35 ms · cumulative 36 → 71 ms</span></div><div class="network-stage-meter"><span class="network-color-2" style="width:70%"></span></div></li><li><span class="network-stage-number network-color-3">4</span><div><strong>Jitter buffer</strong><span>50 ms · cumulative 71 → 121 ms</span></div><div class="network-stage-meter"><span class="network-color-3" style="width:100%"></span></div></li><li><span class="network-stage-number network-color-4">5</span><div><strong>Decode + render</strong><span>29 ms · cumulative 121 → 150 ms</span></div><div class="network-stage-meter"><span class="network-color-4" style="width:57.99999999999999%"></span></div></li></ol><div class="network-equation"><code>16 + 20 + 35 + 50 + 29 = 150 ms</code></div><p class="network-note">A larger jitter buffer can absorb arrival variation but adds delay. Real implementations pipeline work and measure stage boundaries differently; do not blindly add overlapping measurements. Network variation changes the budget from frame to frame.</p>
+</figure><p>One illustrative path aligned with the diagram is:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code>capture + frame assembly       16 ms
+encode + sender work           20 ms
+network                        35 ms
+jitter buffer                  50 ms
+decode + render/display        29 ms
+-----------------------------------
+capture-to-display total      150 ms</code></pre></div>
+<p><strong>Worked example:</strong> at 30 fps, waiting for the next complete frame can add anywhere from near zero to
+33.3 ms, averaging about 16.7 ms if arrival phase is uniform. A measured “encoder time” of 5 ms does
+not include that capture wait unless instrumentation explicitly starts before it.</p>
+<p>The receiver&#39;s jitter buffer is a central trade-off: more queued media absorbs delay variation and
+late repair, but every extra millisecond is playout latency. Keep a latency budget per stage and report
+percentiles, not only an average.</p>
+<p>For motion-to-photon constraints, reprojection, and VR-specific rendering, continue to
+<a href="04_resume_drill.html#4-mars--motion-aware-abr-for-real-time-vr">Research &amp; resume §4, MARS</a>.</p>
+<h3 id="64-loss-recovery-and-error-resilience">6.4 Loss recovery and error resilience<a class="heading-anchor" href="#64-loss-recovery-and-error-resilience" aria-label="Link to 6.4 Loss recovery and error resilience">#</a></h3>
+<p>The correct recovery strategy depends on whether repaired media can arrive before its playout deadline.
+The diagram contrasts waiting one RTT for retransmission, spending proactive FEC bytes, and concealing
+damage locally.</p>
+<figure class="network-diagram" id="net-recovery" data-network-diagram="recovery" aria-labelledby="net-recovery-title">
+  <figcaption><strong id="net-recovery-title">Recovery is a race against playout</strong><span>NETWORK LAB · RECOVERY</span></figcaption>
+  <p class="network-intro">Assume the loss has just been detected and a NACK-triggered retransmission takes 40 ms to return. Compare two remaining deadlines.</p><div class="network-controls" role="group" aria-label="Choose a remaining playout budget"><button type="button" data-network-choice="deadline100" aria-pressed="true" aria-controls="net-recovery-deadline100">100 ms left</button><button type="button" data-network-choice="deadline20" aria-pressed="false" aria-controls="net-recovery-deadline20">20 ms left</button></div><div class="network-states"><section class="network-state" id="net-recovery-deadline100" data-network-panel="deadline100" aria-labelledby="net-recovery-deadline100-title"><p class="network-state-title" id="net-recovery-deadline100-title">100 ms remain until this packet’s playout deadline</p><div class="network-recovery-timeline"><div class="network-recovery-row"><b>Time remaining</b><div class="network-time-track"><span class="network-time-window" style="width:100%">100 ms</span></div><span>deadline</span></div><div class="network-recovery-row"><b>NACK + retry</b><div class="network-time-track"><span class="network-time-retry network-good" style="width:40%">40 ms</span></div><span>arrival</span></div><p class="network-axis-label">0 ms: loss detected / NACK sent → same 0–100 ms scale</p></div><div class="network-recovery-result network-good"><strong>Retry can fit the deadline</strong><code>40 ms < 100 ms</code><span>Illustrative remaining margin: 60 ms.</span></div><p class="network-explanation" data-network-explanation>A retransmission is useful only if it arrives before the data is needed. This model treats 40 ms as the complete NACK-to-retransmission arrival time.</p></section><section class="network-state" id="net-recovery-deadline20" data-network-panel="deadline20" aria-labelledby="net-recovery-deadline20-title"><p class="network-state-title" id="net-recovery-deadline20-title">20 ms remain until this packet’s playout deadline</p><div class="network-recovery-timeline"><div class="network-recovery-row"><b>Time remaining</b><div class="network-time-track"><span class="network-time-window" style="width:20%">20 ms</span></div><span>deadline</span></div><div class="network-recovery-row"><b>NACK + retry</b><div class="network-time-track"><span class="network-time-retry network-warning" style="width:40%">40 ms</span></div><span>arrival</span></div><p class="network-axis-label">0 ms: loss detected / NACK sent → same 0–100 ms scale</p></div><div class="network-recovery-result network-warning"><strong>Retry misses the deadline</strong><code>40 ms > 20 ms</code><span>The retransmission would arrive 20 ms too late for this playout deadline.</span></div><div class="network-recovery-alternatives"><ol class="network-flow "><li><strong>Enough FEC already received?</strong><span>Recover locally if the code and available parity cover this loss.</span></li><li><strong>Otherwise</strong><span>Conceal or drop late data; manage damaged references if needed.</span></li></ol></div><p class="network-explanation" data-network-explanation>FEC can avoid waiting for a feedback round trip when sufficient repair data is available in time. It costs bandwidth and may add waiting; it is not a guarantee of on-time recovery.</p></section></div><p class="network-live network-sr-only" data-network-live aria-live="polite" aria-atomic="true"></p><p class="network-note">Illustrative timing only: real recovery includes loss detection, feedback scheduling, sender retention, pacing and retransmission travel time. An RTT estimate alone is not a guaranteed repair arrival time.</p>
+</figure><div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Technique</th><th>Main cost</th><th>Good fit</th></tr></thead><tbody><tr><td><strong>NACK + retransmission</strong></td><td>roughly one RTT plus scheduling</td><td>repair deadline comfortably exceeds RTT</td></tr><tr><td><strong>FEC</strong></td><td>steady bandwidth and computation</td><td>tight deadline or paths where selected losses are recoverable from parity</td></tr><tr><td><strong>intra refresh</strong></td><td>distributed codec overhead</td><td>limit long error propagation without one huge keyframe</td></tr><tr><td><strong>keyframe request (PLI/FIR)</strong></td><td>bitrate/latency spike</td><td>decoder state cannot otherwise recover</td></tr><tr><td><strong>packet-loss concealment</strong></td><td>local quality degradation</td><td>packet is already too late to repair</td></tr><tr><td><strong>independent slices/tiles</strong></td><td>compression/packetization overhead</td><td>contain damage spatially where codec/profile supports it</td></tr></tbody></table></div><p>NACK and FEC are not mutually exclusive. A system may protect important packets, retransmit when RTT
+permits, and conceal whatever still misses deadline. “20% FEC” also does not guarantee recovery from
+every 20% loss pattern; burst structure and code design matter.</p>
+<p>Inter prediction can propagate damage when later pictures reference corrupted state. Refresh cadence,
+reference structure, decoder error handling, and feedback policy therefore interact.</p>
+<blockquote>
+<p><strong>AquaScope connection:</strong> an extremely lossy, high-latency acoustic link can make RTT-based repair
+miss the deadline and heavy channel FEC expensive. A representation whose independently useful units
+degrade gracefully is <strong>source-level resilience</strong>, complementary to channel-level repair.</p>
+</blockquote>
+<h3 id="65-congestion-control-for-real-time-media">6.5 Congestion control for real-time media<a class="heading-anchor" href="#65-congestion-control-for-real-time-media" aria-label="Link to 6.5 Congestion control for real-time media">#</a></h3>
+<p>A real-time sender must match the path while keeping queues short. Loss is one congestion signal, but
+delay trends or explicit congestion markings can reveal growing queues earlier. The control loop is:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code>packet pacing → path queues/loss → receiver arrival feedback
+      ↑                                  |
+      └── target rate / probe / backoff ─┘</code></pre></div>
+<p>Chromium-derived WebRTC stacks commonly use Google Congestion Control concepts, combining delay and
+loss-related signals. The exact estimator has evolved and is not mandated by the WebRTC API. TWCC is
+feedback data, not the rate-control algorithm itself; REMB is an older receiver-estimated bitrate signal.
+The <a href="https://webrtcforthecurious.com/docs/06-media-communication/" target="_blank" rel="noopener noreferrer">WebRTC for the Curious media chapter</a>
+walks through RTP/RTCP feedback and bandwidth estimation.</p>
+<p>Rate adaptation can change encoder bitrate, resolution, frame rate, layer selection, or pacing. These
+act on different timescales. A queue can grow during a slow encoder reconfiguration, so pacing and a
+small transport queue still matter.</p>
+<blockquote>
+<p><strong>Interview pitfall:</strong> “UDP avoids congestion control” is unsafe and incorrect. UDP supplies none,
+so the real-time application must implement it; see <a href="https://www.rfc-editor.org/rfc/rfc8085.html" target="_blank" rel="noopener noreferrer">RFC 8085</a>.</p>
+</blockquote>
+<h3 id="66-interactive-media-pipeline">6.6 Interactive media pipeline<a class="heading-anchor" href="#66-interactive-media-pipeline" aria-label="Link to 6.6 Interactive media pipeline">#</a></h3>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code>client input → uplink → application/game server → render or compose
+  → GPU/media capture → low-delay encode → pace + transmit
+  → jitter buffer → decode → render → display/audio playout</code></pre></div>
+<p>Design points that generalize beyond one product:</p>
+<ul>
+<li><strong>Avoid copies:</strong> keep rendered frames in GPU-compatible surfaces through hardware encode when possible.</li>
+<li><strong>Pipeline work:</strong> encode/transmit available slices or chunks when the codec and transport support it.</li>
+<li><strong>Bound queues:</strong> stale inputs or frames may be less valuable than fresh state.</li>
+<li><strong>Coordinate controllers:</strong> application simulation, encoder rate control, and network congestion
+control should not independently build hidden queues.</li>
+<li><strong>Choose recovery by deadline:</strong> late retransmissions consume capacity without improving the frame.</li>
+<li><strong>Measure interaction:</strong> input-to-visible-response and frame-time variance can matter more than average bitrate.</li>
+</ul>
+<p>Cloud gaming often disables B-frame reordering and long lookahead, uses a small rate-control buffer,
+and relies on hardware encode. Those are product choices for latency, not universal WebRTC requirements.
+VR adds head-pose prediction and reprojection; those specialized constraints remain in
+<a href="04_resume_drill.html#5-trinity--qoe-for-cloud-vr-gaming">Research &amp; resume §5, Trinity</a>.</p>
+<hr>
+</div></div></details>
+<details class="chapter" id="chapter-7-delivery-at-scale" data-chapter="7-delivery-at-scale">
+      <summary class="chapter-summary" id="7-delivery-at-scale"><span class="chapter-number">07</span><span class="chapter-title">Delivery at Scale</span><span class="chapter-state">3 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="7-delivery-at-scale" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#7-delivery-at-scale">Chapter link ↗</a></div><div class="prose"><h3 id="71-cdn-and-scale">7.1 CDN and scale<a class="heading-anchor" href="#71-cdn-and-scale" aria-label="Link to 7.1 CDN and scale">#</a></h3>
+<p>A CDN places reusable content near viewers and protects a smaller origin tier. The diagram follows a
+request through edge, shield/mid-tier, and origin, then shows how the response fills caches on its way
+back.</p>
+<figure class="network-diagram" id="net-cdn-flow" data-network-diagram="cdn-flow" aria-labelledby="net-cdn-flow-title">
+  <figcaption><strong id="net-cdn-flow-title">A cache hit shortens the HTTP serving path</strong><span>NETWORK LAB · CDN FLOW</span></figcaption>
+  <p class="network-intro">A video segment is an HTTP object to the CDN. The cache uses its configured key and freshness rules, not the codec’s picture-prediction structure.</p>
+    <div class="network-cdn-lane"><p class="network-lane-title">EDGE HIT</p><div class="network-cdn-flow"><strong>Client</strong><span>request →<br>← cached bytes</span><strong class="network-good">Edge cache · HIT</strong></div></div>
+    <div class="network-cdn-lane"><p class="network-lane-title">EDGE MISS · SHIELD ALSO MISSES IN THIS EXAMPLE</p><ol class="network-flow "><li><strong>Client</strong><span>Request segment URL</span></li><li><strong>Edge cache</strong><span>Miss → request upstream</span></li><li><strong>Shield cache</strong><span>Miss → request origin</span></li><li><strong>Origin</strong><span>Return the object</span></li></ol><div class="network-cache-return"><strong>Client</strong><span>← bytes</span><strong>Edge stores*</strong><span>← bytes</span><strong>Shield stores*</strong><span>← bytes</span><strong>Origin</strong></div></div><p class="network-note">*Stored only when cache policy permits. A shield hit would avoid the origin request. An actual response may be streamed downstream while it is being fetched and cached; this diagram shows logical ownership, not a requirement to wait for the complete object.</p>
+</figure><ul>
+<li><strong>Cache hierarchy:</strong> edge → shield/mid-tier → origin. Each layer trades storage for fewer upstream bytes.</li>
+<li><strong>Cache hit ratio:</strong> requests or bytes served without reaching the next tier; byte hit ratio is often
+more informative when object sizes vary greatly.</li>
+<li><strong>Origin shielding:</strong> many edges consolidate misses through fewer upstream caches/connections.</li>
+<li><strong>Request collapsing:</strong> compatible concurrent misses can share one upstream fetch; HTTP caching permits
+this pattern under the reuse rules in <a href="https://www.rfc-editor.org/rfc/rfc9111.html" target="_blank" rel="noopener noreferrer">RFC 9111</a>.</li>
+<li><strong>Long-tail catalog:</strong> popular objects produce high reuse; rare objects create storage and fill trade-offs.</li>
+<li><strong>Live:</strong> completed segments are requested by many viewers almost together, which helps reuse but creates
+a synchronized miss burst when publication or cache keys are wrong.</li>
+</ul>
+<p>Netflix Open Connect is a purpose-built example, not a generic CDN template. Netflix documents embedded
+Open Connect Appliances plus fill/update paths in its
+<a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener noreferrer">Open Connect overview</a>. Catalog predictability
+allows proactive placement; user-generated live content has different demand and freshness behavior.</p>
+<h3 id="72-cache-keys-manifests-and-origin-load">7.2 Cache keys, manifests, and origin load<a class="heading-anchor" href="#72-cache-keys-manifests-and-origin-load" aria-label="Link to 7.2 Cache keys, manifests, and origin load">#</a></h3>
+<p>Suppose one million viewers request the same 4 MB segment. With perfect edge reuse, the upstream tier
+may fetch roughly one copy per edge rather than <code>4 MB × 1,000,000 = 4 TB</code>. But accidental cache-key
+variation—unique query strings, cookies, headers selected by <code>Vary</code>, or inconsistent hostnames—can turn
+that object into many misses.</p>
+<p>Manifest and segment policies should differ:</p>
+<ul>
+<li>a live manifest is small and mutable, so freshness is short and request rate is high;</li>
+<li>a uniquely named completed segment is large and immutable, so freshness can be long;</li>
+<li>a VOD manifest may be versioned and long-lived unless personalization changes it;</li>
+<li>personalized ad manifests need intentional cache partitioning and privacy review.</li>
+</ul>
+<blockquote>
+<p><strong>Interview pitfall:</strong> cache hit ratio alone can look healthy while expensive large objects miss.
+Track request hit ratio, byte hit ratio, origin egress, shield effectiveness, and status/latency by tier.</p>
+</blockquote>
+<h3 id="73-multi-cdn-and-live-event-resilience">7.3 Multi-CDN and live-event resilience<a class="heading-anchor" href="#73-multi-cdn-and-live-event-resilience" aria-label="Link to 7.3 Multi-CDN and live-event resilience">#</a></h3>
+<p>Multi-CDN routing can improve reach and failure isolation, but only if switching uses independent health
+signals and content is consistently available. DNS steering acts at DNS-cache timescales; application
+or manifest steering can react differently; existing connections do not necessarily move when DNS changes.</p>
+<p>Plan capacity on every failover path; keep object naming, TLS, CORS, range, and cache behavior
+consistent; protect the origin from cold failover; bound player retries; label telemetry by delivery
+path; and test traffic draining before the event.</p>
+<p><strong>Worked failure:</strong> if CDN A carries 70% of a 1 Tb/s event and fails, B and C must absorb 700 Gb/s in
+addition to their existing 300 Gb/s. Having two configured vendors is not resilience if spare capacity,
+cache warmth, or origin capacity cannot survive that step.</p>
+<hr>
+</div></div></details>
+<details class="chapter" id="chapter-8-debugging-streaming-systems" data-chapter="8-debugging-streaming-systems">
+      <summary class="chapter-summary" id="8-debugging-streaming-systems"><span class="chapter-number">08</span><span class="chapter-title">Debugging Streaming Systems</span><span class="chapter-state">3 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="8-debugging-streaming-systems" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#8-debugging-streaming-systems">Chapter link ↗</a></div><div class="prose"><h3 id="81-debug-by-layer-and-by-timeline">8.1 Debug by layer and by timeline<a class="heading-anchor" href="#81-debug-by-layer-and-by-timeline" aria-label="Link to 8.1 Debug by layer and by timeline">#</a></h3>
+<p>Start with one affected session and establish <strong>what worked last</strong>:</p>
+<ol>
+<li>Did DNS return usable addresses?</li>
+<li>Did transport and TLS establish? Which protocol/version and edge?</li>
+<li>Did the manifest request succeed, and was the content current?</li>
+<li>Did media requests succeed with expected status, size, range, and timing?</li>
+<li>Could the demuxer parse initialization and media timestamps?</li>
+<li>Did the decoder accept frames?</li>
+<li>Did the player buffer/render, or deliberately wait/drop?</li>
+<li>Did telemetry itself arrive?</li>
+</ol>
+<p>Build one timeline from monotonic timestamps. Wall clocks across devices can be skewed, while durations
+measured on one host&#39;s monotonic clock remain meaningful.</p>
+<h3 id="82-minimum-useful-measurements">8.2 Minimum useful measurements<a class="heading-anchor" href="#82-minimum-useful-measurements" aria-label="Link to 8.2 Minimum useful measurements">#</a></h3>
+<p>For each request capture:</p>
+<ul>
+<li>URL class (manifest, init, audio, video, key/license), with sensitive tokens redacted;</li>
+<li>DNS, connect, TLS, request queue, TTFB, transfer time, bytes, status, redirects, and protocol;</li>
+<li>cache status, <code>Age</code>, range/content length, CDN/edge identity, and retry number;</li>
+<li>representation, media sequence/segment number, decode and presentation timestamps;</li>
+<li>buffer before/after, selected quality, estimated throughput, and switch reason.</li>
+</ul>
+<p>For WebRTC capture:</p>
+<ul>
+<li>selected ICE candidate pair and whether TURN is used;</li>
+<li>RTT, available outgoing bitrate estimate, send/receive rate, packet loss, jitter, and NACK/FEC counts;</li>
+<li>sender queue/pacer delay, jitter-buffer delay, frames encoded/decoded/dropped, QP/quality proxy;</li>
+<li>PLI/FIR count, freezes, resolution/frame-rate changes, and audio concealment.</li>
+</ul>
+<p>Tools answer different layers: <code>dig</code>/<code>nslookup</code> for DNS, <code>curl -v</code> for HTTP/TLS timing and headers,
+browser network panels for player requests, <code>ffprobe</code> for container/timestamps, packet capture for wire
+events where permitted, and <code>webrtc-internals</code>/<code>getStats()</code> for WebRTC. No single tool is the truth for
+the entire pipeline.</p>
+<h3 id="83-symptom--hypothesis-not-symptom--verdict">8.3 Symptom → hypothesis, not symptom → verdict<a class="heading-anchor" href="#83-symptom--hypothesis-not-symptom--verdict" aria-label="Link to 8.3 Symptom → hypothesis, not symptom → verdict">#</a></h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Symptom</th><th>Plausible hypotheses</th><th>Discriminating evidence</th></tr></thead><tbody><tr><td>high startup time</td><td>cold DNS/TLS, origin miss, slow first segment, decoder wait</td><td>stage timing + cache status + first-frame event</td></tr><tr><td>periodic stalls</td><td>rung too high, radio cycle, segment outlier, timestamp gap</td><td>buffer trace + bytes/time + media timeline</td></tr><tr><td>low quality, no stalls</td><td>conservative ABR, bad throughput samples, weak ladder</td><td>selection reason + capacity + encoded quality</td></tr><tr><td>live latency drifts upward</td><td>downloads slightly slower than playback, catch-up disabled</td><td>live-edge distance + buffer slope</td></tr><tr><td>call freezes after network switch</td><td>stale ICE path, failed restart, TURN unreachable</td><td>candidate-pair changes + ICE states</td></tr><tr><td>audio works, video fails</td><td>codec/profile mismatch, bandwidth, decoder, video SSRC/path</td><td>negotiation + inbound RTP + decoder counters</td></tr><tr><td>huge RTT, little loss</td><td>bufferbloat or oversized sender queue</td><td>queue/pacer delay + RTT vs baseline</td></tr><tr><td>CDN 5xx burst</td><td>origin overload, bad deployment, shield failure</td><td>cache status + tier logs + object distribution</td></tr></tbody></table></div><p>Say “hypothesis” until a measurement rules alternatives in or out. Correlation—for example, stalls and
+bitrate increases occurring together—does not prove the switch caused the stall; both may follow a bad
+capacity estimate.</p>
+<hr>
+</div></div></details>
+<details class="chapter" id="chapter-9-rapid-fire-drill--networking" data-chapter="9-rapid-fire-drill--networking">
+      <summary class="chapter-summary" id="9-rapid-fire-drill--networking"><span class="chapter-number">09</span><span class="chapter-title">Rapid-Fire Drill — Networking</span><span class="chapter-state">Notes</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="9-rapid-fire-drill--networking" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#9-rapid-fire-drill--networking">Chapter link ↗</a></div><div class="prose"><p>Cover the answer and give a crisp 30-second version before expanding.</p>
+<p><strong>Basic networking</strong></p>
+<ol>
+<li>Walk one HTTPS request through DNS, routing, transport, TLS, HTTP, cache, and origin.</li>
+<li>Bandwidth vs throughput vs goodput vs latency: define each and give a counterexample.</li>
+<li>What creates queueing delay, and why can “no packet loss” still feel bad?</li>
+<li>Compute the BDP of a 50 Mb/s, 100 ms path. Why does the sender window matter?</li>
+<li>Why should a UDP media sender avoid IP fragmentation?</li>
+<li>What does a port identify? What does a five-tuple identify?</li>
+<li>Explain TCP&#39;s three-way handshake and why an ACK does not consume byte sequence space.</li>
+<li>Receive flow control vs congestion control: whom does each protect?</li>
+<li>What is TCP head-of-line blocking? What exactly does QUIC improve?</li>
+<li>Why is “UDP is faster” not a valid transport decision?</li>
+<li>What security risk makes TLS/QUIC 0-RTT unsuitable for arbitrary writes?</li>
+<li>On a cache miss, which additional stages can increase TTFB?</li>
+</ol>
+<p><strong>Streaming and delivery — migrated from the Video drill</strong></p>
+<ol start="13">
+<li><p>HLS vs DASH vs CMAF; why did CMAF win?</p>
+</li>
+<li><p>How does LL-HLS get to 2 s?</p>
+</li>
+<li><p>Walk the WebRTC stack; what does RTCP feed back?</p>
+</li>
+<li><p>NACK vs FEC — how do you decide?</p>
+</li>
+<li><p>Why can loss-only congestion control build delay, and how do delay and loss signals complement each other?</p>
+</li>
+<li><p>Compare rate-based / buffer-based / MPC / RL ABR. Why hasn&#39;t RL taken over?</p>
+</li>
+<li><p>Write the standard QoE objective and explain each term.</p>
+</li>
+<li><p>Which QoE metric matters most in production, and why?</p>
+</li>
+<li><p>Why is a segment 4 s and not 0.5 s or 30 s?</p>
+</li>
+</ol>
+<p><strong>Interactive media and operations — new</strong></p>
+<ol start="22">
+<li>Build a generic capture-to-playout budget. Which queues are hidden most often?</li>
+<li>STUN vs TURN vs ICE: what problem does each solve?</li>
+<li>Why can a TURN relay be necessary, and what must you capacity-plan?</li>
+<li>Why can a live segment cache well while the live manifest must stay fresh?</li>
+<li>Request hit ratio vs byte hit ratio: when do they tell different stories?</li>
+<li>Why might DNS failover not move an already-playing client immediately?</li>
+<li>A player&#39;s live latency grows with no hard stalls. What traces do you inspect first?</li>
+</ol>
+<hr>
+</div></div></details>
+<details class="chapter" id="chapter-10-coding-reverse-index--networking" data-chapter="10-coding-reverse-index--networking">
+      <summary class="chapter-summary" id="10-coding-reverse-index--networking"><span class="chapter-number">10</span><span class="chapter-title">Coding Reverse Index — Networking</span><span class="chapter-state">Notes</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="10-coding-reverse-index--networking" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#10-coding-reverse-index--networking">Chapter link ↗</a></div><div class="prose"><p>Coding prompts live beside the concepts they exercise. <code>[TODO]</code> is an interface and test contract; it
+does not claim an implementation exists.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Priority</th><th>Practice task</th><th>Review topic</th><th>Status / implementation</th></tr></thead><tbody><tr><td>P2</td><td>Throughput + buffer ABR</td><td><a href="#51-abr-algorithms">§5.1</a></td><td><code>[TODO]</code> <code>streaming.py</code></td></tr></tbody></table></div><hr>
+<p><em>Return to <a href="01_video_domain.html">01_video_domain.md</a>, continue to <a href="02_ml_domain.html">02_ml_domain.md</a>, or connect the two in <a href="02_ml_domain.html#6-generative-models--learned-compression">02_ml_domain.md#6-generative-models--learned-compression</a>.</em></p>
+</div></div></details></article><nav class="toc" aria-label="Table of contents"><p class="nav-label">ON THIS PAGE</p><a href="#1-network-foundations" data-toc="1-network-foundations"><span>01</span>Network Foundations</a><a href="#2-udp-tcp-and-quic" data-toc="2-udp-tcp-and-quic"><span>02</span>UDP, TCP, and QUIC</a><a href="#3-http-and-the-request-path" data-toc="3-http-and-the-request-path"><span>03</span>HTTP and the Request Path</a><a href="#4-hls-dash-and-cmaf" data-toc="4-hls-dash-and-cmaf"><span>04</span>HLS, DASH, and CMAF</a><a href="#5-adaptive-bitrate-and-qoe" data-toc="5-adaptive-bitrate-and-qoe"><span>05</span>Adaptive Bitrate and QoE</a><a href="#6-real-time-media-and-webrtc" data-toc="6-real-time-media-and-webrtc"><span>06</span>Real-Time Media and WebRTC</a><a href="#7-delivery-at-scale" data-toc="7-delivery-at-scale"><span>07</span>Delivery at Scale</a><a href="#8-debugging-streaming-systems" data-toc="8-debugging-streaming-systems"><span>08</span>Debugging Streaming Systems</a><a href="#9-rapid-fire-drill--networking" data-toc="9-rapid-fire-drill--networking"><span>09</span>Rapid-Fire Drill — Networking</a><a href="#10-coding-reverse-index--networking" data-toc="10-coding-reverse-index--networking"><span>10</span>Coding Reverse Index — Networking</a><a href="#main-content" class="toc-top">↑ Back to top</a></nav></div>
+<footer class="site-footer"><span>Video & ML · Notes, code & questions.</span><a href="#main-content">Back to top ↑</a></footer></div></main>
+<dialog class="search-dialog" aria-label="Search all notes"><div class="search-head"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><input id="search-input" type="search" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" placeholder="Search concepts, questions, code…" aria-label="Search keywords" autocomplete="off"><button class="button" type="button" data-close-search>Esc</button></div><div class="search-filters" role="group" aria-label="Search scope"><button class="button active" type="button" data-scope="all">All</button><button class="button" type="button" data-scope="video">Video domain</button><button class="button" type="button" data-scope="ml">ML & LLMs</button><button class="button" type="button" data-scope="resume">Research & resume</button><button class="button" type="button" data-scope="leetcode">LeetCode Notes</button><button class="button" type="button" data-scope="system-design">System Design</button><button class="button" type="button" data-scope="interviews">Company Interviews</button><button class="button" type="button" data-scope="network">Networking & Streaming</button></div><p class="search-status" role="status" aria-live="polite">Enter keywords to search all books</p><div class="search-results" id="search-results" role="listbox" aria-label="Search results"></div><div class="search-footer">↑ ↓ Select · Enter Open · Esc Close</div></dialog><div class="toast" role="status" aria-live="polite"></div></body></html>

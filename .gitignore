@@ -1,0 +1,33 @@
+node_modules/
+.preview-check/
+.venv-transformer/
+
+# Local environments and generated caches
+.venv*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.DS_Store
+**/.DS_Store
+
+# Backups, archived copies, and temporary output
+backups/
+_archive*
+tmp/
+output/
+*.bak
+*.tmp
+
+# Local assistant settings and credentials
+.claude/
+.codex/
+.env
+.env.*
+!.env.example
+.aws/
+*.pem
+*.key

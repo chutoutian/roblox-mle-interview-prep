@@ -1,0 +1,8 @@
+# Reproducible local practice environment, compatible with Python 3.9.
+# CodeSignal already provides its own libraries; do not install these there.
+numpy==1.26.4
+pandas==2.2.3
+scikit-learn==1.6.1
+nbformat==5.10.4
+nbclient==0.10.2
+ipykernel==6.31.0

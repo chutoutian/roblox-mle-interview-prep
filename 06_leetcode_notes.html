@@ -1,0 +1,1230 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>LeetCode Notes · Video & ML</title><meta name="description" content="Notes for coding practice."><link rel="stylesheet" href="assets/book.css"><link rel="stylesheet" href="assets/code.css"><link rel="stylesheet" href="assets/katex/katex.min.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem('study-theme')||'light'}catch{}</script><script src="assets/book-data.js" defer></script><script src="assets/book.js" defer></script></head>
+<body data-page="leetcode"><a class="skip-link" href="#main-content">Skip to content</a><div class="read-progress" aria-hidden="true"><div class="track-fill" id="read-progress"></div></div>
+<aside class="sidebar" id="sidebar"><a href="index.html" class="brand"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4z"/><path d="M13 7a3 3 0 0 1 3-3h5v15h-5a4 4 0 0 0-3 2"/></svg><span>Video & ML<br><small>Lingzhi’s study book</small></span></a>
+    <button class="nav-search" type="button" data-open-search><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><span>Search all notes</span><kbd>⌘ K</kbd></button>
+    <nav aria-label="Book navigation"><p class="nav-label">WORKSPACE</p><a class="nav-link "  href="index.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4z"/><path d="M13 7a3 3 0 0 1 3-3h5v15h-5a4 4 0 0 0-3 2"/></svg><span>Home</span></a><a class="nav-link "  href="01_video_domain.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m10 8 6 4-6 4zM7 4v16M17 4v16"/></svg><span>Video domain</span><small>3</small></a><a class="nav-link "  href="02_ml_domain.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="3"/><path d="M12 3v4M2 12h2m16 0h2M9 16h6"/><circle cx="8" cy="11" r=".7"/><circle cx="16" cy="11" r=".7"/></svg><span>ML & LLMs</span><small>14</small></a><a class="nav-link "  href="04_resume_drill.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/></svg><span>Research & resume</span><small>9</small></a><a class="nav-link active" aria-current="page" href="06_leetcode_notes.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 5-6 7 6 7m8-14 6 7-6 7M14 3l-4 18"/></svg><span>LeetCode Notes</span><small>5</small></a><a class="nav-link "  href="07_system_design.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M5 17v-5h14v5"/></svg><span>System Design</span><small>7</small></a><a class="nav-link "  href="08_company_interviews.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h7v7H4zM13 11h7v7h-7zM7 16v4h10M17 8V4H7"/></svg><span>Company Interviews</span><small>1</small></a><a class="nav-link "  href="05_networking_streaming.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M5 17v-5h14v5"/></svg><span>Networking & Streaming</span><small>10</small></a>
+    <p class="nav-label">YOUR PRACTICE</p><button class="nav-link" type="button" data-search-preset="Coding"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/></svg><span>Coding exercises</span></button><button class="nav-link" type="button" data-search-preset="Rapid-Fire"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Oral self-test</span></button></nav>
+    <div class="sidebar-progress"><div><span>Reading progress</span><strong data-total-progress>0%</strong></div><div class="progress-track"><div class="track-fill" data-total-bar></div></div><small data-total-count>0 chapters read</small></div>
+    <div class="sidebar-footer"><a class="nav-link" href="https://alisawuffles.notion.site/alisa-s-book-of-llms" target="_blank" rel="noopener noreferrer"><span>↗</span><span>Alisa’s book of LLMs</span></a><small>Read offline · Progress saved in this browser</small></div></aside><button class="sidebar-backdrop" aria-label="Close navigation" type="button" data-close-menu></button>
+<header class="topbar"><div class="breadcrumb"><button class="icon-button mobile-menu" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar" type="button" data-menu><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><a href="index.html"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-4-2H4z"/><path d="M13 7a3 3 0 0 1 3-3h5v15h-5a4 4 0 0 0-3 2"/></svg><span>Study book</span></a><span class="breadcrumb-divider">/</span><span>LeetCode Notes</span></div><div class="topbar-actions"><button class="icon-button" type="button" data-open-search aria-label="Search notes"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg></button><button class="icon-button" type="button" data-focus aria-label="Focus mode" aria-pressed="false" title="Focus mode"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button><button class="icon-button" type="button" data-theme-toggle aria-label="Switch to dark mode" title="Toggle color theme"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10Z"/></svg></button><button class="button print-button" type="button" data-print>Print / PDF</button></div></header>
+<main class="main" id="main-content"><div class="page-shell"><header class="page-header"><div class="page-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 5-6 7 6 7m8-14 6 7-6 7M14 3l-4 18"/></svg></div><p class="eyebrow">06 / TEMPLATES & EXAMPLES</p><h1>LeetCode Notes</h1><p class="page-description">Notes for coding practice.</p><div class="page-meta"><span>5 CHAPTERS</span><span>·</span><a href="06_leetcode_notes.md" download>Download source ↗</a><span>·</span><span data-page-progress>0 chapters read</span></div></header>
+
+
+<div class="page-actions"><button class="button primary-button" type="button" data-resume>Start reading <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button><div><button class="button" type="button" data-font-size aria-label="Adjust reading font size">Text · Default</button><button class="button" type="button" data-expand>Expand all</button><button class="button" type="button" data-collapse>Collapse all</button></div></div>
+<div class="reading-layout"><article class="reading-content"><details class="chapter overview" id="reading-overview"><summary class="chapter-summary"><span class="chapter-title">Reading guide & contents</span></summary><div class="chapter-body prose"><blockquote>
+<p>Reusable templates, common mistakes, and worked examples.</p>
+</blockquote>
+</div></details><details class="chapter" id="chapter-1-binary-search" data-chapter="1-binary-search" open>
+      <summary class="chapter-summary" id="1-binary-search"><span class="chapter-number">01</span><span class="chapter-title">Binary Search</span><span class="chapter-state">4 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="1-binary-search" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#1-binary-search">Chapter link ↗</a></div><div class="prose"><p>Start with two templates: <strong>find an exact value</strong>, or <strong>find the first value that meets a condition</strong>.
+The bounds, loop condition, and updates work as a set—do not mix lines from different templates.
+All array examples below assume ascending order.</p>
+<h3 id="11-template-a-find-an-exact-value">1.1 Template A: find an exact value<a class="heading-anchor" href="#11-template-a-find-an-exact-value" aria-label="Link to 1.1 Template A: find an exact value">#</a></h3>
+<p>Use a closed interval <code>[left, right]</code>: both endpoints are included.</p>
+<ul>
+<li><code>right = len(nums) - 1</code>: the last valid index.</li>
+<li><code>while left &lt;= right</code>: when the pointers meet, one element still needs checking.</li>
+<li>On a mismatch, use <code>mid - 1</code> or <code>mid + 1</code>: we already know <code>mid</code> is not the answer.</li>
+</ul>
+<details class="coding-drill" id="coding-template-a--exact-search-ready"><summary><span>Coding: Template A — exact search <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">binary_search_exact</span>(<span class="hljs-params">nums, target</span>):
+    left, right = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums) - <span class="hljs-number">1</span>
+
+    <span class="hljs-keyword">while</span> left &lt;= right:
+        mid = (left + right) // <span class="hljs-number">2</span>
+        <span class="hljs-keyword">if</span> nums[mid] == target:
+            <span class="hljs-keyword">return</span> mid
+        <span class="hljs-keyword">elif</span> nums[mid] &lt; target:
+            left = mid + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            right = mid - <span class="hljs-number">1</span>
+
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span></code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(log n)</code> worst case, where <code>n = len(nums)</code>. Each comparison removes about half of the remaining search interval.</p>
+<p><strong>Space complexity:</strong> <code>O(1)</code> extra space. Only the two bounds and midpoint are stored; the array is not copied.</p>
+<p>If no match exists, the loop ends with <code>left &gt; right</code>. Return <code>-1</code> for “not found.”
+For <strong>Search Insert Position</strong>, change the final return to <code>left</code>: it is where the missing value belongs.</p>
+</div></details><h3 id="12-template-b-find-the-first-value--target">1.2 Template B: find the first value &gt;= target<a class="heading-anchor" href="#12-template-b-find-the-first-value--target" aria-label="Link to 1.2 Template B: find the first value &gt;= target">#</a></h3>
+<p>This is the <strong>lower bound</strong>: the first matching position or the insertion position.
+Use <code>[left, right)</code> for the array elements still to check; <code>right</code> is excluded.</p>
+<ul>
+<li><code>right = len(nums)</code>: the answer can be <code>n</code>, meaning “after the last element.”</li>
+<li><code>while left &lt; right</code>: stop when the boundary position is determined.</li>
+<li><code>nums[mid] &lt; target</code>: too small, so <code>left = mid + 1</code>.</li>
+<li>Otherwise, <code>mid</code> could be the first qualifying position, so <code>right = mid</code>.</li>
+</ul>
+<details class="coding-drill" id="coding-template-b--lower-bound-ready"><summary><span>Coding: Template B — lower bound <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">lower_bound</span>(<span class="hljs-params">nums, target</span>):
+    left, right = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums)
+
+    <span class="hljs-keyword">while</span> left &lt; right:
+        mid = (left + right) // <span class="hljs-number">2</span>
+        <span class="hljs-keyword">if</span> nums[mid] &lt; target:
+            left = mid + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            right = mid
+
+    <span class="hljs-keyword">return</span> left</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(log n)</code> for a nonempty array, where <code>n = len(nums)</code>. Each iteration halves the remaining interval; an empty array returns in <code>O(1)</code> time.</p>
+<p><strong>Space complexity:</strong> <code>O(1)</code> extra space. The iterative search stores only a fixed number of indices.</p>
+<p>This works for empty arrays and targets beyond the last value without extra guards.
+It never reads <code>nums[n]</code>: while the loop runs, <code>mid &lt; right &lt;= n</code>.</p>
+<p>To find the <strong>first value &gt; target</strong> instead, change just <code>nums[mid] &lt; target</code> to
+<code>nums[mid] &lt;= target</code>. This skips equal values too; it is called the <strong>upper bound</strong>.</p>
+</div></details><h3 id="13-why-mid-updates-can-get-stuck">1.3 Why mid updates can get stuck<a class="heading-anchor" href="#13-why-mid-updates-can-get-stuck" aria-label="Link to 1.3 Why mid updates can get stuck">#</a></h3>
+<p>Ask: <strong>after this comparison, could mid still be the answer?</strong></p>
+<ul>
+<li>No → exclude it with <code>mid + 1</code> or <code>mid - 1</code>.</li>
+<li>Yes → keep it as a possible answer; when searching leftward, use <code>right = mid</code>.</li>
+</ul>
+<p>For a loop that shrinks a closed interval until <code>left == right</code>, use <code>while left &lt; right</code>.
+Continuing at equality with <code>right = mid</code> would repeat the same state forever.</p>
+<p>The usual midpoint rounds down. With <code>left = 3, right = 4</code>, it gives <code>mid = 3</code>:
+<code>left = mid</code> would not move, but <code>right = mid</code> would.</p>
+<p>If you use the <strong>last-valid-answer</strong> variant with updates <code>left = mid</code> / <code>right = mid - 1</code>,
+use the upper midpoint <code>(left + right + 1) // 2</code> and <code>while left &lt; right</code>.
+This variant assumes the initial closed interval contains an answer.
+For example, LeetCode 69, <strong>Sqrt(x)</strong>, asks for the largest integer whose square is <code>&lt;= x</code>.</p>
+<p>These are rules for the templates described here, not universal rules for every binary-search implementation.</p>
+<h3 id="14-leetcode-examples">1.4 LeetCode examples<a class="heading-anchor" href="#14-leetcode-examples" aria-label="Link to 1.4 LeetCode examples">#</a></h3>
+<h4 id="704-binary-search--exact-match">704. Binary Search — exact match<a class="heading-anchor" href="#704-binary-search--exact-match" aria-label="Link to 704. Binary Search — exact match">#</a></h4>
+<p>Use <strong>Template A</strong> directly.</p>
+<p><code>nums = [-1, 0, 3, 5, 9, 12], target = 9</code> → return index <code>4</code>.
+If the target is <code>2</code>, return <code>-1</code>.</p>
+<h4 id="35-search-insert-position--insertion-position">35. Search Insert Position — insertion position<a class="heading-anchor" href="#35-search-insert-position--insertion-position" aria-label="Link to 35. Search Insert Position — insertion position">#</a></h4>
+<p>Use <strong>Template B</strong> directly. For <code>nums = [1, 3, 5, 6], target = 2</code>:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>left, right before check</th><th>mid / value</th><th>Update</th></tr></thead><tbody><tr><td>0, 4</td><td>2 / 5</td><td><code>right = 2</code></td></tr><tr><td>0, 2</td><td>1 / 3</td><td><code>right = 1</code></td></tr><tr><td>0, 1</td><td>0 / 1</td><td><code>left = 1</code></td></tr></tbody></table></div><p>Now <code>left == right == 1</code>: insert at index <code>1</code>.
+For target <code>7</code>, the same template returns <code>4</code>, after the last element.</p>
+<h4 id="34-first-and-last-position--two-boundary-searches">34. First and Last Position — two boundary searches<a class="heading-anchor" href="#34-first-and-last-position--two-boundary-searches" aria-label="Link to 34. First and Last Position — two boundary searches">#</a></h4>
+<p>Use <strong>Template B twice</strong>: first <code>&gt;= target</code>, then first <code>&gt; target</code>.
+The second boundary is just after the last match, so subtract one.</p>
+<p>For <code>[5, 7, 7, 8, 8, 10]</code>, target <code>8</code>: the boundaries are <code>3</code> and <code>5</code>; return <code>[3, 4]</code>.</p>
+<details class="coding-drill" id="coding-leetcode-34--first-and-last-occurrence-ready"><summary><span>Coding: LeetCode 34 — first and last occurrence <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">upper_bound</span>(<span class="hljs-params">nums, target</span>):
+    left, right = <span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(nums)
+    <span class="hljs-keyword">while</span> left &lt; right:
+        mid = (left + right) // <span class="hljs-number">2</span>
+        <span class="hljs-keyword">if</span> nums[mid] &lt;= target:  <span class="hljs-comment"># Only change from lower_bound</span>
+            left = mid + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            right = mid
+    <span class="hljs-keyword">return</span> left
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">search_range</span>(<span class="hljs-params">nums, target</span>):
+    first = lower_bound(nums, target)  <span class="hljs-comment"># Reuse Template B</span>
+    <span class="hljs-keyword">if</span> first == <span class="hljs-built_in">len</span>(nums) <span class="hljs-keyword">or</span> nums[first] != target:
+        <span class="hljs-keyword">return</span> [-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>]
+    <span class="hljs-keyword">return</span> [first, upper_bound(nums, target) - <span class="hljs-number">1</span>]</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(log n)</code> worst case, where <code>n = len(nums)</code>. At most two binary searches are performed, so <code>O(log n) + O(log n)</code> is still <code>O(log n)</code>.</p>
+<p><strong>Space complexity:</strong> <code>O(1)</code> extra space. Both searches are iterative, and the returned two-element list has constant size.</p>
+</div></details><h4 id="875-koko-eating-bananas--search-for-the-smallest-valid-answer">875. Koko Eating Bananas — search for the smallest valid answer<a class="heading-anchor" href="#875-koko-eating-bananas--search-for-the-smallest-valid-answer" aria-label="Link to 875. Koko Eating Bananas — search for the smallest valid answer">#</a></h4>
+<p>Search <strong>speeds</strong>, not array indices. A slow speed fails; a fast enough speed works.
+Use the same boundary idea as B: too slow → <code>left = mid + 1</code>; works → <code>right = mid</code>.</p>
+<p>The closed interval <code>[1, max(piles)]</code> contains an answer because the problem guarantees
+<code>h &gt;= len(piles)</code>. At the maximum speed, every pile takes one hour.
+For <code>piles = [3, 6, 7, 11], h = 8</code>, speed <code>3</code> takes 10 hours; speed <code>4</code> takes 8. Return <code>4</code>.</p>
+<details class="coding-drill" id="coding-leetcode-875--smallest-valid-speed-ready"><summary><span>Coding: LeetCode 875 — smallest valid speed <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">min_eating_speed</span>(<span class="hljs-params">piles, h</span>):
+    left, right = <span class="hljs-number">1</span>, <span class="hljs-built_in">max</span>(piles)
+    <span class="hljs-keyword">while</span> left &lt; right:
+        mid = (left + right) // <span class="hljs-number">2</span>
+        <span class="hljs-comment"># Round each pile&#x27;s eating time up to a whole hour.</span>
+        hours = <span class="hljs-built_in">sum</span>((pile + mid - <span class="hljs-number">1</span>) // mid <span class="hljs-keyword">for</span> pile <span class="hljs-keyword">in</span> piles)
+        <span class="hljs-keyword">if</span> hours &lt;= h:
+            right = mid
+        <span class="hljs-keyword">else</span>:
+            left = mid + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> left</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n log(M + 1))</code>, where <code>n = len(piles)</code> and <code>M = max(piles)</code>. Finding the initial maximum costs <code>O(n)</code>; each binary-search step scans all <code>n</code> piles to test a speed. The <code>+1</code> also covers <code>M = 1</code>, when only the initial scan is needed.</p>
+<p><strong>Space complexity:</strong> <code>O(1)</code> extra space. The generator passed to <code>sum</code> processes pile costs one at a time instead of building an <code>n</code>-element list.</p>
+<p><strong>Practice links:</strong> <a href="https://leetcode.com/problems/binary-search/description/" target="_blank" rel="noopener noreferrer">704</a> ·
+<a href="https://leetcode.com/problems/search-insert-position/description/" target="_blank" rel="noopener noreferrer">35</a> ·
+<a href="https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/" target="_blank" rel="noopener noreferrer">34</a> ·
+<a href="https://leetcode.com/problems/koko-eating-bananas/description/" target="_blank" rel="noopener noreferrer">875</a> ·
+<a href="https://leetcode.com/problems/sqrtx/" target="_blank" rel="noopener noreferrer">69</a>.</p>
+</div></details></div></div></details>
+<details class="chapter" id="chapter-2-doubly-linked-lists" data-chapter="2-doubly-linked-lists">
+      <summary class="chapter-summary" id="2-doubly-linked-lists"><span class="chapter-number">02</span><span class="chapter-title">Doubly Linked Lists</span><span class="chapter-state">4 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="2-doubly-linked-lists" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#2-doubly-linked-lists">Chapter link ↗</a></div><div class="prose"><p>The reusable operations are <strong>remove a known node</strong> and <strong>append it at the back</strong>.
+Both take <code>O(1)</code> because each node stores <code>prev</code> and <code>next</code> pointers.
+Finding a node by its value still takes <code>O(n)</code> unless another structure gives you the node directly.</p>
+<h3 id="21-shared-template-dummy-head-and-tail">2.1 Shared template: dummy head and tail<a class="heading-anchor" href="#21-shared-template-dummy-head-and-tail" aria-label="Link to 2.1 Shared template: dummy head and tail">#</a></h3>
+<p>Use two dummy nodes so empty lists and single-node lists follow the same pointer rules.
+They do not store real entries and must never be removed.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">Empty:      head &lt;----------------&gt; tail
+Nonempty:   head &lt;-&gt; [A] &lt;-&gt; [B] &lt;-&gt; tail
+                     ^       ^
+                  first     last</code></pre></div>
+<p><code>head.next</code> is the first real node; <code>tail.prev</code> is the last.
+To remove <code>X</code>, connect its neighbors directly: <code>A &lt;-&gt; X &lt;-&gt; B</code> becomes <code>A &lt;-&gt; B</code>.
+To append <code>X</code>, insert it between the current last node and <code>tail</code>.</p>
+<details class="coding-drill" id="coding-doubly-linked-list--two-reusable-operations-ready"><summary><span>Coding: doubly linked list — two reusable operations <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, key=<span class="hljs-number">0</span>, value=<span class="hljs-number">0</span></span>):
+        <span class="hljs-variable language_">self</span>.key = key      <span class="hljs-comment"># Needed by LRU; unused by the queue</span>
+        <span class="hljs-variable language_">self</span>.value = value
+        <span class="hljs-variable language_">self</span>.prev = <span class="hljs-literal">None</span>
+        <span class="hljs-variable language_">self</span>.<span class="hljs-built_in">next</span> = <span class="hljs-literal">None</span>
+
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">DoublyLinkedList</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-variable language_">self</span>.head = Node()
+        <span class="hljs-variable language_">self</span>.tail = Node()
+        <span class="hljs-variable language_">self</span>.head.<span class="hljs-built_in">next</span> = <span class="hljs-variable language_">self</span>.tail
+        <span class="hljs-variable language_">self</span>.tail.prev = <span class="hljs-variable language_">self</span>.head
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">append</span>(<span class="hljs-params">self, node</span>):
+        last = <span class="hljs-variable language_">self</span>.tail.prev
+        node.prev = last
+        node.<span class="hljs-built_in">next</span> = <span class="hljs-variable language_">self</span>.tail
+        last.<span class="hljs-built_in">next</span> = node
+        <span class="hljs-variable language_">self</span>.tail.prev = node
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">remove</span>(<span class="hljs-params">self, node</span>):
+        left, right = node.prev, node.<span class="hljs-built_in">next</span>
+        left.<span class="hljs-built_in">next</span> = right
+        right.prev = left
+        node.prev = node.<span class="hljs-built_in">next</span> = <span class="hljs-literal">None</span></code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(1)</code> for initialization, <code>append</code>, and <code>remove</code>. Given the node directly, each operation changes only a fixed number of pointers; finding a node by value would require a separate <code>O(n)</code> scan.</p>
+<p><strong>Space complexity:</strong> <code>O(1)</code> extra space per operation and <code>O(n)</code> total storage for <code>n</code> linked nodes. Initialization creates only two dummy nodes.</p>
+<p><code>append</code> expects a detached node; <code>remove</code> expects a real node already in this list.
+To move an existing node to the back, <strong>remove it first, then append it</strong>.
+Both solutions below reuse these classes: include this helper block before the solution class.</p>
+</div></details><h3 id="22-design-circular-queue--fifo-with-a-capacity-limit">2.2 Design Circular Queue — FIFO with a capacity limit<a class="heading-anchor" href="#22-design-circular-queue--fifo-with-a-capacity-limit" aria-label="Link to 2.2 Design Circular Queue — FIFO with a capacity limit">#</a></h3>
+<p>Problem: <a href="https://neetcode.io/problems/design-circular-queue/question?list=neetcode250" target="_blank" rel="noopener noreferrer">Design Circular Queue</a> (LeetCode 622).</p>
+<p>Keep the <strong>front next to head</strong> and the <strong>rear next to tail</strong>.
+Enqueue appends at the rear; dequeue removes the front. Track <code>size</code> to distinguish empty from full.
+Enqueue on a full queue returns <code>False</code>; it does not overwrite the oldest entry.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">                  dequeue              enqueue
+                     |                    |
+                     v                    v
+head &lt;-&gt; [front / oldest] &lt;-&gt; [rear / newest] &lt;-&gt; tail</code></pre></div>
+<p><strong>A doubly linked list is an option, not a requirement.</strong> A ring-buffer array is the usual
+alternative: wrap indices with <code>% capacity</code>. A singly linked list with front/rear pointers
+also suffices. The version below implements the bounded FIFO behavior with dummy endpoints;
+its pointers do not physically form a circle. Freed capacity becomes available after dequeue.</p>
+<details class="coding-drill" id="coding-design-circular-queue--reuse-the-list-template-ready"><summary><span>Coding: Design Circular Queue — reuse the list template <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCircularQueue</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, k</span>):
+        <span class="hljs-variable language_">self</span>.capacity = k
+        <span class="hljs-variable language_">self</span>.size = <span class="hljs-number">0</span>
+        <span class="hljs-variable language_">self</span>.order = DoublyLinkedList()
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">enQueue</span>(<span class="hljs-params">self, value</span>):
+        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.isFull():
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-variable language_">self</span>.order.append(Node(value=value))
+        <span class="hljs-variable language_">self</span>.size += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">deQueue</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.isEmpty():
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-variable language_">self</span>.order.remove(<span class="hljs-variable language_">self</span>.order.head.<span class="hljs-built_in">next</span>)
+        <span class="hljs-variable language_">self</span>.size -= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">Front</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.isEmpty() <span class="hljs-keyword">else</span> <span class="hljs-variable language_">self</span>.order.head.<span class="hljs-built_in">next</span>.value
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">Rear</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.isEmpty() <span class="hljs-keyword">else</span> <span class="hljs-variable language_">self</span>.order.tail.prev.value
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isEmpty</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.size == <span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">isFull</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.size == <span class="hljs-variable language_">self</span>.capacity</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(1)</code> for initialization and every queue operation. Front/rear pointers and the size counter avoid scanning the list.</p>
+<p><strong>Space complexity:</strong> <code>O(k)</code> total space at capacity <code>k</code>, with at most <code>k</code> data nodes and two dummy nodes. Each operation needs <code>O(1)</code> additional working space; this linked-list version allocates nodes as values are enqueued.</p>
+<p><strong>Example, capacity = 2:</strong></p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Operation</th><th>Front → rear afterward</th><th>Result</th></tr></thead><tbody><tr><td><code>enQueue(7)</code></td><td><code>[7]</code></td><td><code>True</code></td></tr><tr><td><code>enQueue(9)</code></td><td><code>[7, 9]</code></td><td><code>True</code></td></tr><tr><td><code>enQueue(11)</code></td><td><code>[7, 9]</code></td><td><code>False</code>: full</td></tr><tr><td><code>deQueue()</code></td><td><code>[9]</code></td><td><code>True</code></td></tr><tr><td><code>enQueue(11)</code></td><td><code>[9, 11]</code></td><td><code>True</code>: space reused</td></tr></tbody></table></div><p>Now <code>Front()</code> is <code>9</code> and <code>Rear()</code> is <code>11</code>. On an empty queue, both return <code>-1</code>.</p>
+</div></details><h3 id="23-lru-cache--hash-map--recency-order">2.3 LRU Cache — hash map + recency order<a class="heading-anchor" href="#23-lru-cache--hash-map--recency-order" aria-label="Link to 2.3 LRU Cache — hash map + recency order">#</a></h3>
+<p>Problem: <a href="https://neetcode.io/problems/lru-cache/question?list=neetcode250" target="_blank" rel="noopener noreferrer">LRU Cache</a> (LeetCode 146).</p>
+<p>The <strong>hash map finds a node by key</strong>; the <strong>doubly linked list tracks usage order</strong>.
+Keep the least recently used (LRU) node next to <code>head</code> and the most recently used (MRU) next to <code>tail</code>.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">cache[key] --------------------+
+                               v
+head &lt;-&gt; [LRU] &lt;-&gt; ... &lt;-&gt; [key, value] &lt;-&gt; ... &lt;-&gt; [MRU] &lt;-&gt; tail
+          ^                                         ^
+        evict                              move accessed node here</code></pre></div>
+<ul>
+<li><code>get(key)</code>: missing → <code>-1</code>; found → move its node to MRU and return the value.</li>
+<li><code>put(key, value)</code>: update an existing node or append a new one; either way, it becomes MRU.</li>
+<li>If capacity is exceeded, remove <code>head.next</code> <strong>from both the list and the hash map</strong>.</li>
+</ul>
+<p>Why store the key inside each node? Eviction starts from the list&#39;s LRU node, so its key
+is needed to delete the matching map entry. A map of <code>key → value</code> alone cannot locate list nodes in <code>O(1)</code>.</p>
+<details class="coding-drill" id="coding-lru-cache--reuse-the-list-template-ready"><summary><span>Coding: LRU Cache — reuse the list template <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LRUCache</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, capacity</span>):
+        <span class="hljs-variable language_">self</span>.capacity = capacity
+        <span class="hljs-variable language_">self</span>.cache = {}      <span class="hljs-comment"># key -&gt; Node, not key -&gt; value</span>
+        <span class="hljs-variable language_">self</span>.order = DoublyLinkedList()
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_touch</span>(<span class="hljs-params">self, node</span>):
+        <span class="hljs-variable language_">self</span>.order.remove(node)
+        <span class="hljs-variable language_">self</span>.order.append(node)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get</span>(<span class="hljs-params">self, key</span>):
+        node = <span class="hljs-variable language_">self</span>.cache.get(key)
+        <span class="hljs-keyword">if</span> node <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+        <span class="hljs-variable language_">self</span>._touch(node)
+        <span class="hljs-keyword">return</span> node.value
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">put</span>(<span class="hljs-params">self, key, value</span>):
+        node = <span class="hljs-variable language_">self</span>.cache.get(key)
+        <span class="hljs-keyword">if</span> node <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:
+            node.value = value
+            <span class="hljs-variable language_">self</span>._touch(node)
+            <span class="hljs-keyword">return</span>
+
+        node = Node(key, value)
+        <span class="hljs-variable language_">self</span>.cache[key] = node
+        <span class="hljs-variable language_">self</span>.order.append(node)
+
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>.cache) &gt; <span class="hljs-variable language_">self</span>.capacity:
+            oldest = <span class="hljs-variable language_">self</span>.order.head.<span class="hljs-built_in">next</span>
+            <span class="hljs-variable language_">self</span>.order.remove(oldest)
+            <span class="hljs-keyword">del</span> <span class="hljs-variable language_">self</span>.cache[oldest.key]</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(1)</code> average per <code>get</code> or <code>put</code>, using average-case hash-map operations and constant-time list updates. Dictionary insertion is amortized because occasional resizing costs more; pathological hash collisions can make an operation <code>O(k)</code> for capacity <code>k</code>. Initialization is <code>O(1)</code>.</p>
+<p><strong>Space complexity:</strong> <code>O(k)</code> total space for the hash map and linked list, where <code>k</code> is the capacity. The map points to the same list nodes; moving a node does not copy the list.</p>
+<p><strong>Example, capacity = 2.</strong> The list below shows keys, ordered LRU → MRU:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Operation</th><th>Keys afterward</th><th>Result</th></tr></thead><tbody><tr><td><code>put(1, 10)</code></td><td><code>[1]</code></td><td>Add key 1</td></tr><tr><td><code>put(2, 20)</code></td><td><code>[1, 2]</code></td><td>Add key 2</td></tr><tr><td><code>get(1)</code></td><td><code>[2, 1]</code></td><td>Return <code>10</code>; key 1 becomes MRU</td></tr><tr><td><code>put(3, 30)</code></td><td><code>[1, 3]</code></td><td>Evict key 2</td></tr><tr><td><code>get(2)</code></td><td><code>[1, 3]</code></td><td>Return <code>-1</code>; order unchanged</td></tr><tr><td><code>put(1, 99)</code></td><td><code>[3, 1]</code></td><td>Update value and make key 1 MRU</td></tr></tbody></table></div><p>Finding/removing the LRU node never requires scanning the list.</p>
+</div></details><h3 id="24-what-to-remember">2.4 What to remember<a class="heading-anchor" href="#24-what-to-remember" aria-label="Link to 2.4 What to remember">#</a></h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th></th><th>Circular Queue</th><th>LRU Cache</th></tr></thead><tbody><tr><td>Ordering</td><td>Insertion order: FIFO</td><td>Most recent successful access/update</td></tr><tr><td>Insert</td><td>Append at rear</td><td>Append at MRU end</td></tr><tr><td>Remove</td><td>Front</td><td>LRU end, or a known node before moving it</td></tr><tr><td>Extra state</td><td>Size + capacity</td><td>Hash map + capacity</td></tr><tr><td>When full</td><td>Reject enqueue</td><td>Evict LRU when adding a new key</td></tr></tbody></table></div><p>Update <strong>both directions</strong> of every link. Never remove a dummy node.
+For LRU, reads change order, updates do not create duplicate nodes, and evictions must update both structures.
+Test empty/full queues, capacity one, repeated reads, existing-key updates, and eviction.</p>
+</div></div></details>
+<details class="chapter" id="chapter-3-recursion-tree-dfs-backtracking-memoization" data-chapter="3-recursion-tree-dfs-backtracking-memoization">
+      <summary class="chapter-summary" id="3-recursion-tree-dfs-backtracking-memoization"><span class="chapter-number">03</span><span class="chapter-title">Recursion: Tree DFS, Backtracking, Memoization</span><span class="chapter-state">4 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="3-recursion-tree-dfs-backtracking-memoization" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#3-recursion-tree-dfs-backtracking-memoization">Chapter link ↗</a></div><div class="prose"><p>Tree DFS, backtracking and DFS with memoization are one technique: a function that solves a problem by calling itself on smaller pieces. They differ in what one call returns and in whether two calls can ask the same question. Section 3.1 puts the three side by side, with one template and one way to count the cost for each; then <a href="#32-tree-dfs">3.2</a> covers tree DFS, <a href="#33-backtracking">3.3</a> backtracking, and <a href="#34-dfs--memoization">3.4</a> memoization, each with the same template and cost analysis.</p>
+<h3 id="31-one-recursion-three-questions">3.1 One recursion, three questions<a class="heading-anchor" href="#31-one-recursion-three-questions" aria-label="Link to 3.1 One recursion, three questions">#</a></h3>
+<p>Answer three questions before writing the function:</p>
+<ol>
+<li><strong>What does one call return?</strong> A fact about its piece, such as the height of a subtree or the number of ways to finish, is <strong>returned</strong> to the caller. A list of complete answers is <strong>collected</strong>: the call returns nothing and appends <code>path.copy()</code> to an outer list.</li>
+<li><strong>Can two calls ask the same question?</strong> Every tree node is visited once, so there is nothing to reuse. A tree of choices reaches the same remaining problem along many paths; when the answer depends only on the arguments, cache it.</li>
+<li><strong>How many calls, and how much work in each?</strong> Their product is the running time, plus the cost of copying answers out.</li>
+</ol>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th></th><th>Tree DFS</th><th>Backtracking</th><th>DFS + memoization</th></tr></thead><tbody><tr><td>The recursion walks</td><td>the nodes of a given tree</td><td>a tree of choices it builds as it goes</td><td>the distinct states of a subproblem</td></tr><tr><td>One call returns</td><td>a fact about its subtree</td><td>nothing: complete paths go to <code>result</code></td><td>the answer for its state</td></tr><tr><td>Shared mutable data</td><td>none, except a path being collected</td><td><code>path</code> and <code>used</code>: change, recurse, undo</td><td>none: the answer depends only on the arguments</td></tr><tr><td>Same arguments twice?</td><td>never</td><td>yes, but each path must still be listed</td><td>yes, served from the memo</td></tr><tr><td>Time</td><td>nodes × work per node</td><td>nodes of the choice tree × work per node + output copied</td><td>distinct states × work per state</td></tr><tr><td>Extra space</td><td>recursion depth <code>O(h)</code></td><td>depth and current path, plus the output</td><td>memo entries + recursion depth</td></tr><tr><td>Examples here</td><td>104, 100, 98, 701, 450, 236, 113, 110, 543</td><td>78, 77, 46, 39, 90, 40, 47</td><td>377, 279, 300, 139, 416, 152</td></tr></tbody></table></div><p><strong>The three templates.</strong> The skeleton is the same: stop at a base case, try each child or choice, combine. What changes is where the answer goes.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text"># Tree DFS: return a fact about the subtree
+def dfs(node):
+    if node is None:
+        return base
+    left = dfs(node.left)
+    right = dfs(node.right)
+    return combine(node, left, right)
+
+# Backtracking: collect complete paths in result
+def dfs(state):
+    if complete(state):
+        result.append(path.copy())
+        return
+    for choice in choices(state):
+        path.append(choice)                 # choose
+        dfs(next_state(state, choice))      # explore
+        path.pop()                          # undo
+
+# DFS + memoization: return the answer of a state, computed once
+def dfs(state):
+    if is_base(state):
+        return base_value(state)
+    if state in memo:
+        return memo[state]
+    answer = identity                       # 0 for +, inf for min, False for or
+    for choice in choices(state):
+        answer = combine(answer, dfs(next_state(state, choice)))
+    memo[state] = answer
+    return answer</code></pre></div>
+<p><strong>The cost, counted the same way for all three.</strong> Count the calls, multiply by the work one call does apart from its recursive calls, and add what is copied into the output. Space is the deepest chain of calls, plus the memo, plus the output.</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Problem</th><th>Calls</th><th>Work per call</th><th>Output</th><th>Time</th><th>Extra space</th></tr></thead><tbody><tr><td>104. Maximum depth</td><td><code>n</code> nodes</td><td><code>O(1)</code></td><td>one number</td><td><code>O(n)</code></td><td><code>O(h)</code></td></tr><tr><td>78. Subsets</td><td><code>2^n</code> nodes of the choice tree</td><td><code>O(1)</code>, plus copying up to <code>n</code> values</td><td><code>n · 2^n</code> values</td><td><code>O(n · 2^n)</code></td><td><code>O(n)</code> + output</td></tr><tr><td>46. Permutations</td><td>fewer than <code>e · n!</code> nodes</td><td><code>O(n)</code> scan of <code>used</code></td><td><code>n · n!</code> values</td><td><code>O(n · n!)</code></td><td><code>O(n)</code> + output</td></tr><tr><td>377. Combination Sum IV</td><td><code>target + 1</code> states</td><td><code>O(len(nums))</code></td><td>one number</td><td><code>O(target · len(nums))</code></td><td><code>O(target)</code></td></tr><tr><td>416. Partition Equal Subset Sum</td><td><code>n · (target + 1)</code> states</td><td><code>O(1)</code></td><td><code>True</code> or <code>False</code></td><td><code>O(n · target)</code></td><td><code>O(n · target)</code></td></tr></tbody></table></div><p>The permutation tree has <code>n!/(n-k)!</code> nodes at depth <code>k</code>, and the sum over all depths is <code>n! · (1 + 1/1! + 1/2! + ...) &lt; e · n!</code>. For backtracking the output alone is exponential, so no cache can make it polynomial. For memoization the same arguments come back, so the number of calls drops from the size of the choice tree to the number of distinct states.</p>
+<p><strong>One input, three questions.</strong> The same numbers give different recursions depending on what is asked. With <code>nums = [1, 2, 3]</code> and <code>target = 4</code>:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Question</th><th>Answer</th><th>Form</th><th>State</th><th>Where</th></tr></thead><tbody><tr><td>List the combinations, each number reusable (39)</td><td><code>[1,1,1,1]</code>, <code>[1,1,2]</code>, <code>[1,3]</code>, <code>[2,2]</code></td><td>backtracking</td><td><code>(start, remaining)</code> and <code>path</code></td><td><a href="#336-allow-reusing-an-element-i-instead-of-i--1">3.3.6</a></td></tr><tr><td>Count those combinations (518)</td><td>4</td><td>memoization, <code>+</code></td><td><code>(start, remaining)</code></td><td><a href="#343-377-combination-sum-iv-count-ordered-ways-combine-with-">3.4.3</a></td></tr><tr><td>Count the ordered sequences (377)</td><td>7</td><td>memoization, <code>+</code></td><td><code>remaining</code></td><td><a href="#343-377-combination-sum-iv-count-ordered-ways-combine-with-">3.4.3</a></td></tr><tr><td>Does some subset, each number used once, sum to 4? (the core of 416)</td><td>yes, <code>1 + 3</code></td><td>memoization, <code>or</code></td><td><code>(i, remaining)</code></td><td><a href="#347-416-partition-equal-subset-sum-take-or-skip-combine-with-or">3.4.7</a></td></tr></tbody></table></div><p>Listing needs the path, so every path is walked. Counting or deciding needs only what is left to do, so two paths that leave the same problem share one answer:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">nums = [1, 2, 3, 4], target 5             state = (next index i, remaining)
+
+take 1, take 2, skip 3   →  (3, 2)  ┐
+skip 1, skip 2, take 3   →  (3, 2)  ┘  the same question: can a subset of [4] sum to 2?</code></pre></div>
+<p>Backtracking explores below both paths; memoization answers <code>(3, 2)</code> once.</p>
+<p><strong>Which one to write.</strong></p>
+<ol>
+<li><strong>The input is a tree and the question is about it:</strong> tree DFS. Decide first what one call returns (<a href="#321-choose-the-return-contract">3.2.1</a>).</li>
+<li><strong>The answer is every solution:</strong> backtracking. The output itself is exponential; prune branches that cannot finish.</li>
+<li><strong>The answer is a count, a best value, or yes or no, and what is left can be described by a few numbers:</strong> DFS + memoization, with those numbers as the state (<a href="#349-finding-the-state-and-common-mistakes">3.4.9</a>).</li>
+<li><strong>The state would have to include the whole path:</strong> the subproblems never repeat, so a memo cannot help. Stay with backtracking and prune.</li>
+</ol>
+<a id="3-tree-dfs"></a><h3 id="32-tree-dfs">3.2 Tree DFS<a class="heading-anchor" href="#32-tree-dfs" aria-label="Link to 3.2 Tree DFS">#</a></h3>
+<p>Before writing recursion, finish this sentence: <strong>“For the subtree rooted at <code>node</code>, this function returns ___.”</strong>
+Then choose the empty-tree result, recurse into children, and combine their answers. The return type follows the meaning—not the other way around.</p>
+<a id="31-choose-the-return-contract"></a><h4 id="321-choose-the-return-contract">3.2.1 Choose the return contract<a class="heading-anchor" href="#321-choose-the-return-contract" aria-label="Link to 3.2.1 Choose the return contract">#</a></h4>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Return from DFS</th><th>Meaning</th><th>Representative problems</th></tr></thead><tbody><tr><td>Number</td><td>A measurement of this subtree</td><td>104: maximum depth</td></tr><tr><td><code>bool</code></td><td>Whether this subtree satisfies a condition</td><td>100: same tree; 98: valid BST</td></tr><tr><td>Node: updated root</td><td>The subtree after modification</td><td>701: BST insertion; 450: BST deletion</td></tr><tr><td>Node: answer</td><td>A matching node or an ancestor</td><td>236: lowest common ancestor</td></tr><tr><td><code>None</code> + collected output</td><td>Visit paths and save results elsewhere</td><td>113: path sum II</td></tr><tr><td>Tuple</td><td>Several facts the parent needs together</td><td>110: balanced binary tree</td></tr></tbody></table></div><p><strong>Shared node definition.</strong> LeetCode supplies this class; include it when running the examples locally.
+The functions below are standalone helpers rather than <code>Solution</code> methods.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TreeNode</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, val=<span class="hljs-number">0</span>, left=<span class="hljs-literal">None</span>, right=<span class="hljs-literal">None</span></span>):
+        <span class="hljs-variable language_">self</span>.val = val
+        <span class="hljs-variable language_">self</span>.left = left
+        <span class="hljs-variable language_">self</span>.right = right</code></pre></div>
+<p>Here, <code>n</code> means the number of nodes and <code>h</code> the tree height. Recursive stack space is <code>O(h)</code>, which can be <code>O(n)</code> for a chain—not always <code>O(log n)</code>. Very deep trees can exceed Python&#39;s recursion limit; an explicit stack is the iterative alternative.</p>
+<a id="32-return-a-number-subtree-information"></a><h4 id="322-return-a-number-subtree-information">3.2.2 Return a number: subtree information<a class="heading-anchor" href="#322-return-a-number-subtree-information" aria-label="Link to 3.2.2 Return a number: subtree information">#</a></h4>
+<p><strong>Template:</strong> empty value → ask both children → combine their numbers.</p>
+<p>For <a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/" target="_blank" rel="noopener noreferrer">104. Maximum Depth of Binary Tree</a>, <code>max_depth(node)</code> returns the number of nodes on its longest downward path. Empty tree → <code>0</code>; leaf → <code>1</code>.</p>
+<details class="coding-drill" id="coding-dfs-returns-a-number--maximum-depth-ready"><summary><span>Coding: DFS returns a number — maximum depth <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">max_depth</span>(<span class="hljs-params">root</span>):
+    <span class="hljs-keyword">if</span> root <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+
+    left = max_depth(root.left)
+    right = max_depth(root.right)
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> + <span class="hljs-built_in">max</span>(left, right)</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n)</code>. Each node is visited once, and combining its two child heights takes constant time.</p>
+<p><strong>Space complexity:</strong> <code>O(h)</code> extra space for the recursion stack: <code>O(log n)</code> for a balanced tree and <code>O(n)</code> for a chain. The returned height occupies <code>O(1)</code> space.</p>
+<p>For a root whose left subtree has height <code>2</code> and right subtree has height <code>1</code>, return <code>1 + max(2, 1) = 3</code>.
+For a node-count problem, the same pattern becomes <code>1 + left + right</code> instead.</p>
+</div></details><a id="33-return-bool-check-a-condition"></a><h4 id="323-return-bool-check-a-condition">3.2.3 Return bool: check a condition<a class="heading-anchor" href="#323-return-bool-check-a-condition" aria-label="Link to 3.2.3 Return bool: check a condition">#</a></h4>
+<p><strong>Template:</strong> handle empty cases → reject a local mismatch → combine recursive checks.</p>
+<p>Use <strong><code>and</code></strong> when both branches must pass. Use <strong><code>or</code></strong> when finding one successful branch is enough. The empty-tree result depends on the question: an empty BST is valid, but an empty tree has no root-to-leaf path.</p>
+<details class="coding-drill" id="coding-dfs-returns-bool--same-tree-ready"><summary><span>Coding: DFS returns bool — same tree <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><p><a href="https://leetcode.com/problems/same-tree/" target="_blank" rel="noopener noreferrer">100. Same Tree</a> checks both structure and values. This DFS compares a <strong>pair of nodes</strong>, not just one node.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">same_tree</span>(<span class="hljs-params">p, q</span>):
+    <span class="hljs-keyword">if</span> p <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">or</span> q <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">return</span> p <span class="hljs-keyword">is</span> q  <span class="hljs-comment"># True only when both are None.</span>
+    <span class="hljs-keyword">if</span> p.val != q.val:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+    <span class="hljs-keyword">return</span> same_tree(p.left, q.left) <span class="hljs-keyword">and</span> same_tree(p.right, q.right)</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(min(n1, n2) + 1)</code> worst case, where <code>n1</code> and <code>n2</code> are the two tree sizes. Each matching node pair is compared once, and a mismatch can stop the search early. The <code>+1</code> covers an empty-tree comparison.</p>
+<p><strong>Space complexity:</strong> <code>O(min(h1, h2) + 1)</code> extra space for the recursion stack, where <code>h1</code> and <code>h2</code> are the two heights. Recursion only continues while both nodes exist; branches run sequentially, not with separate full stacks.</p>
+<p>Both empty → <code>True</code>; only one empty → <code>False</code>; otherwise values and both matching child pairs must agree.
+For mirror symmetry, compare opposite children instead: left with right, then right with left.</p>
+</div></details><details class="coding-drill" id="coding-dfs-returns-bool--validate-bst-with-bounds-ready"><summary><span>Coding: DFS returns bool — validate BST with bounds <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><p><a href="https://leetcode.com/problems/validate-binary-search-tree/" target="_blank" rel="noopener noreferrer">98. Validate Binary Search Tree</a> needs <strong>ancestor constraints</strong>, not just parent-child comparisons. Pass the allowed interval downward; return validity upward. Values must lie strictly inside the interval, so duplicates are invalid.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_valid_bst</span>(<span class="hljs-params">root</span>):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">node, low, high</span>):
+        <span class="hljs-keyword">if</span> node <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> low &lt; node.val &lt; high:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+        <span class="hljs-keyword">return</span> (dfs(node.left, low, node.val)
+                <span class="hljs-keyword">and</span> dfs(node.right, node.val, high))
+
+    <span class="hljs-keyword">return</span> dfs(root, <span class="hljs-built_in">float</span>(<span class="hljs-string">&quot;-inf&quot;</span>), <span class="hljs-built_in">float</span>(<span class="hljs-string">&quot;inf&quot;</span>))</code></pre></div>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">        5
+       / \
+      3   8
+         / \
+        4   9
+
+4 &lt; 8, but 4 is also right of 5.
+Its allowed range is (5, 8): invalid.</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n)</code> worst case. Each node is checked once against its inherited bounds; an invalid value or failed branch can stop the search early.</p>
+<p><strong>Space complexity:</strong> <code>O(h)</code> extra space for recursion. Each call stores only a node reference and two bounds, not a copy of its subtree.</p>
+</div></details><a id="34-return-node-rebuild-a-subtree"></a><h4 id="324-return-node-rebuild-a-subtree">3.2.4 Return node: rebuild a subtree<a class="heading-anchor" href="#324-return-node-rebuild-a-subtree" aria-label="Link to 3.2.4 Return node: rebuild a subtree">#</a></h4>
+<p><strong>Template:</strong> return the updated subtree root, and let the caller reconnect it.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">node.left  = dfs(node.left, ...)
+node.right = dfs(node.right, ...)
+return node</code></pre></div>
+<p>These are pointer assignments, not copies of entire subtrees. If a recursive call returns a replacement node or <code>None</code>, the parent must store that result. Reassigning a local parameter alone does not change the parent&#39;s child pointer.</p>
+<p><strong>At the top level, capture the result too:</strong> <code>root = insert_bst(root, value)</code> or <code>root = delete_bst(root, key)</code>.</p>
+<details class="coding-drill" id="coding-dfs-returns-an-updated-root--bst-insertion-ready"><summary><span>Coding: DFS returns an updated root — BST insertion <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><p><a href="https://leetcode.com/problems/insert-into-a-binary-search-tree/" target="_blank" rel="noopener noreferrer">701. Insert into a Binary Search Tree</a> follows one branch using the BST ordering. Reaching <code>None</code> means the insertion position has been found: return a new node.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">insert_bst</span>(<span class="hljs-params">root, val</span>):
+    <span class="hljs-keyword">if</span> root <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">return</span> TreeNode(val)
+
+    <span class="hljs-keyword">if</span> val &lt; root.val:
+        root.left = insert_bst(root.left, val)
+    <span class="hljs-keyword">elif</span> val &gt; root.val:
+        root.right = insert_bst(root.right, val)
+    <span class="hljs-keyword">return</span> root</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(h)</code>. BST ordering selects one root-to-insertion path: <code>O(log n)</code> for a balanced tree, but <code>O(n)</code> for a chain.</p>
+<p><strong>Space complexity:</strong> <code>O(h)</code> extra space for recursion, plus <code>O(1)</code> for the new node. The existing tree is updated in place rather than copied.</p>
+<p>LeetCode guarantees a new value; this reusable version leaves an existing value unchanged.</p>
+<p><strong>Insert <code>4</code> into a tree rooted at <code>5</code> with left child <code>3</code>:</strong> the call on <code>3.right</code> receives <code>None</code>, returns <code>TreeNode(4)</code>, and the caller stores it in <code>3.right</code>. The next returns are node <code>3</code>, then node <code>5</code>—the updated root at each level.</p>
+</div></details><details class="coding-drill" id="coding-dfs-returns-an-updated-root--bst-deletion-ready"><summary><span>Coding: DFS returns an updated root — BST deletion <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><p>For <a href="https://leetcode.com/problems/delete-node-in-a-bst/" target="_blank" rel="noopener noreferrer">450. Delete Node in a BST</a>, first find the target, then choose its replacement:</p>
+<ul>
+<li><strong>No children:</strong> return <code>None</code>.</li>
+<li><strong>One child:</strong> return that child, bypassing the deleted node.</li>
+<li><strong>Two children:</strong> copy the smallest value from the right subtree (the successor), then delete that successor from the right subtree.</li>
+</ul>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">delete_bst</span>(<span class="hljs-params">root, key</span>):
+    <span class="hljs-keyword">if</span> root <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+
+    <span class="hljs-keyword">if</span> key &lt; root.val:
+        root.left = delete_bst(root.left, key)
+    <span class="hljs-keyword">elif</span> key &gt; root.val:
+        root.right = delete_bst(root.right, key)
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">if</span> root.left <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">return</span> root.right  <span class="hljs-comment"># Also handles a leaf: returns None.</span>
+        <span class="hljs-keyword">if</span> root.right <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">return</span> root.left
+
+        successor = root.right
+        <span class="hljs-keyword">while</span> successor.left <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:
+            successor = successor.left
+        root.val = successor.val
+        root.right = delete_bst(root.right, successor.val)
+
+    <span class="hljs-keyword">return</span> root</code></pre></div>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">Delete 3: return its child 4.
+
+      5                 5
+     / \               / \
+    3   8     -&gt;      4   8
+     \
+      4
+
+Delete 5: successor is 7.
+
+      5                 7
+     / \               / \
+    3   8     -&gt;      3   8
+       / \                 \
+      7   9                 9</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(h)</code>. Finding the target and, when needed, finding and deleting its successor follow paths bounded by the tree height. Walking the successor path twice changes only the constant factor: balanced <code>O(log n)</code>, skewed <code>O(n)</code>.</p>
+<p><strong>Space complexity:</strong> <code>O(h)</code> extra space for recursion. The successor search uses one additional pointer, and deletion reconnects existing nodes without allocating a replacement tree.</p>
+<p>In the first example, <code>root.val == 5</code>, and <code>root.left = delete_bst(root.left, 3)</code> reconnects the returned node <code>4</code>.
+In the second, the old root object remains, but its value changes to <code>7</code>; the original successor node is removed from its old position. Do not copy the value and forget the second deletion.</p>
+<p>Missing deletion keys leave the tree unchanged. These operations do not rebalance a skewed tree.</p>
+</div></details><a id="35-return-node-find-an-answer"></a><h4 id="325-return-node-find-an-answer">3.2.5 Return node: find an answer<a class="heading-anchor" href="#325-return-node-find-an-answer" aria-label="Link to 3.2.5 Return node: find an answer">#</a></h4>
+<p>A returned node can instead be a <strong>search result</strong>, with no tree modification. For <a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/" target="_blank" rel="noopener noreferrer">236. Lowest Common Ancestor of a Binary Tree</a>, return a target found below, or the ancestor where the two search results meet.</p>
+<details class="coding-drill" id="coding-dfs-returns-a-candidate-node--lowest-common-ancestor-ready"><summary><span>Coding: DFS returns a candidate node — lowest common ancestor <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">lowest_common_ancestor</span>(<span class="hljs-params">root, p, q</span>):
+    <span class="hljs-keyword">if</span> root <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">or</span> root <span class="hljs-keyword">is</span> p <span class="hljs-keyword">or</span> root <span class="hljs-keyword">is</span> q:
+        <span class="hljs-keyword">return</span> root
+
+    left = lowest_common_ancestor(root.left, p, q)
+    right = lowest_common_ancestor(root.right, p, q)
+
+    <span class="hljs-keyword">if</span> left <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> right <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:
+        <span class="hljs-keyword">return</span> root
+    <span class="hljs-keyword">return</span> left <span class="hljs-keyword">if</span> left <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">else</span> right</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n)</code> worst case. Unlike a BST search, both subtrees may need to be explored; each node is visited at most once.</p>
+<p><strong>Space complexity:</strong> <code>O(h)</code> extra space for recursion. The answer is one reference to an existing node, so output space is <code>O(1)</code>.</p>
+<ul>
+<li>Results on <strong>both sides</strong> → this node is where the targets meet.</li>
+<li>Result on <strong>one side</strong> → pass that result upward.</li>
+<li>Neither side → return <code>None</code>.</li>
+</ul>
+<p>Use <code>is</code> to compare node identity, not just values. If <code>p</code> is itself an ancestor of <code>q</code>, returning <code>p</code> is correct.
+This version relies on the problem&#39;s guarantee that <strong>both targets exist</strong>. It does not independently verify their presence; if that guarantee disappears, track whether each was found.</p>
+<p>Unlike insertion/deletion, do <strong>not</strong> assign the returned candidate to <code>root.left</code> or <code>root.right</code>: that would change the tree.</p>
+</div></details><a id="36-return-none-collect-paths"></a><h4 id="326-return-none-collect-paths">3.2.6 Return None: collect paths<a class="heading-anchor" href="#326-return-none-collect-paths" aria-label="Link to 3.2.6 Return None: collect paths">#</a></h4>
+<p><strong>Template:</strong> append → explore children → pop. DFS changes a shared path and result list instead of returning the answer from every call. This is backtracking on a tree whose shape is given: the choose, explore, undo of <a href="#332-the-shared-pattern-choose-explore-undo">3.3.2</a>, with the two children as the only choices.</p>
+<p>For <a href="https://leetcode.com/problems/path-sum-ii/" target="_blank" rel="noopener noreferrer">113. Path Sum II</a>, save a path only when it reaches a <strong>leaf</strong> and its sum matches the target.</p>
+<details class="coding-drill" id="coding-dfs-with-backtracking--root-to-leaf-paths-ready"><summary><span>Coding: DFS with backtracking — root-to-leaf paths <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">path_sum</span>(<span class="hljs-params">root, target_sum</span>):
+    result, path = [], []
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">node, remaining</span>):
+        <span class="hljs-keyword">if</span> node <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">return</span>
+
+        path.append(node.val)
+        remaining -= node.val
+        <span class="hljs-keyword">if</span> node.left <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">and</span> node.right <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">if</span> remaining == <span class="hljs-number">0</span>:
+                result.append(path.copy())
+        <span class="hljs-keyword">else</span>:
+            dfs(node.left, remaining)
+            dfs(node.right, remaining)
+        path.pop()
+
+    dfs(root, target_sum)
+    <span class="hljs-keyword">return</span> result</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n + L)</code>, where <code>L</code> is the total number of values in all returned paths. DFS visits every node once, and each successful <code>path.copy()</code> costs the path length. Output copying can make the worst case <code>O(n²)</code>, not always <code>O(n)</code>.</p>
+<p><strong>Space complexity:</strong> <code>O(h)</code> working space for recursion and the current path, plus <code>O(L)</code> for the returned paths: <code>O(h + L)</code> total extra space. The output can occupy <code>O(n²)</code> in the worst case.</p>
+<p>The inner <code>dfs</code> returns <code>None</code>; the outer function returns the collected list.
+<code>path.copy()</code> saves a snapshot. Without the copy, results would refer to the same list that later gets popped.
+The final <code>pop()</code> restores the path before visiting a sibling; do not return early from a leaf and skip it.</p>
+<p><code>remaining</code> is an integer passed into each call, so its local subtraction needs no undo. Negative values are allowed: do not prune merely because <code>remaining &lt; 0</code>.</p>
+<p>For a tree with paths <code>1 → 2 → 5</code>, <code>1 → 2 → 4</code>, and <code>1 → 3 → 4</code>, target <code>8</code> gives <code>[[1, 2, 5], [1, 3, 4]]</code>.</p>
+</div></details><a id="37-return-a-tuple-combine-states"></a><h4 id="327-return-a-tuple-combine-states">3.2.7 Return a tuple: combine states<a class="heading-anchor" href="#327-return-a-tuple-combine-states" aria-label="Link to 3.2.7 Return a tuple: combine states">#</a></h4>
+<p>Sometimes a boolean answer is not enough for the parent. <a href="https://leetcode.com/problems/balanced-binary-tree/" target="_blank" rel="noopener noreferrer">110. Balanced Binary Tree</a> needs both <strong>“is this subtree balanced?”</strong> and <strong>“how tall is it?”</strong>.</p>
+<details class="coding-drill" id="coding-dfs-returns-two-facts--balanced-tree-ready"><summary><span>Coding: DFS returns two facts — balanced tree <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_balanced</span>(<span class="hljs-params">root</span>):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">node</span>):
+        <span class="hljs-keyword">if</span> node <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>, <span class="hljs-number">0</span>
+
+        left_ok, left_h = dfs(node.left)
+        right_ok, right_h = dfs(node.right)
+        ok = left_ok <span class="hljs-keyword">and</span> right_ok <span class="hljs-keyword">and</span> <span class="hljs-built_in">abs</span>(left_h - right_h) &lt;= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> ok, <span class="hljs-number">1</span> + <span class="hljs-built_in">max</span>(left_h, right_h)
+
+    balanced, _ = dfs(root)
+    <span class="hljs-keyword">return</span> balanced</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n)</code>. Each subtree&#39;s height and balance are computed once. This implementation visits both children even if the left subtree is already unbalanced.</p>
+<p><strong>Space complexity:</strong> <code>O(h)</code> extra space for recursion. Each call keeps a constant-size tuple and a few local values, rather than storing results for all nodes simultaneously.</p>
+<p>The recursive contract is always <code>(balanced, height)</code>; the outer function keeps only the boolean.
+The condition must hold at <strong>every node</strong>, not just the root. Repeatedly recalculating subtree heights instead can take <code>O(n²)</code> on a chain.</p>
+</div></details><a id="38-return-value-versus-final-answer"></a><h4 id="328-return-value-versus-final-answer">3.2.8 Return value versus final answer<a class="heading-anchor" href="#328-return-value-versus-final-answer" aria-label="Link to 3.2.8 Return value versus final answer">#</a></h4>
+<p>For <a href="https://leetcode.com/problems/diameter-of-binary-tree/" target="_blank" rel="noopener noreferrer">543. Diameter of Binary Tree</a>, DFS returns <strong>one downward height</strong> to its parent, but the final answer may use <strong>both branches</strong>. The diameter counts edges and may lie entirely below the root.</p>
+<details class="coding-drill" id="coding-dfs-returns-height-but-updates-diameter-ready"><summary><span>Coding: DFS returns height, but updates diameter <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">diameter</span>(<span class="hljs-params">root</span>):
+    best = <span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">height</span>(<span class="hljs-params">node</span>):
+        <span class="hljs-keyword">nonlocal</span> best
+        <span class="hljs-keyword">if</span> node <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+
+        left = height(node.left)
+        right = height(node.right)
+        best = <span class="hljs-built_in">max</span>(best, left + right)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> + <span class="hljs-built_in">max</span>(left, right)
+
+    height(root)
+    <span class="hljs-keyword">return</span> best</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n)</code>. Each node contributes one height calculation and one constant-time diameter update; subtree heights are not recalculated separately.</p>
+<p><strong>Space complexity:</strong> <code>O(h)</code> extra space for recursion. The shared <code>best</code> variable and the returned number use only <code>O(1)</code> additional space.</p>
+<p>If <code>left = 2</code> and <code>right = 2</code>, the candidate diameter through this node is <code>4</code> edges, but it returns height <code>3</code> to its parent.
+The parent can extend only <strong>one branch</strong> through this node; returning <code>left + right</code> would incorrectly let it reuse a fork as a single path.
+<code>nonlocal best</code> updates the enclosing function&#39;s variable, and <code>best</code> starts fresh for each call.</p>
+</div></details><a id="39-traversal-order-and-common-mistakes"></a><h4 id="329-traversal-order-and-common-mistakes">3.2.9 Traversal order and common mistakes<a class="heading-anchor" href="#329-traversal-order-and-common-mistakes" aria-label="Link to 3.2.9 Traversal order and common mistakes">#</a></h4>
+<ul>
+<li><strong>Preorder: node → left → right.</strong> Useful when passing current-path state downward, such as a path or ancestor bounds.</li>
+<li><strong>Inorder: left → node → right.</strong> Visits a strict BST in increasing value order; useful for ordered enumeration and kth-smallest problems.</li>
+<li><strong>Postorder: left → right → node.</strong> Combine child answers after recursion: height, balance, diameter.</li>
+</ul>
+<p>These describe where the useful work happens; they are not separate return types.</p>
+<p>Before finishing a solution, check:</p>
+<ol>
+<li><strong>Empty tree versus leaf:</strong> <code>node is None</code> is not the same as a node with no children.</li>
+<li><strong>Return meaning stays consistent:</strong> a height is not a diameter; an answer node is not necessarily a replacement root.</li>
+<li><strong>Mutation needs reconnection:</strong> keep returned child roots and the returned top-level root.</li>
+<li><strong>Path state needs restoration:</strong> copy saved paths, and pop before returning to the parent.</li>
+<li><strong>Use the actual guarantees:</strong> BST ordering, duplicate policy, and target existence change the algorithm.</li>
+</ol>
+<a id="4-backtracking"></a><h3 id="33-backtracking">3.3 Backtracking<a class="heading-anchor" href="#33-backtracking" aria-label="Link to 3.3 Backtracking">#</a></h3>
+<p>Backtracking is DFS over a <strong>tree of choices</strong>: choose something, explore what follows, then undo that choice before trying the next option. It is the path collection of <a href="#326-return-none-collect-paths">3.2.6</a>, except that the code builds the tree as it goes: each node&#39;s children are the choices still allowed. The three core patterns are <strong>subsets, combinations, and permutations</strong>.</p>
+<a id="41-first-decide-whether-order-and-length-matter"></a><h4 id="331-first-decide-whether-order-and-length-matter">3.3.1 First decide whether order and length matter<a class="heading-anchor" href="#331-first-decide-whether-order-and-length-matter" aria-label="Link to 3.3.1 First decide whether order and length matter">#</a></h4>
+<p>For <code>nums = [1, 2, 3]</code>:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Type</th><th>What counts as an answer?</th><th>Does order matter?</th><th>When do we save <code>path</code>?</th></tr></thead><tbody><tr><td>Subsets</td><td>Any selection: <code>[]</code>, <code>[1]</code>, <code>[1, 3]</code>, ...</td><td>No: <code>[1, 2]</code> and <code>[2, 1]</code> represent the same selection</td><td>At every recursion node</td></tr><tr><td>Combinations</td><td>A selection satisfying a condition, such as exactly <code>k = 2</code> elements</td><td>No: keep just one ordering, such as <code>[1, 2]</code></td><td>When the size or target condition is met</td></tr><tr><td>Permutations</td><td>An ordering of all elements: <code>[1, 2, 3]</code>, <code>[2, 1, 3]</code>, ...</td><td>Yes: these are different answers</td><td>When every position has been filled</td></tr></tbody></table></div><p><strong>Two main selection rules:</strong></p>
+<ul>
+<li><strong>Subsets / combinations:</strong> use <code>start</code> so indices only move forward. This avoids generating different orderings of the same selection.</li>
+<li><strong>Permutations:</strong> consider every index at each position, but use <code>used[i]</code> to prevent reusing an index already in the current path.</li>
+</ul>
+<p>The first three templates assume distinct input values. Reusing an element and handling duplicate input values are separate variations, introduced below.</p>
+<a id="42-the-shared-pattern-choose-explore-undo"></a><h4 id="332-the-shared-pattern-choose-explore-undo">3.3.2 The shared pattern: choose, explore, undo<a class="heading-anchor" href="#332-the-shared-pattern-choose-explore-undo" aria-label="Link to 3.3.2 The shared pattern: choose, explore, undo">#</a></h4>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">path describes the choices made so far
+
+for each allowed choice:
+    choose       → append to path; mark used if necessary
+    explore      → recurse
+    undo         → pop from path; clear used if necessary</code></pre></div>
+<p><code>dfs</code> usually returns <code>None</code>; it appends completed answers to an outer <code>result</code> list. The outer function returns that list. Use <strong><code>path.copy()</code></strong> when saving an answer: otherwise every result could refer to the same list that later changes.</p>
+<p>For example, after exploring the branch starting with <code>1</code>:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">[] → [1] → [1, 2] → pop → [1] → [1, 3] → pop → [1]
+                                                   │
+                                                 pop
+                                                   ▼
+                                                  []</code></pre></div>
+<p>The final undo lets the caller try a different first choice. <code>pop()</code> does not remove an already saved copy from <code>result</code>.</p>
+<p>In the analyses below, <strong>working space excludes the returned answers</strong>. Output copying matters: generating exponentially many lists cannot take only linear time or total space.</p>
+<a id="43-subsets-save-every-node"></a><h4 id="333-subsets-save-every-node">3.3.3 Subsets: save every node<a class="heading-anchor" href="#333-subsets-save-every-node" aria-label="Link to 3.3.3 Subsets: save every node">#</a></h4>
+<p>For <a href="https://leetcode.com/problems/subsets/description/" target="_blank" rel="noopener noreferrer">78. Subsets</a>, every partial selection is already a valid answer, including <code>[]</code>. After choosing index <code>i</code>, recurse with <strong><code>i + 1</code></strong>: that index cannot be reused.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">[]                         Save every node in this tree.
+├── [1]
+│   ├── [1, 2]
+│   │   └── [1, 2, 3]
+│   └── [1, 3]
+├── [2]
+│   └── [2, 3]
+└── [3]</code></pre></div>
+<details class="coding-drill" id="coding-leetcode-78--subsets-ready"><summary><span>Coding: LeetCode 78 — Subsets <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">subsets</span>(<span class="hljs-params">nums</span>):
+    result, path = [], []
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">start</span>):
+        result.append(path.copy())
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(start, <span class="hljs-built_in">len</span>(nums)):
+            path.append(nums[i])
+            dfs(i + <span class="hljs-number">1</span>)
+            path.pop()
+
+    dfs(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> result</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n * 2^n)</code>, where <code>n = len(nums)</code>. There are <code>2^n</code> subsets, and saving a subset copies up to <code>n</code> values.</p>
+<p><strong>Space complexity:</strong> <code>O(n)</code> working space for the current path and recursion stack, plus <code>O(n * 2^n)</code> output space. The empty input returns <code>[[]]</code> in constant time and space.</p>
+<p><code>start</code> is the <strong>first allowed next index</strong>, not the current depth. After choosing <code>2</code>, we never go backward and choose <code>1</code>, so <code>[2, 1]</code> is not generated again.</p>
+</div></details><a id="44-combinations-save-only-when-the-size-reaches-k"></a><h4 id="334-combinations-save-only-when-the-size-reaches-k">3.3.4 Combinations: save only when the size reaches k<a class="heading-anchor" href="#334-combinations-save-only-when-the-size-reaches-k" aria-label="Link to 3.3.4 Combinations: save only when the size reaches k">#</a></h4>
+<p>For <a href="https://leetcode.com/problems/combinations/description/" target="_blank" rel="noopener noreferrer">77. Combinations</a>, choose <code>k</code> distinct numbers from <code>1..n</code>. This is the subsets pattern with a different saving condition.</p>
+<p>For <code>n = 4, k = 2</code>, return <code>[[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]</code>. Do not save <code>[1]</code>, and do not continue to <code>[1, 2, 3]</code>.</p>
+<details class="coding-drill" id="coding-leetcode-77--combinations-ready"><summary><span>Coding: LeetCode 77 — Combinations <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">combine</span>(<span class="hljs-params">n, k</span>):
+    <span class="hljs-keyword">if</span> k &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> k &gt; n:
+        <span class="hljs-keyword">return</span> []
+    result, path = [], []
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">start</span>):
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(path) == k:
+            result.append(path.copy())
+            <span class="hljs-keyword">return</span>
+
+        needed = k - <span class="hljs-built_in">len</span>(path)
+        <span class="hljs-comment"># Leave enough numbers to fill the remaining positions.</span>
+        <span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(start, n - needed + <span class="hljs-number">2</span>):
+            path.append(value)
+            dfs(value + <span class="hljs-number">1</span>)
+            path.pop()
+
+    dfs(<span class="hljs-number">1</span>)
+    <span class="hljs-keyword">return</span> result</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(k * C(n, k))</code> for <code>1 &lt;= k &lt;= n</code>, where <code>C(n, k)</code> is the number of size-<code>k</code> combinations. The loop skips prefixes that cannot be completed, and copying each answer costs <code>O(k)</code>. <code>k = 0</code> and invalid <code>k</code> return in <code>O(1)</code> time.</p>
+<p><strong>Space complexity:</strong> <code>O(k)</code> working space for recursion and the current selection, plus <code>O(k * C(n, k))</code> output space. For <code>k = 0</code>, the result is <code>[[]]</code> with constant space.</p>
+<p><strong>Why that loop bound?</strong> If <code>n = 4</code> and we still need two numbers, the next value can be at most <code>3</code>: choosing <code>4</code> leaves no second number. The last allowed value is <code>n - needed + 1</code>; Python&#39;s <code>range</code> excludes its upper endpoint, hence <code>+2</code>.</p>
+<p>That is <strong>pruning</strong>: skip a branch once we know it cannot produce an answer. The important template remains <code>start</code>, choose, recurse forward, and undo.</p>
+</div></details><a id="45-permutations-fill-positions-with-unused-indices"></a><h4 id="335-permutations-fill-positions-with-unused-indices">3.3.5 Permutations: fill positions with unused indices<a class="heading-anchor" href="#335-permutations-fill-positions-with-unused-indices" aria-label="Link to 3.3.5 Permutations: fill positions with unused indices">#</a></h4>
+<p>For <a href="https://leetcode.com/problems/permutations/description/" target="_blank" rel="noopener noreferrer">46. Permutations</a>, order matters. After choosing <code>2</code>, we must still be allowed to choose <code>1</code>, so a forward-only <code>start</code> would miss valid answers.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">[]
+├── [1] → [1, 2] → [1, 2, 3]
+│       → [1, 3] → [1, 3, 2]
+├── [2] → [2, 1] → [2, 1, 3]
+│       → [2, 3] → [2, 3, 1]
+└── [3] → [3, 1] → [3, 1, 2]
+        → [3, 2] → [3, 2, 1]</code></pre></div>
+<details class="coding-drill" id="coding-leetcode-46--permutations-ready"><summary><span>Coding: LeetCode 46 — Permutations <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">permute</span>(<span class="hljs-params">nums</span>):
+    result, path = [], []
+    used = [<span class="hljs-literal">False</span>] * <span class="hljs-built_in">len</span>(nums)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>():
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(path) == <span class="hljs-built_in">len</span>(nums):
+            result.append(path.copy())
+            <span class="hljs-keyword">return</span>
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nums)):
+            <span class="hljs-keyword">if</span> used[i]:
+                <span class="hljs-keyword">continue</span>
+            used[i] = <span class="hljs-literal">True</span>
+            path.append(nums[i])
+            dfs()
+            path.pop()
+            used[i] = <span class="hljs-literal">False</span>
+
+    dfs()
+    <span class="hljs-keyword">return</span> result</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n * n!)</code>, where <code>n = len(nums)</code>. There are <code>n!</code> complete permutations; copying each one costs <code>O(n)</code>. Scanning the indices at intermediate nodes fits within this bound.</p>
+<p><strong>Space complexity:</strong> <code>O(n)</code> working space for <code>used</code>, <code>path</code>, and recursion, plus <code>O(n * n!)</code> output space. Empty input returns <code>[[]]</code> in constant space.</p>
+<p><code>used</code> belongs to the <strong>current path</strong>, not the whole search. When <code>[1, 2, 3]</code> is finished, undoing the choices allows those indices to participate in <code>[1, 3, 2]</code> and every other branch.</p>
+</div></details><a id="46-allow-reusing-an-element-i-instead-of-i--1"></a><h4 id="336-allow-reusing-an-element-i-instead-of-i--1">3.3.6 Allow reusing an element: i instead of i + 1<a class="heading-anchor" href="#336-allow-reusing-an-element-i-instead-of-i--1" aria-label="Link to 3.3.6 Allow reusing an element: i instead of i + 1">#</a></h4>
+<p>For <a href="https://leetcode.com/problems/combination-sum/description/" target="_blank" rel="noopener noreferrer">39. Combination Sum</a>, candidates are distinct positive integers and a chosen value may be reused. Order still does not matter.</p>
+<p>Change the next start index from <strong><code>i + 1</code> to <code>i</code></strong>. For <code>[2, 3, 6, 7]</code>, target <code>7</code>, the results are <code>[[2, 2, 3], [7]]</code>. We can choose <code>2</code> again without generating reordered duplicates such as <code>[3, 2, 2]</code>.</p>
+<details class="coding-drill" id="coding-leetcode-39--combination-sum-ready"><summary><span>Coding: LeetCode 39 — Combination Sum <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">combination_sum</span>(<span class="hljs-params">candidates, target</span>):
+    values = <span class="hljs-built_in">sorted</span>(candidates)
+    result, path = [], []
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">start, remaining</span>):
+        <span class="hljs-keyword">if</span> remaining == <span class="hljs-number">0</span>:
+            result.append(path.copy())
+            <span class="hljs-keyword">return</span>
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(start, <span class="hljs-built_in">len</span>(values)):
+            <span class="hljs-keyword">if</span> values[i] &gt; remaining:
+                <span class="hljs-keyword">break</span>
+            path.append(values[i])
+            dfs(i, remaining - values[i])  <span class="hljs-comment"># Reuse this value.</span>
+            path.pop()
+
+    dfs(<span class="hljs-number">0</span>, target)
+    <span class="hljs-keyword">return</span> result</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n log n + S + L)</code>, where <code>n</code> is the candidate count, <code>S</code> is the number of recursive search states visited, and <code>L</code> is the total number of values copied into the output. Sorting costs <code>O(n log n)</code>; every successful loop iteration creates one child state, with at most one final <code>break</code> per state. The search can be exponential, and its depth depends on the target, not just <code>n</code>.</p>
+<p><strong>Space complexity:</strong> <code>O(n + D)</code> working space for the sorted copy, path, and stack, plus <code>O(L)</code> output space, where <code>D = target // min(candidates)</code> for nonempty positive candidates. Empty candidates or target zero need only the corresponding constant-depth search.</p>
+<p>Sorting makes <code>break</code> valid: if this value is already too large, every later value is too large too. <code>sorted</code> leaves the caller&#39;s list unchanged. Positivity is essential: allowing unlimited zero or negative values would invalidate the shrinking-remainder argument and can make the search nonterminating.</p>
+</div></details><a id="47-duplicate-inputs-skip-duplicate-branches-not-valid-repeated-values"></a><h4 id="337-duplicate-inputs-skip-duplicate-branches-not-valid-repeated-values">3.3.7 Duplicate inputs: skip duplicate branches, not valid repeated values<a class="heading-anchor" href="#337-duplicate-inputs-skip-duplicate-branches-not-valid-repeated-values" aria-label="Link to 3.3.7 Duplicate inputs: skip duplicate branches, not valid repeated values">#</a></h4>
+<p><strong>Input duplicates are not the same as permission to reuse an index.</strong> In <code>[1, 1, 2]</code>, the two <code>1</code>s occupy different indices. We may use both when allowed, but must not emit the same answer twice.</p>
+<p>Sort a copy first so equal values are adjacent. The central rule is: <strong>skip equal alternatives at the same depth</strong>, not equal values anywhere in the path.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">Sorted input: [1a, 1b, 2]      a/b distinguish equal-valued indices.
+
+[]
+├── choose 1a → [1] → choose 1b → [1, 1]   valid deeper choice
+├── choose 1b → [1]                         duplicate sibling: skip
+└── choose 2  → [2]</code></pre></div>
+<details class="coding-drill" id="coding-leetcode-90--subsets-ii-ready"><summary><span>Coding: LeetCode 90 — Subsets II <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><p><a href="https://leetcode.com/problems/subsets-ii/description/" target="_blank" rel="noopener noreferrer">90. Subsets II</a> adds one same-depth duplicate check to the subsets template.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">subsets_with_dup</span>(<span class="hljs-params">nums</span>):
+    values = <span class="hljs-built_in">sorted</span>(nums)
+    result, path = [], []
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">start</span>):
+        result.append(path.copy())
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(start, <span class="hljs-built_in">len</span>(values)):
+            <span class="hljs-keyword">if</span> i &gt; start <span class="hljs-keyword">and</span> values[i] == values[i - <span class="hljs-number">1</span>]:
+                <span class="hljs-keyword">continue</span>
+            path.append(values[i])
+            dfs(i + <span class="hljs-number">1</span>)
+            path.pop()
+
+    dfs(<span class="hljs-number">0</span>)
+    <span class="hljs-keyword">return</span> result</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n log n + n * 2^n)</code> worst case, including sorting and copying results. Duplicates reduce the number of unique subsets; the no-duplicate input gives the exponential worst case.</p>
+<p><strong>Space complexity:</strong> <code>O(n)</code> working space for sorting, the current path, and recursion. Returned subsets take up to <code>O(n * 2^n)</code> space.</p>
+<p>For <code>[1, 2, 2]</code>, return <code>[]</code>, <code>[1]</code>, <code>[1, 2]</code>, <code>[1, 2, 2]</code>, <code>[2]</code>, and <code>[2, 2]</code>, each once. <strong><code>i &gt; start</code></strong> means another equal choice was already offered in this call. Using <code>i &gt; 0</code> instead would incorrectly block taking the second <code>2</code> in a deeper call.</p>
+</div></details><details class="coding-drill" id="coding-leetcode-40--combination-sum-ii-ready"><summary><span>Coding: LeetCode 40 — Combination Sum II <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><p><a href="https://leetcode.com/problems/combination-sum-ii/description/" target="_blank" rel="noopener noreferrer">40. Combination Sum II</a> allows duplicate positive candidates, but each input index may be used at most once. Combine the same-depth skip with <strong><code>dfs(i + 1, ...)</code></strong>.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">combination_sum2</span>(<span class="hljs-params">candidates, target</span>):
+    values = <span class="hljs-built_in">sorted</span>(candidates)
+    result, path = [], []
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">start, remaining</span>):
+        <span class="hljs-keyword">if</span> remaining == <span class="hljs-number">0</span>:
+            result.append(path.copy())
+            <span class="hljs-keyword">return</span>
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(start, <span class="hljs-built_in">len</span>(values)):
+            <span class="hljs-keyword">if</span> i &gt; start <span class="hljs-keyword">and</span> values[i] == values[i - <span class="hljs-number">1</span>]:
+                <span class="hljs-keyword">continue</span>
+            <span class="hljs-keyword">if</span> values[i] &gt; remaining:
+                <span class="hljs-keyword">break</span>
+            path.append(values[i])
+            dfs(i + <span class="hljs-number">1</span>, remaining - values[i])
+            path.pop()
+
+    dfs(<span class="hljs-number">0</span>, target)
+    <span class="hljs-keyword">return</span> result</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n log n + n * 2^n)</code> as a conservative worst-case bound: sort, search a pruned subset tree, and copy successful combinations. Unlike Combination Sum, depth is at most <code>n</code> because each index is used once.</p>
+<p><strong>Space complexity:</strong> <code>O(n)</code> working space for the sorted copy, path, and stack, plus <code>O(L)</code> for returned values. Output is at most <code>O(n * 2^n)</code>; pruning and duplicate skipping can make it much smaller.</p>
+<p>For <code>[1, 1, 2]</code>, target <code>2</code>, return <code>[[1, 1], [2]]</code>. <code>[1, 1]</code> is valid because it uses two different input indices; the duplicate rule must not remove it.</p>
+</div></details><details class="coding-drill" id="coding-leetcode-47--permutations-ii-ready"><summary><span>Coding: LeetCode 47 — Permutations II <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><p><a href="https://leetcode.com/problems/permutations-ii/description/" target="_blank" rel="noopener noreferrer">47. Permutations II</a> keeps the permutation <code>used</code> array and adds a rule that equal-valued indices are selected in a consistent order.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">permute_unique</span>(<span class="hljs-params">nums</span>):
+    values = <span class="hljs-built_in">sorted</span>(nums)
+    result, path = [], []
+    used = [<span class="hljs-literal">False</span>] * <span class="hljs-built_in">len</span>(values)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>():
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(path) == <span class="hljs-built_in">len</span>(values):
+            result.append(path.copy())
+            <span class="hljs-keyword">return</span>
+
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(values)):
+            <span class="hljs-keyword">if</span> used[i]:
+                <span class="hljs-keyword">continue</span>
+            <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> values[i] == values[i - <span class="hljs-number">1</span>] <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> used[i - <span class="hljs-number">1</span>]:
+                <span class="hljs-keyword">continue</span>
+            used[i] = <span class="hljs-literal">True</span>
+            path.append(values[i])
+            dfs()
+            path.pop()
+            used[i] = <span class="hljs-literal">False</span>
+
+    dfs()
+    <span class="hljs-keyword">return</span> result</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n * n!)</code> as a worst-case bound, including sorting, candidate scans, and output copying. Duplicates reduce outputs, but this implementation still scans all <code>n</code> indices in each nonterminal call; one unique output does not imply linear runtime.</p>
+<p><strong>Space complexity:</strong> <code>O(n)</code> working space for sorting, <code>used</code>, <code>path</code>, and recursion, plus <code>O(n * U)</code> output space for <code>U</code> unique permutations. The worst-case output bound is <code>O(n * n!)</code>.</p>
+<p>For two equal values <code>1a</code> and <code>1b</code>:</p>
+<ul>
+<li>If <code>1a</code> is <strong>not used</strong> in the current path, choosing <code>1b</code> now would duplicate the sibling branch that chooses <code>1a</code>. Skip it.</li>
+<li>If <code>1a</code> <strong>is already used</strong>, choosing <code>1b</code> next is valid: this lets us build <code>[1, 1, 2]</code>.</li>
+</ul>
+<p>Thus <code>[1, 1, 2]</code> produces exactly <code>[[1, 1, 2], [1, 2, 1], [2, 1, 1]]</code>. <code>used[i]</code> means an <strong>index</strong> is taken; it does not mean every occurrence of that value is forbidden.</p>
+</div></details><a id="48-template-cheat-sheet-and-common-mistakes"></a><h4 id="338-template-cheat-sheet-and-common-mistakes">3.3.8 Template cheat sheet and common mistakes<a class="heading-anchor" href="#338-template-cheat-sheet-and-common-mistakes" aria-label="Link to 3.3.8 Template cheat sheet and common mistakes">#</a></h4>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Problem family</th><th>Loop over</th><th>Recursive update</th><th>Save when</th></tr></thead><tbody><tr><td>Subsets</td><td>Indices from <code>start</code></td><td><code>dfs(i + 1)</code></td><td>Every call</td></tr><tr><td>Fixed-size combinations</td><td>Values from <code>start</code>, leaving enough choices</td><td><code>dfs(value + 1)</code></td><td><code>len(path) == k</code></td></tr><tr><td>Combination Sum: reusable candidates</td><td>Indices from <code>start</code></td><td><code>dfs(i, remaining - value)</code></td><td><code>remaining == 0</code></td></tr><tr><td>Combination Sum II: each index once</td><td>Indices from <code>start</code>; skip equal siblings</td><td><code>dfs(i + 1, remaining - value)</code></td><td><code>remaining == 0</code></td></tr><tr><td>Permutations</td><td>Every unused index</td><td><code>dfs()</code> with updated <code>used</code></td><td><code>len(path) == n</code></td></tr></tbody></table></div><p>Before writing code, ask: <strong>Does order matter? Can an index be reused? Are there duplicate input values? What makes a path a complete answer?</strong></p>
+<p>Common mistakes:</p>
+<ol>
+<li><strong>Saving the shared list:</strong> append <code>path.copy()</code>, not <code>path</code>.</li>
+<li><strong>Forgetting undo:</strong> every <code>append</code> needs a matching <code>pop</code>; every <code>used[i] = True</code> needs a reset after recursion.</li>
+<li><strong>Moving from the wrong index:</strong> after choosing <code>i</code>, use <code>i + 1</code>, not <code>start + 1</code>, when reuse is forbidden.</li>
+<li><strong>Using <code>start</code> for permutations:</strong> it would lose answers such as <code>[2, 1, 3]</code>.</li>
+<li><strong>Globally banning equal values:</strong> skip duplicate sibling choices, while allowing valid equal values deeper in the path.</li>
+<li><strong>Unjustified pruning:</strong> sum-based <code>break</code> requires sorted positive candidates; those assumptions do not apply to every backtracking problem.</li>
+<li><strong>Ignoring output cost:</strong> include copying complete paths when explaining time and distinguish working space from returned results.</li>
+</ol>
+<p>The reusable functions also cover empty inputs: subsets/permutations of <code>[]</code> return <code>[[]]</code>; choosing zero elements returns <code>[[]]</code>; a positive-candidate combination summing to zero is the empty combination.</p>
+<a id="6-dfs--memoization"></a><h3 id="34-dfs--memoization">3.4 DFS + memoization<a class="heading-anchor" href="#34-dfs--memoization" aria-label="Link to 3.4 DFS + memoization">#</a></h3>
+<p>Backtracking (3.3) lists every answer, so its <code>dfs</code> returns nothing and appends finished paths to an outer list. Many problems only ask for a <strong>number</strong>: how many ways, the best length or the fewest pieces, or whether it is possible at all. Then <code>dfs</code> can <strong>return</strong> the answer for the subproblem its arguments describe. The same arguments are reached along many different paths, so caching each result turns an exponential search into one computation per distinct argument. This is top-down dynamic programming.</p>
+<a id="61-when-memoization-works"></a><h4 id="341-when-memoization-works">3.4.1 When memoization works<a class="heading-anchor" href="#341-when-memoization-works" aria-label="Link to 3.4.1 When memoization works">#</a></h4>
+<p>Three conditions must hold:</p>
+<ol>
+<li><strong><code>dfs</code> returns its result</strong> instead of appending to an outer list.</li>
+<li><strong>The result depends only on the arguments:</strong> no shared <code>path</code>, no <code>used</code> array, no outer counter that changes between calls.</li>
+<li><strong>The same arguments come back</strong> along different paths; otherwise the cache never hits.</li>
+</ol>
+<p>The cost then follows directly:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">time  = number of distinct states × work in one call (not counting the recursive calls)
+space = memo entries + recursion depth</code></pre></div>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Problem</th><th>State: the arguments</th><th><code>dfs(state)</code> returns</th><th>Combine the children with</th></tr></thead><tbody><tr><td>377. Combination Sum IV</td><td><code>remaining</code></td><td>number of ordered ways to reach exactly 0</td><td><code>+</code>: count</td></tr><tr><td>279. Perfect Squares</td><td><code>remaining</code></td><td>fewest perfect squares that sum to it</td><td><code>min</code>: fewest</td></tr><tr><td>300. Longest Increasing Subsequence</td><td><code>(i, prev)</code>, or just <code>i</code></td><td>length of the longest increasing subsequence from here</td><td><code>max</code>: best</td></tr><tr><td>139. Word Break</td><td><code>index</code></td><td>whether <code>s[index:]</code> splits into dictionary words</td><td><code>or</code>: any</td></tr><tr><td>416. Partition Equal Subset Sum</td><td><code>(i, remaining)</code></td><td>whether a subset of <code>nums[i:]</code> sums to <code>remaining</code></td><td><code>or</code>: take or skip</td></tr><tr><td>152. Maximum Product Subarray</td><td><code>i</code></td><td>the largest and the smallest product of a subarray ending at <code>i</code></td><td><code>max</code> and <code>min</code>, then <code>max</code> over all <code>i</code></td></tr></tbody></table></div><a id="62-the-shared-template"></a><h4 id="342-the-shared-template">3.4.2 The shared template<a class="heading-anchor" href="#342-the-shared-template" aria-label="Link to 3.4.2 The shared template">#</a></h4>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">memo = {}
+def dfs(state):
+    if state is a base case: return its value      # 1 way / length 0 / True
+    if state in memo: return memo[state]
+    result = identity                              # 0 for +, 0 for max of lengths, False for or
+    for each choice from this state:
+        result = combine(result, dfs(next state))
+    memo[state] = result                           # store every result, failures included
+    return result
+return dfs(start)</code></pre></div>
+<p>Decorating the inner <code>dfs</code> with <code>functools.cache</code> does the same bookkeeping. Because the inner function is created anew on every outer call, its cache never leaks into the next test case.</p>
+<p>Why it pays off, for <code>nums = [1, 2, 3]</code> and <code>target = 4</code> in 377:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">dfs(4)
+├── take 1 → dfs(3)
+│   ├── take 1 → dfs(2)    computed: 2 ways (1+1, 2); dfs(1) = 1 is computed inside it
+│   ├── take 2 → dfs(1)    memo hit: 1
+│   └── take 3 → dfs(0)    base case: 1               → dfs(3) = 2 + 1 + 1 = 4
+├── take 2 → dfs(2)        memo hit: 2
+└── take 3 → dfs(1)        memo hit: 1                → dfs(4) = 4 + 2 + 1 = 7</code></pre></div>
+<p>Without the memo, every subtree is rebuilt each time it appears, and the number of calls grows exponentially with <code>target</code>.</p>
+<a id="63-377-combination-sum-iv-count-ordered-ways-combine-with-"></a><h4 id="343-377-combination-sum-iv-count-ordered-ways-combine-with-">3.4.3 377. Combination Sum IV: count ordered ways, combine with +<a class="heading-anchor" href="#343-377-combination-sum-iv-count-ordered-ways-combine-with-" aria-label="Link to 3.4.3 377. Combination Sum IV: count ordered ways, combine with +">#</a></h4>
+<p><a href="https://leetcode.com/problems/combination-sum-iv/description/" target="_blank" rel="noopener noreferrer">377. Combination Sum IV</a>: given distinct positive <code>nums</code>, count the sequences that sum to <code>target</code>, where different orders count as different sequences. For <code>nums = [1, 2, 3]</code> and <code>target = 4</code> the answer is 7: <code>(1,1,1,1)</code>, <code>(1,1,2)</code>, <code>(1,2,1)</code>, <code>(2,1,1)</code>, <code>(2,2)</code>, <code>(1,3)</code> and <code>(3,1)</code>.</p>
+<p>Because order matters, any number may come next at every step, so the number of ways to finish depends only on how much is left. The state is <code>remaining</code>.</p>
+<details class="coding-drill" id="coding-leetcode-377--combination-sum-iv-ready"><summary><span>Coding: LeetCode 377 — Combination Sum IV <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">combination_sum4</span>(<span class="hljs-params">nums, target</span>):
+    memo = {}
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">remaining</span>):
+        <span class="hljs-keyword">if</span> remaining == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>                        <span class="hljs-comment"># one way: stop here</span>
+        <span class="hljs-keyword">if</span> remaining &lt; <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> remaining <span class="hljs-keyword">in</span> memo:
+            <span class="hljs-keyword">return</span> memo[remaining]
+        ways = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> nums:                  <span class="hljs-comment"># order matters: any number can come next</span>
+            ways += dfs(remaining - value)
+        memo[remaining] = ways
+        <span class="hljs-keyword">return</span> ways
+
+    <span class="hljs-keyword">return</span> dfs(target)</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(target * n)</code>, where <code>n = len(nums)</code>: at most <code>target + 1</code> states, each looping over the <code>n</code> numbers.</p>
+<p><strong>Space complexity:</strong> <code>O(target)</code> for the memo and for the recursion, which goes at most <code>target</code> levels deep when the smallest number is 1.</p>
+<p>The memo key is <code>remaining</code> alone, and that is exactly right. A signature such as <code>dfs(i, remaining)</code> whose <code>i</code> is never read (the loop variable overwrites it) only adds an unused argument; drop it. If order did <strong>not</strong> matter, as in <a href="https://leetcode.com/problems/coin-change-ii/description/" target="_blank" rel="noopener noreferrer">518. Coin Change II</a>, <code>(1, 3)</code> and <code>(3, 1)</code> would be one answer. The state would then also need where the choices may start, <code>dfs(start, remaining)</code> looping <code>for i in range(start, n)</code>, which is the <code>start</code> rule of <a href="#336-allow-reusing-an-element-i-instead-of-i--1">Combination Sum</a> in the backtracking part. The problem requires positive numbers: with a zero or a negative value, the same <code>remaining</code> could recur forever.</p>
+</div></details><a id="64-279-perfect-squares-fewest-pieces-combine-with-min"></a><h4 id="344-279-perfect-squares-fewest-pieces-combine-with-min">3.4.4 279. Perfect Squares: fewest pieces, combine with min<a class="heading-anchor" href="#344-279-perfect-squares-fewest-pieces-combine-with-min" aria-label="Link to 3.4.4 279. Perfect Squares: fewest pieces, combine with min">#</a></h4>
+<p><a href="https://leetcode.com/problems/perfect-squares/description/" target="_blank" rel="noopener noreferrer">279. Perfect Squares</a>: return the least number of perfect squares (1, 4, 9, ...) that sum to <code>n</code>. For <code>12 = 4 + 4 + 4</code> the answer is 3, and for <code>13 = 4 + 9</code> it is 2.</p>
+<p>The state is the same as in 377, what is left, but the question differs: 377 counts every way and adds the children, here we want the fewest pieces and take the minimum over the next square, <code>dfs(r) = 1 + min(dfs(r - k*k))</code> over <code>k*k &lt;= r</code>, with <code>dfs(0) = 0</code>. Greedy is wrong: always taking the largest square gives <code>12 = 9 + 1 + 1 + 1</code>, four pieces, so every square has to be tried.</p>
+<details class="coding-drill" id="coding-leetcode-279--perfect-squares-ready"><summary><span>Coding: LeetCode 279 — Perfect Squares <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">import</span> math
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">num_squares</span>(<span class="hljs-params">n</span>):
+    squares = [k * k <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(math.isqrt(n), <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>)]   <span class="hljs-comment"># largest first</span>
+    memo = {}
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">remaining</span>):                     <span class="hljs-comment"># fewest perfect squares that sum to remaining</span>
+        <span class="hljs-keyword">if</span> remaining == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> remaining <span class="hljs-keyword">in</span> memo:
+            <span class="hljs-keyword">return</span> memo[remaining]
+        best = remaining                    <span class="hljs-comment"># upper bound: 1 + 1 + ... + 1</span>
+        <span class="hljs-keyword">for</span> square <span class="hljs-keyword">in</span> squares:
+            <span class="hljs-keyword">if</span> square &lt;= remaining:
+                best = <span class="hljs-built_in">min</span>(best, <span class="hljs-number">1</span> + dfs(remaining - square))
+        memo[remaining] = best
+        <span class="hljs-keyword">return</span> best
+
+    <span class="hljs-keyword">return</span> dfs(n)</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n * sqrt(n))</code>: at most <code>n + 1</code> states, each trying up to <code>sqrt(n)</code> squares.</p>
+<p><strong>Space complexity:</strong> <code>O(n)</code> for the memo. With the largest square tried first the recursion stays shallow, as measured below.</p>
+<p>The order of the loop matters in Python. Trying <code>1</code> first makes the very first path <code>1 + 1 + ... + 1</code>, <code>n</code> calls deep, and LeetCode&#39;s <code>n = 10,000</code> breaks CPython&#39;s 1,000-frame limit. Trying the largest square first reaches small remainders quickly and fills the memo on the way: over every <code>n</code> up to 2,000 and 300 random values up to 10,000, the deepest chain measured was 8 calls. That is an observation, not a bound. The same recurrence written bottom-up needs no recursion at all.</p>
+</div></details><details class="coding-drill" id="coding-leetcode-279--the-same-recurrence-as-a-table-ready"><summary><span>Coding: LeetCode 279 — the same recurrence as a table <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">num_squares_table</span>(<span class="hljs-params">n</span>):
+    dp = [<span class="hljs-number">0</span>] + [n] * n                      <span class="hljs-comment"># dp[r] = fewest perfect squares that sum to r</span>
+    <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+        k = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> k * k &lt;= r:
+            dp[r] = <span class="hljs-built_in">min</span>(dp[r], dp[r - k * k] + <span class="hljs-number">1</span>)
+            k += <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> dp[n]</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n * sqrt(n))</code>: the same states and choices as the memoized version.</p>
+<p><strong>Space complexity:</strong> <code>O(n)</code> for the table, with no recursion.</p>
+<p>Two other views are worth a sentence in an interview. As a shortest path, a BFS from <code>n</code> along &quot;subtract a square&quot; edges stops at the first level that reaches 0. And by Lagrange&#39;s four-square theorem the answer is never more than 4; Legendre&#39;s three-square theorem says it is exactly 4 when <code>n</code> has the form <code>4^a (8b + 7)</code>, which leads to an <code>O(sqrt(n))</code> solution.</p>
+</div></details><a id="65-300-longest-increasing-subsequence-best-length-combine-with-max"></a><h4 id="345-300-longest-increasing-subsequence-best-length-combine-with-max">3.4.5 300. Longest Increasing Subsequence: best length, combine with max<a class="heading-anchor" href="#345-300-longest-increasing-subsequence-best-length-combine-with-max" aria-label="Link to 3.4.5 300. Longest Increasing Subsequence: best length, combine with max">#</a></h4>
+<p><a href="https://leetcode.com/problems/longest-increasing-subsequence/description/" target="_blank" rel="noopener noreferrer">300. Longest Increasing Subsequence</a>: return the length of the longest strictly increasing subsequence. For <code>[10, 9, 2, 5, 3, 7, 101, 18]</code> the answer is 4, for example <code>2, 3, 7, 18</code>.</p>
+<p>The take-or-skip view: at index <code>i</code>, either skip <code>nums[i]</code> or take it, and taking is allowed only if it is larger than the last number taken. What can still be achieved depends on <code>i</code> and on the last number taken, so the state is <code>(i, prev)</code>, where <code>prev</code> is the index of the last taken number and <code>-1</code> means none yet.</p>
+<details class="coding-drill" id="coding-leetcode-300--take-or-skip-state-i-prev-ready"><summary><span>Coding: LeetCode 300 — take or skip, state <code>(i, prev)</code> <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">length_of_lis_take_skip</span>(<span class="hljs-params">nums</span>):
+    n = <span class="hljs-built_in">len</span>(nums)
+    memo = {}
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">i, prev</span>):                       <span class="hljs-comment"># prev: index of the last taken number, -1 if none</span>
+        <span class="hljs-keyword">if</span> i == n:
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> (i, prev) <span class="hljs-keyword">in</span> memo:
+            <span class="hljs-keyword">return</span> memo[(i, prev)]
+        best = dfs(i + <span class="hljs-number">1</span>, prev)             <span class="hljs-comment"># skip nums[i]</span>
+        <span class="hljs-keyword">if</span> prev == -<span class="hljs-number">1</span> <span class="hljs-keyword">or</span> nums[prev] &lt; nums[i]:
+            best = <span class="hljs-built_in">max</span>(best, <span class="hljs-number">1</span> + dfs(i + <span class="hljs-number">1</span>, i))   <span class="hljs-comment"># take nums[i]</span>
+        memo[(i, prev)] = best
+        <span class="hljs-keyword">return</span> best
+
+    <span class="hljs-keyword">return</span> dfs(<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>)</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n^2)</code>: <code>i</code> and <code>prev</code> each range over about <code>n</code> values, with <code>prev &lt; i</code>, and each state does constant work.</p>
+<p><strong>Space complexity:</strong> <code>O(n^2)</code> for the memo, plus <code>O(n)</code> recursion depth.</p>
+<p>The two-argument state is correct but stores <code>n^2</code> entries, about 3 million for LeetCode&#39;s <code>n = 2,500</code>. One argument is enough if <code>dfs(i)</code> means &quot;the longest increasing subsequence that <strong>starts</strong> with <code>nums[i]</code>&quot;: its next element is any later, larger number, so <code>dfs(i) = 1 + max(dfs(j))</code> over <code>j &gt; i</code> with <code>nums[j] &gt; nums[i]</code>, and the answer is the largest <code>dfs(i)</code>.</p>
+</div></details><details class="coding-drill" id="coding-leetcode-300--one-argument-state-dfsi-ready"><summary><span>Coding: LeetCode 300 — one-argument state <code>dfs(i)</code> <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">length_of_lis</span>(<span class="hljs-params">nums</span>):
+    n = <span class="hljs-built_in">len</span>(nums)
+    memo = {}
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">i</span>):                             <span class="hljs-comment"># longest increasing subsequence starting at nums[i]</span>
+        <span class="hljs-keyword">if</span> i <span class="hljs-keyword">in</span> memo:
+            <span class="hljs-keyword">return</span> memo[i]
+        best = <span class="hljs-number">1</span>                            <span class="hljs-comment"># nums[i] alone</span>
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i + <span class="hljs-number">1</span>, n):
+            <span class="hljs-keyword">if</span> nums[j] &gt; nums[i]:
+                best = <span class="hljs-built_in">max</span>(best, <span class="hljs-number">1</span> + dfs(j))
+        memo[i] = best
+        <span class="hljs-keyword">return</span> best
+
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>((dfs(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n)), default=<span class="hljs-number">0</span>)</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n^2)</code>: <code>n</code> states, each scanning up to <code>n</code> later indices.</p>
+<p><strong>Space complexity:</strong> <code>O(n)</code> for the memo and the recursion depth.</p>
+<p>Both recursive versions can go <code>n</code> levels deep, and LeetCode allows <code>n = 2,500</code>, above CPython&#39;s default limit of 1,000 frames: call <code>sys.setrecursionlimit(10_000)</code> first, or fill the same table bottom-up from the last index to the first. The <code>O(n log n)</code> solution is a different idea: keep <code>tails[k]</code>, the smallest last value of any increasing subsequence of length <code>k + 1</code>, and place each number with the <a href="#12-template-b-find-the-first-value--target">lower bound</a> of Chapter 1.</p>
+</div></details><a id="66-139-word-break-feasibility-combine-with-or"></a><h4 id="346-139-word-break-feasibility-combine-with-or">3.4.6 139. Word Break: feasibility, combine with or<a class="heading-anchor" href="#346-139-word-break-feasibility-combine-with-or" aria-label="Link to 3.4.6 139. Word Break: feasibility, combine with or">#</a></h4>
+<p><a href="https://leetcode.com/problems/word-break/description/" target="_blank" rel="noopener noreferrer">139. Word Break</a>: can <code>s</code> be split into a sequence of dictionary words, each word usable any number of times? <code>&quot;leetcode&quot;</code> with <code>[&quot;leet&quot;, &quot;code&quot;]</code> gives <code>True</code>; <code>&quot;catsandog&quot;</code> with <code>[&quot;cats&quot;, &quot;dog&quot;, &quot;sand&quot;, &quot;and&quot;, &quot;cat&quot;]</code> gives <code>False</code>.</p>
+<p>The state is the index where the unsplit suffix begins: <code>dfs(index)</code> answers whether <code>s[index:]</code> can be split. It tries every word that matches at <code>index</code> and succeeds as soon as one continuation succeeds.</p>
+<details class="coding-drill" id="coding-leetcode-139--word-break-ready"><summary><span>Coding: LeetCode 139 — Word Break <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">word_break</span>(<span class="hljs-params">s, word_dict</span>):
+    n = <span class="hljs-built_in">len</span>(s)
+    memo = {}
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">index</span>):                         <span class="hljs-comment"># can s[index:] be split into dictionary words?</span>
+        <span class="hljs-keyword">if</span> index == n:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">if</span> index <span class="hljs-keyword">in</span> memo:
+            <span class="hljs-keyword">return</span> memo[index]
+        <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> word_dict:
+            <span class="hljs-keyword">if</span> s.startswith(word, index) <span class="hljs-keyword">and</span> dfs(index + <span class="hljs-built_in">len</span>(word)):
+                memo[index] = <span class="hljs-literal">True</span>
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        memo[index] = <span class="hljs-literal">False</span>                 <span class="hljs-comment"># store failures too, or they are recomputed</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+    <span class="hljs-keyword">return</span> dfs(<span class="hljs-number">0</span>)</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n * W * L)</code>, where <code>n = len(s)</code>, <code>W</code> is the number of words and <code>L</code> the length of the longest word: <code>n + 1</code> states, each comparing up to <code>W</code> words of up to <code>L</code> characters.</p>
+<p><strong>Space complexity:</strong> <code>O(n)</code> for the memo and the recursion depth.</p>
+<p><code>s.startswith(word, index)</code> is the same test as <code>s[index:index + len(word)] == word</code> without building a substring. Storing <code>False</code> matters most in this problem: failing suffixes are what repeat, and without that line an input such as 30 <code>a</code>s followed by one <code>b</code>, with words <code>&quot;a&quot;</code>, <code>&quot;aa&quot;</code> and <code>&quot;aaa&quot;</code>, explores an exponential number of splits before giving up. When the dictionary is large, loop over the end index instead and test <code>s[index:end] in words</code> with a set.</p>
+</div></details><h4 id="347-416-partition-equal-subset-sum-take-or-skip-combine-with-or">3.4.7 416. Partition Equal Subset Sum: take or skip, combine with or<a class="heading-anchor" href="#347-416-partition-equal-subset-sum-take-or-skip-combine-with-or" aria-label="Link to 3.4.7 416. Partition Equal Subset Sum: take or skip, combine with or">#</a></h4>
+<p><a href="https://leetcode.com/problems/partition-equal-subset-sum/description/" target="_blank" rel="noopener noreferrer">416. Partition Equal Subset Sum</a>: can the positive numbers <code>nums</code> be split into two groups with equal sums? <code>[1, 5, 11, 5]</code> gives <code>True</code>, as <code>1 + 5 + 5 = 11</code>; <code>[1, 2, 3, 5]</code> gives <code>False</code>.</p>
+<p>Two equal groups each sum to half the total, so the question becomes: does some subset sum to <code>target = total / 2</code>? An odd total answers <code>False</code> at once. This is the subset tree of <a href="#333-subsets-save-every-node">3.3.3</a> with a yes-or-no question instead of a list: at index <code>i</code>, take <code>nums[i]</code> or skip it. What is still possible depends only on <code>i</code> and on the sum still missing, so the state is <code>(i, remaining)</code>, the example of <a href="#31-one-recursion-three-questions">3.1</a>.</p>
+<details class="coding-drill" id="coding-leetcode-416--partition-equal-subset-sum-ready"><summary><span>Coding: LeetCode 416 — Partition Equal Subset Sum <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">can_partition</span>(<span class="hljs-params">nums</span>):
+    total = <span class="hljs-built_in">sum</span>(nums)
+    <span class="hljs-keyword">if</span> total % <span class="hljs-number">2</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    n = <span class="hljs-built_in">len</span>(nums)
+    memo = {}
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">i, remaining</span>):                  <span class="hljs-comment"># can a subset of nums[i:] sum to remaining?</span>
+        <span class="hljs-keyword">if</span> remaining == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">if</span> i == n <span class="hljs-keyword">or</span> remaining &lt; <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">if</span> (i, remaining) <span class="hljs-keyword">in</span> memo:
+            <span class="hljs-keyword">return</span> memo[(i, remaining)]
+        found = dfs(i + <span class="hljs-number">1</span>, remaining - nums[i]) <span class="hljs-keyword">or</span> dfs(i + <span class="hljs-number">1</span>, remaining)   <span class="hljs-comment"># take, then skip</span>
+        memo[(i, remaining)] = found
+        <span class="hljs-keyword">return</span> found
+
+    <span class="hljs-keyword">return</span> dfs(<span class="hljs-number">0</span>, total // <span class="hljs-number">2</span>)</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n * target)</code>, where <code>target = sum(nums) / 2</code>: at most <code>n * (target + 1)</code> states, each doing constant work.</p>
+<p><strong>Space complexity:</strong> <code>O(n * target)</code> for the memo, plus <code>O(n)</code> recursion depth.</p>
+<p>Without the memo this is the subset tree, <code>2^n</code> leaves. With it, the cost no longer depends on how many subsets exist, only on how many different <code>(i, remaining)</code> pairs do. <code>or</code> stops early: once taking <code>nums[i]</code> succeeds, skipping it is never tried. LeetCode allows 200 numbers up to 100, so <code>target</code> can reach 10,000 and the memo 2 million entries, which is slow as a Python dictionary. The table below keeps one row of booleans instead.</p>
+</div></details><details class="coding-drill" id="coding-leetcode-416--the-same-recurrence-as-one-row-ready"><summary><span>Coding: LeetCode 416 — the same recurrence as one row <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">can_partition_table</span>(<span class="hljs-params">nums</span>):
+    total = <span class="hljs-built_in">sum</span>(nums)
+    <span class="hljs-keyword">if</span> total % <span class="hljs-number">2</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+    target = total // <span class="hljs-number">2</span>
+    reachable = [<span class="hljs-literal">True</span>] + [<span class="hljs-literal">False</span>] * target    <span class="hljs-comment"># reachable[s]: some subset of the numbers seen so far sums to s</span>
+    <span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> nums:
+        <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(target, value - <span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):   <span class="hljs-comment"># downward: each number used at most once</span>
+            reachable[s] = reachable[s] <span class="hljs-keyword">or</span> reachable[s - value]
+    <span class="hljs-keyword">return</span> reachable[target]</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n * target)</code>: every number updates every sum from <code>target</code> down to its own value.</p>
+<p><strong>Space complexity:</strong> <code>O(target)</code>: one row, overwritten for each number.</p>
+<p>The direction of the inner loop is what makes each number count once. Going down, <code>reachable[s - value]</code> still holds its value from before <code>value</code> was considered, so <code>value</code> is used at most once: the 0/1 knapsack. Going up, <code>reachable[s - value]</code> may already include <code>value</code>, so the same number can be taken again: the unbounded version. For counting rather than yes or no, an outer loop over the values with an upward inner loop counts combinations (518), and an outer loop over the sums counts ordered sequences (377).</p>
+</div></details><h4 id="348-152-maximum-product-subarray-return-two-values-combine-with-max-and-min">3.4.8 152. Maximum Product Subarray: return two values, combine with max and min<a class="heading-anchor" href="#348-152-maximum-product-subarray-return-two-values-combine-with-max-and-min" aria-label="Link to 3.4.8 152. Maximum Product Subarray: return two values, combine with max and min">#</a></h4>
+<p><a href="https://leetcode.com/problems/maximum-product-subarray/description/" target="_blank" rel="noopener noreferrer">152. Maximum Product Subarray</a>: the largest product of a non-empty contiguous subarray. <code>[2, 3, -2, 4]</code> gives 6, from <code>[2, 3]</code>; <code>[-2, 0, -1]</code> gives 0; <code>[-2, 3, -4]</code> gives 24, the whole array.</p>
+<p>A subarray is contiguous, so the natural state is where it ends: <code>dfs(i)</code> describes the subarrays that end at index <code>i</code>. One number is not enough. A negative <code>nums[i]</code> turns the smallest product ending at <code>i - 1</code> into the largest one ending at <code>i</code>: in <code>[-2, 3, -4]</code> the largest product ending at <code>3</code> is <code>3</code>, but the smallest is <code>-6</code>, and <code>-6 * -4 = 24</code>. So <code>dfs(i)</code> returns a pair, like the tuple contract of tree DFS in <a href="#327-return-a-tuple-combine-states">3.2.7</a>:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">dfs(i)   = (hi, lo): the largest and the smallest product of a subarray ending at i
+dfs(0)   = (nums[0], nums[0])
+dfs(i)   = (max(c), min(c))   where c = (nums[i], hi * nums[i], lo * nums[i]) and (hi, lo) = dfs(i - 1)
+answer   = the largest hi over all i</code></pre></div>
+<p><code>nums[i]</code> on its own starts a new subarray. That handles zeros: after a <code>0</code> both extremes are <code>0</code>, and the next number may start afresh.</p>
+<details class="coding-drill" id="coding-leetcode-152--maximum-product-subarray-ready"><summary><span>Coding: LeetCode 152 — Maximum Product Subarray <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">max_product</span>(<span class="hljs-params">nums</span>):
+    memo = {}
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">i</span>):                             <span class="hljs-comment"># (largest, smallest) product of a subarray ending at i</span>
+        <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> nums[<span class="hljs-number">0</span>], nums[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">if</span> i <span class="hljs-keyword">in</span> memo:
+            <span class="hljs-keyword">return</span> memo[i]
+        hi, lo = dfs(i - <span class="hljs-number">1</span>)
+        candidates = (nums[i], hi * nums[i], lo * nums[i])
+        memo[i] = <span class="hljs-built_in">max</span>(candidates), <span class="hljs-built_in">min</span>(candidates)
+        <span class="hljs-keyword">return</span> memo[i]
+
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(dfs(i)[<span class="hljs-number">0</span>] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(nums)))</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n)</code>: <code>n</code> states, each combining three candidates.</p>
+<p><strong>Space complexity:</strong> <code>O(n)</code> for the memo. Calling <code>dfs</code> for <code>i = 0, 1, 2, ...</code> keeps the recursion one level deep, because <code>dfs(i - 1)</code> is already stored; calling <code>dfs(n - 1)</code> first would go <code>n</code> levels deep, beyond CPython&#39;s limit for LeetCode&#39;s <code>n = 20,000</code>.</p>
+</div></details><details class="coding-drill" id="coding-leetcode-152--two-variables-instead-of-a-memo-ready"><summary><span>Coding: LeetCode 152 — two variables instead of a memo <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">max_product_loop</span>(<span class="hljs-params">nums</span>):
+    hi = lo = best = nums[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">for</span> value <span class="hljs-keyword">in</span> nums[<span class="hljs-number">1</span>:]:
+        candidates = (value, hi * value, lo * value)
+        hi, lo = <span class="hljs-built_in">max</span>(candidates), <span class="hljs-built_in">min</span>(candidates)
+        best = <span class="hljs-built_in">max</span>(best, hi)
+    <span class="hljs-keyword">return</span> best</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(n)</code>: one pass.</p>
+<p><strong>Space complexity:</strong> <code>O(1)</code>: the memo shrinks to the last pair.</p>
+<p>Each state reads only the one before it, so the whole memo can shrink to that pair. This is the usual last step for a one-dimensional recursion: write <code>dfs(i)</code> from <code>dfs(i - 1)</code>, check it with a memo, then keep only the values the next step reads. <code>hi, lo = max(...), min(...)</code> assigns both from the old values; updating <code>hi</code> first and then computing <code>lo</code> from the new <code>hi</code> is a classic bug.</p>
+</div></details><a id="67-finding-the-state-and-common-mistakes"></a><h4 id="349-finding-the-state-and-common-mistakes">3.4.9 Finding the state, and common mistakes<a class="heading-anchor" href="#349-finding-the-state-and-common-mistakes" aria-label="Link to 3.4.9 Finding the state, and common mistakes">#</a></h4>
+<p>Three questions, in order:</p>
+<ol>
+<li><strong>What does one call return?</strong> A count, a best value, or yes or no. That fixes the combine operator and its starting value.</li>
+<li><strong>What must the call know to answer?</strong> Exactly those values are the arguments; nothing about the path that led here.</li>
+<li><strong>How many distinct states are there, and how much work does one call do?</strong> Their product is the running time.</li>
+</ol>
+<p>Every memoized DFS is a table filled lazily, and filling it in dependency order gives the bottom-up version. For 377:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">dp[0] = 1
+dp[r] = sum(dp[r - v] for v in nums if v &lt;= r)      for r = 1 .. target</code></pre></div>
+<p>Common mistakes:</p>
+<ol>
+<li><strong>Memoizing a function that reads outside state:</strong> if the answer depends on a shared <code>path</code> or <code>used</code>, two calls with equal arguments may need different answers. Problems that list every answer, as in backtracking (3.3), cannot be memoized this way.</li>
+<li><strong>A state that is too small:</strong> take-or-skip LIS memoized on <code>i</code> alone returns answers that were computed for a different last number.</li>
+<li><strong>A state that is too large:</strong> an argument that is never read multiplies the entries and lowers the hit rate.</li>
+<li><strong>Caching only successes:</strong> in Word Break, the failures are what repeat.</li>
+<li><strong>A memo that outlives the call:</strong> a module-level dictionary or a mutable default argument keeps answers from the previous test case. Create the memo inside the function, or decorate the inner <code>dfs</code> with <code>functools.cache</code>.</li>
+<li><strong>Counting ordered versus unordered:</strong> 377 counts sequences with state <code>remaining</code>; 518 counts combinations with state <code>(start, remaining)</code>.</li>
+<li><strong>Recursion depth:</strong> CPython stops at 1,000 frames by default. Raise the limit, order the choices so that the first path is short (the largest square first in 279), or write the table bottom-up.</li>
+<li><strong>A return value that is too small:</strong> in 152 the largest product ending at <code>i</code> cannot be extended alone, because a negative number turns the smallest product into the largest. Return what the caller needs, here a pair, as in the tuple contract of tree DFS.</li>
+<li><strong>The wrong loop direction in a one-row table:</strong> in 416 the sums must run downward so that each number is used once; running upward reuses it.</li>
+</ol>
+</div></div></details>
+<details class="chapter" id="chapter-4-dijkstra-shortest-path" data-chapter="4-dijkstra-shortest-path">
+      <summary class="chapter-summary" id="4-dijkstra-shortest-path"><span class="chapter-number">04</span><span class="chapter-title">Dijkstra Shortest Path</span><span class="chapter-state">4 sections</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="4-dijkstra-shortest-path" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#4-dijkstra-shortest-path">Chapter link ↗</a></div><div class="prose"><a id="5-dijkstra-shortest-path"></a><p>Dijkstra&#39;s algorithm finds the cheapest route from one source to every node of a graph whose edge weights are <strong>non-negative</strong>. It is BFS with a priority queue: BFS pops nodes in order of hop count, Dijkstra pops them in order of <strong>cost so far</strong>. The two problems below are the classic sum-of-weights form and the less obvious max-of-weights form.
+<a id="51-the-invariant-the-closest-unsettled-node-is-final"></a></p>
+<h3 id="41-the-invariant-the-closest-unsettled-node-is-final">4.1 The invariant: the closest unsettled node is final<a class="heading-anchor" href="#41-the-invariant-the-closest-unsettled-node-is-final" aria-label="Link to 4.1 The invariant: the closest unsettled node is final">#</a></h3>
+<p>Keep <code>dist[v]</code>, the best known cost to reach <code>v</code>, starting with <code>dist[source] = 0</code> and everything else infinite. Repeatedly take the unsettled node with the smallest <code>dist</code>. Its value is final: any other route to it would have to leave the settled set through a node that is already at least as far, and non-negative edges never make a route cheaper. Then <strong>relax</strong> its outgoing edges: if <code>dist[u] + w &lt; dist[v]</code>, record the better value.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">dist: s=0, a=inf, b=inf, c=inf        edges: s→a 4, s→b 1, b→a 2, b→c 5, a→c 1
+
+pop s (0)   relax s→a: 4      relax s→b: 1
+pop b (1)   relax b→a: 1+2=3 &lt; 4, improve      relax b→c: 1+5=6
+pop a (3)   relax a→c: 3+1=4 &lt; 6, improve
+pop c (4)   nothing left: every dist is final</code></pre></div>
+<p>A binary heap returns the smallest unsettled node in <code>O(log n)</code>. The heap is never edited in place: when a node improves, push a new <code>(dist, node)</code> pair and let the old pair become <strong>stale</strong>. When a stale pair is popped, <code>d &gt; dist[u]</code> identifies it and it is skipped.</p>
+<details class="coding-drill" id="coding-dijkstra-template--distances-from-one-source-ready"><summary><span>Coding: Dijkstra template — distances from one source <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">import</span> heapq
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">dijkstra</span>(<span class="hljs-params">n, graph, source</span>):
+    <span class="hljs-string">&quot;&quot;&quot;graph[u] lists (v, w) edges with w &gt;= 0; nodes are 0..n-1.
+    Returns dist[v] for every node, float(&#x27;inf&#x27;) when v is unreachable.&quot;&quot;&quot;</span>
+    INF = <span class="hljs-built_in">float</span>(<span class="hljs-string">&quot;inf&quot;</span>)
+    dist = [INF] * n
+    dist[source] = <span class="hljs-number">0</span>
+    heap = [(<span class="hljs-number">0</span>, source)]
+
+    <span class="hljs-keyword">while</span> heap:
+        d, u = heapq.heappop(heap)
+        <span class="hljs-keyword">if</span> d &gt; dist[u]:
+            <span class="hljs-keyword">continue</span>                      <span class="hljs-comment"># stale entry: u was settled with a smaller distance</span>
+        <span class="hljs-keyword">for</span> v, w <span class="hljs-keyword">in</span> graph[u]:
+            candidate = d + w
+            <span class="hljs-keyword">if</span> candidate &lt; dist[v]:
+                dist[v] = candidate
+                heapq.heappush(heap, (candidate, v))
+
+    <span class="hljs-keyword">return</span> dist</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O((V + E) log V)</code> for <code>V</code> nodes and <code>E</code> edges. Every edge is relaxed at most once, from its settled tail; each relaxation may push one heap entry, so the heap never holds more than <code>E + 1</code> entries and each pop or push costs <code>O(log E) = O(log V)</code>.</p>
+<p><strong>Space complexity:</strong> <code>O(V + E)</code> for the distance array and the heap, on top of the adjacency lists.</p>
+<p>Three details carry the correctness: a node is settled when it is <strong>popped</strong>, not when it is pushed; a node may be pushed several times but is processed only on its first pop; and a negative edge would break the invariant, because a later node could then make an already settled node cheaper. Use Bellman-Ford for negative weights and plain BFS when every weight is the same.</p>
+</div></details><details class="coding-drill" id="coding-dijkstra-template--the-visited-set-variant-ready"><summary><span>Coding: Dijkstra template — the <code>visited</code> set variant <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><p>The same template with a set of settled nodes instead of the stale check. <code>dist[u]</code> is written only when <code>u</code> is popped for the first time, because that value is final; a push writes nothing, so a node can sit in the heap several times and only its first pop counts.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">dijkstra_visited</span>(<span class="hljs-params">n, graph, source</span>):
+    dist = [<span class="hljs-built_in">float</span>(<span class="hljs-string">&quot;inf&quot;</span>)] * n
+    visited = <span class="hljs-built_in">set</span>()                           <span class="hljs-comment"># nodes whose distance is final</span>
+    heap = [(<span class="hljs-number">0</span>, source)]
+
+    <span class="hljs-keyword">while</span> heap:
+        d, u = heapq.heappop(heap)
+        <span class="hljs-keyword">if</span> u <span class="hljs-keyword">in</span> visited:
+            <span class="hljs-keyword">continue</span>                          <span class="hljs-comment"># a cheaper pop settled u already</span>
+        visited.add(u)
+        dist[u] = d                           <span class="hljs-comment"># final on the first pop; never written at push time</span>
+        <span class="hljs-keyword">for</span> v, w <span class="hljs-keyword">in</span> graph[u]:
+            <span class="hljs-keyword">if</span> v <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> visited:
+                heapq.heappush(heap, (d + w, v))
+
+    <span class="hljs-keyword">return</span> dist</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O((V + E) log V)</code>, as for the stale-check form: every node is settled once, every edge is relaxed once from its settled tail, and the heap holds at most <code>E + 1</code> entries.</p>
+<p><strong>Space complexity:</strong> <code>O(V + E)</code> for the distance array, the set, and the heap.</p>
+<p><code>u in visited</code> and <code>d &gt; dist[u]</code> test the same fact, that <code>u</code> was settled by an earlier pop: the stale-check form pushes only strict improvements, so the last entry pushed for <code>u</code> is its smallest and equals <code>dist[u]</code>, the first pop of <code>u</code> returns exactly that entry, and every later entry for <code>u</code> is strictly larger. The two forms differ only in what they push: this one pushes every edge to an unsettled neighbour, the stale-check form pushes only improvements. Writing <code>dist</code> at push time in this form would need the <code>candidate &lt; dist[v]</code> filter again, so that a worse push cannot overwrite a better value, and with that filter the array already records what the set records. The comparison table in 5.3 applies to all three problems.</p>
+</div></details><a id="52-743-network-delay-time-the-longest-of-the-shortest-paths"></a><h3 id="42-743-network-delay-time-the-longest-of-the-shortest-paths">4.2 743. Network Delay Time: the longest of the shortest paths<a class="heading-anchor" href="#42-743-network-delay-time-the-longest-of-the-shortest-paths" aria-label="Link to 4.2 743. Network Delay Time: the longest of the shortest paths">#</a></h3>
+<p><a href="https://leetcode.com/problems/network-delay-time/description/" target="_blank" rel="noopener noreferrer">743. Network Delay Time</a>: a signal sent from node <code>k</code> travels along directed edges <code>(u, v, w)</code> in <code>w</code> time units. Return the time until every node has received it, or <code>-1</code> if some node never does. The answer is the largest single-source distance, so it is the template plus two lines.</p>
+<p>For <code>times = [[2, 1, 1], [2, 3, 1], [3, 4, 1]]</code>, <code>n = 4</code>, <code>k = 2</code>:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">2 → 1          (1)            dist: 2=0, 1=1, 3=1, 4=2
+2 → 3 → 4      (1 + 1 = 2)    answer = max = 2</code></pre></div>
+<details class="coding-drill" id="coding-leetcode-743--network-delay-time-ready"><summary><span>Coding: LeetCode 743 — Network Delay Time <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">network_delay_time</span>(<span class="hljs-params">times, n, k</span>):
+    graph = [[] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n + <span class="hljs-number">1</span>)]       <span class="hljs-comment"># nodes are numbered 1..n</span>
+    <span class="hljs-keyword">for</span> u, v, w <span class="hljs-keyword">in</span> times:
+        graph[u].append((v, w))
+
+    dist = dijkstra(n + <span class="hljs-number">1</span>, graph, k)
+    slowest = <span class="hljs-built_in">max</span>(dist[<span class="hljs-number">1</span>:])
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> slowest == <span class="hljs-built_in">float</span>(<span class="hljs-string">&quot;inf&quot;</span>) <span class="hljs-keyword">else</span> slowest</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O((n + E) log n)</code> for <code>E = len(times)</code>: building the adjacency lists is linear and the Dijkstra run dominates.</p>
+<p><strong>Space complexity:</strong> <code>O(n + E)</code> for the adjacency lists, the distance array, and the heap.</p>
+<p>Watch the <code>-1</code> case: an unreachable node keeps <code>float(&#39;inf&#39;)</code>, and <code>max</code> propagates it. Node <code>0</code> is unused because the problem numbers nodes from <code>1</code>; slicing <code>dist[1:]</code> keeps its infinite entry out of the maximum.</p>
+</div></details><details class="coding-drill" id="coding-leetcode-743--with-the-visited-template-ready"><summary><span>Coding: LeetCode 743 — with the <code>visited</code> template <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">network_delay_time_visited</span>(<span class="hljs-params">times, n, k</span>):
+    graph = [[] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n + <span class="hljs-number">1</span>)]
+    <span class="hljs-keyword">for</span> u, v, w <span class="hljs-keyword">in</span> times:
+        graph[u].append((v, w))
+
+    dist = dijkstra_visited(n + <span class="hljs-number">1</span>, graph, k)  <span class="hljs-comment"># nodes never popped keep float(&#x27;inf&#x27;)</span>
+    slowest = <span class="hljs-built_in">max</span>(dist[<span class="hljs-number">1</span>:])
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span> <span class="hljs-keyword">if</span> slowest == <span class="hljs-built_in">float</span>(<span class="hljs-string">&quot;inf&quot;</span>) <span class="hljs-keyword">else</span> slowest</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O((n + E) log n)</code>, the same as with the stale-check template.</p>
+<p><strong>Space complexity:</strong> <code>O(n + E)</code> for the adjacency lists, the distance array, the set, and the heap.</p>
+<p>Nothing else changes: the answer still needs the distance of every node, so the <code>visited</code> form keeps the <code>dist</code> array and merely fills it at pop time, and an unreachable node is still the <code>float(&#39;inf&#39;)</code> that was never popped.</p>
+</div></details><a id="53-1631-path-with-minimum-effort-minimize-the-largest-step-not-the-sum"></a><h3 id="43-1631-path-with-minimum-effort-minimize-the-largest-step-not-the-sum">4.3 1631. Path with Minimum Effort: minimize the largest step, not the sum<a class="heading-anchor" href="#43-1631-path-with-minimum-effort-minimize-the-largest-step-not-the-sum" aria-label="Link to 4.3 1631. Path with Minimum Effort: minimize the largest step, not the sum">#</a></h3>
+<p><a href="https://leetcode.com/problems/path-with-minimum-effort/description/" target="_blank" rel="noopener noreferrer">1631. Path with Minimum Effort</a>: walk from the top-left to the bottom-right cell of a height grid, moving in four directions. The effort of a route is the <strong>largest</strong> absolute height difference between consecutive cells; return the smallest possible effort.</p>
+<p>The graph is implicit: every cell is a node and every neighbouring pair is an edge of weight <code>|h[a] - h[b]|</code>. The cost of a route is no longer a sum, but Dijkstra still applies, because the invariant only needs that extending a route never makes it cheaper, which holds for <code>max</code> just as it holds for <code>+</code>. The relaxation becomes:</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">text</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-text">candidate = max(effort[u], |h[u] - h[v]|)      instead of      candidate = dist[u] + w</code></pre></div>
+<p>For <code>heights = [[1, 2, 2], [3, 8, 2], [5, 3, 5]]</code> the answer is <code>2</code>: the route <code>1 → 2 → 2 → 2 → 5</code> along the top row and the right column never changes height by more than <code>2</code>, whereas going down the left side through <code>3</code> and <code>5</code> costs <code>3</code>.</p>
+<details class="coding-drill" id="coding-leetcode-1631--path-with-minimum-effort-ready"><summary><span>Coding: LeetCode 1631 — Path with Minimum Effort <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">minimum_effort_path</span>(<span class="hljs-params">heights</span>):
+    rows, cols = <span class="hljs-built_in">len</span>(heights), <span class="hljs-built_in">len</span>(heights[<span class="hljs-number">0</span>])
+    INF = <span class="hljs-built_in">float</span>(<span class="hljs-string">&quot;inf&quot;</span>)
+    effort = [[INF] * cols <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(rows)]
+    effort[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>
+    heap = [(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)]                        <span class="hljs-comment"># (effort so far, row, col)</span>
+
+    <span class="hljs-keyword">while</span> heap:
+        e, r, c = heapq.heappop(heap)
+        <span class="hljs-keyword">if</span> (r, c) == (rows - <span class="hljs-number">1</span>, cols - <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">return</span> e                          <span class="hljs-comment"># first pop of the target: its effort is final</span>
+        <span class="hljs-keyword">if</span> e &gt; effort[r][c]:
+            <span class="hljs-keyword">continue</span>
+        <span class="hljs-keyword">for</span> dr, dc <span class="hljs-keyword">in</span> ((<span class="hljs-number">1</span>, <span class="hljs-number">0</span>), (-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>), (<span class="hljs-number">0</span>, <span class="hljs-number">1</span>), (<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>)):
+            nr, nc = r + dr, c + dc
+            <span class="hljs-keyword">if</span> <span class="hljs-number">0</span> &lt;= nr &lt; rows <span class="hljs-keyword">and</span> <span class="hljs-number">0</span> &lt;= nc &lt; cols:
+                candidate = <span class="hljs-built_in">max</span>(e, <span class="hljs-built_in">abs</span>(heights[nr][nc] - heights[r][c]))
+                <span class="hljs-keyword">if</span> candidate &lt; effort[nr][nc]:
+                    effort[nr][nc] = candidate
+                    heapq.heappush(heap, (candidate, nr, nc))
+
+    <span class="hljs-keyword">return</span> effort[rows - <span class="hljs-number">1</span>][cols - <span class="hljs-number">1</span>]</code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(R * C * log(R * C))</code> for an <code>R x C</code> grid: <code>R * C</code> nodes and at most <code>4 * R * C</code> edges, each relaxed once from its settled cell.</p>
+<p><strong>Space complexity:</strong> <code>O(R * C)</code> for the effort grid and the heap.</p>
+<p>Returning on the <strong>first pop</strong> of the target is safe for the same reason the invariant holds: a popped node&#39;s value is final. Checking the target when it is pushed is not safe, because a cheaper route to it may still be waiting in the heap. The <code>1 x 1</code> grid returns <code>0</code> at the first pop.</p>
+</div></details><details class="coding-drill" id="coding-leetcode-1631--the-visited-set-variant-ready"><summary><span>Coding: LeetCode 1631 — the <code>visited</code> set variant <code>[READY]</code></span><span class="drill-hint">View exercise</span></summary><div class="drill-body"><p>The same algorithm can be written without the <code>effort</code> grid. A set records which cells are already settled; a cell is settled the first time it is popped, and a later pop of the same cell is skipped because it is in the set. Neighbours are pushed unconditionally, except settled ones.</p>
+<div class="code-block"><div class="code-toolbar"><span class="code-lang">python</span><button class="copy-code button" type="button">Copy code</button></div><pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">minimum_effort_path_visited</span>(<span class="hljs-params">heights</span>):
+    rows, cols = <span class="hljs-built_in">len</span>(heights), <span class="hljs-built_in">len</span>(heights[<span class="hljs-number">0</span>])
+    visited = <span class="hljs-built_in">set</span>()                           <span class="hljs-comment"># cells whose effort is final</span>
+    heap = [(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)]                        <span class="hljs-comment"># (effort so far, row, col)</span>
+
+    <span class="hljs-keyword">while</span> heap:
+        e, r, c = heapq.heappop(heap)
+        <span class="hljs-keyword">if</span> (r, c) <span class="hljs-keyword">in</span> visited:
+            <span class="hljs-keyword">continue</span>                          <span class="hljs-comment"># a cheaper pop settled this cell already</span>
+        visited.add((r, c))
+        <span class="hljs-keyword">if</span> (r, c) == (rows - <span class="hljs-number">1</span>, cols - <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">return</span> e
+        <span class="hljs-keyword">for</span> dr, dc <span class="hljs-keyword">in</span> ((<span class="hljs-number">1</span>, <span class="hljs-number">0</span>), (-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>), (<span class="hljs-number">0</span>, <span class="hljs-number">1</span>), (<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>)):
+            nr, nc = r + dr, c + dc
+            <span class="hljs-keyword">if</span> <span class="hljs-number">0</span> &lt;= nr &lt; rows <span class="hljs-keyword">and</span> <span class="hljs-number">0</span> &lt;= nc &lt; cols <span class="hljs-keyword">and</span> (nr, nc) <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> visited:
+                heapq.heappush(heap, (<span class="hljs-built_in">max</span>(e, <span class="hljs-built_in">abs</span>(heights[nr][nc] - heights[r][c])), nr, nc))
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>                                  <span class="hljs-comment"># never reached: a grid is always connected</span></code></pre></div>
+<p><strong>Time complexity:</strong> <code>O(R * C * log(R * C))</code>, the same bound as above. Every cell is settled once and each settlement pushes at most four entries, so the heap holds at most <code>4 * R * C</code> entries; each push or pop costs <code>O(log(R * C))</code>.</p>
+<p><strong>Space complexity:</strong> <code>O(R * C)</code> for the heap and the set of settled cells.</p>
+<p>Both versions are correct for the same reason: the invariant lives in the <strong>pop order</strong>, so a cell&#39;s effort is final the first time it is popped whatever bookkeeping records it. The difference is what gets pushed:</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th></th><th><code>effort</code> grid + stale check</th><th><code>visited</code> set</th></tr></thead><tbody><tr><td>A cell is settled</td><td>on its first pop; later pops fail <code>e &gt; effort[r][c]</code></td><td>on its first pop; later pops find it in the set</td></tr><tr><td>A neighbour is pushed</td><td>only when the new effort improves <code>effort[nr][nc]</code></td><td>always, unless the neighbour is already settled</td></tr><tr><td>Heap entries</td><td>one per improvement</td><td>up to four per settled cell, including dominated duplicates</td></tr><tr><td>Extra memory</td><td><code>R x C</code> numbers</td><td>the set of settled cells</td></tr><tr><td>Efforts of other cells</td><td>available in the grid afterwards</td><td>not kept</td></tr></tbody></table></div><p>The <code>effort</code> form is the standard Dijkstra shape and is the one to reuse when the distances to every node are the answer, as in 743. The <code>visited</code> form is shorter to write in an interview and just as fast in practice; its only cost is pushing entries that a better entry already in the heap makes useless, which the <code>candidate &lt; effort[nr][nc]</code> test avoids. Two details of a first draft are usually unnecessary: a grid of best efforts that is never updated once the set exists, and a <code>return</code> after the loop, which is never reached because the target is always popped.</p>
+</div></details><a id="54-when-dijkstra-applies-and-what-else-to-reach-for"></a><h3 id="44-when-dijkstra-applies-and-what-else-to-reach-for">4.4 When Dijkstra applies, and what else to reach for<a class="heading-anchor" href="#44-when-dijkstra-applies-and-what-else-to-reach-for" aria-label="Link to 4.4 When Dijkstra applies, and what else to reach for">#</a></h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Horizontally scrollable table"><table><thead><tr><th>Situation</th><th>Tool</th><th>Why</th></tr></thead><tbody><tr><td>Non-negative weights, sum of weights</td><td>Dijkstra</td><td>the popped node is final; <code>O(E log V)</code></td></tr><tr><td>Non-negative weights, max of weights (bottleneck)</td><td>Dijkstra with <code>max</code> relaxation</td><td>extending a route never lowers its cost</td></tr><tr><td>All weights equal</td><td>BFS</td><td>the queue already pops in distance order</td></tr><tr><td>Weights <code>0</code> and <code>1</code> only</td><td>0-1 BFS with a deque</td><td>push weight-0 neighbours to the front</td></tr><tr><td>Negative weights, no negative cycle</td><td>Bellman-Ford</td><td>relaxes every edge for <code>V - 1</code> rounds</td></tr><tr><td>Minimum bottleneck with a yes/no check</td><td>binary search on the threshold + BFS</td><td>an alternative for 1631: <code>O(R * C * log(max height))</code></td></tr></tbody></table></div><p>Common mistakes:</p>
+<ol>
+<li><strong>Marking nodes visited when pushed:</strong> a node can be pushed again with a better distance; settle it when it is popped and skip stale pops with <code>d &gt; dist[u]</code>.</li>
+<li><strong>Editing the heap entry instead of pushing a new one:</strong> Python&#39;s <code>heapq</code> has no decrease-key, so push the improved pair and let the old one go stale.</li>
+<li><strong>Stopping too early:</strong> the answer for a target is final when it is popped, not when it is first reached.</li>
+<li><strong>Mixing up the two costs:</strong> <code>+</code> for travel time, <code>max</code> for bottleneck effort; the rest of the code is identical.</li>
+<li><strong>Forgetting unreachable nodes:</strong> keep <code>float(&#39;inf&#39;)</code> in the distance array and test for it where the problem asks, as in the <code>-1</code> of 743.</li>
+<li><strong>Negative edges:</strong> Dijkstra silently returns wrong answers; check the constraints before choosing it.</li>
+</ol>
+</div></div></details>
+<details class="chapter" id="chapter-5-notes-inbox" data-chapter="5-notes-inbox">
+      <summary class="chapter-summary" id="5-notes-inbox"><span class="chapter-number">05</span><span class="chapter-title">Notes Inbox</span><span class="chapter-state">Notes</span></summary>
+      <div class="chapter-body"><div class="chapter-tools"><button type="button" class="button mark-read" data-mark="5-notes-inbox" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Mark as read</span></button><a class="button" href="#5-notes-inbox">Chapter link ↗</a></div><div class="prose"><a id="2-notes-inbox"></a>
+<a id="3-notes-inbox"></a>
+<a id="4-notes-inbox"></a>
+<a id="6-notes-inbox"></a>
+<a id="7-notes-inbox"></a><p>No additional topics yet. Add the next problem, observation, or debugging lesson here.</p>
+</div></div></details></article><nav class="toc" aria-label="Table of contents"><p class="nav-label">ON THIS PAGE</p><a href="#1-binary-search" data-toc="1-binary-search"><span>01</span>Binary Search</a><a href="#2-doubly-linked-lists" data-toc="2-doubly-linked-lists"><span>02</span>Doubly Linked Lists</a><a href="#3-recursion-tree-dfs-backtracking-memoization" data-toc="3-recursion-tree-dfs-backtracking-memoization"><span>03</span>Recursion: Tree DFS, Backtracking, Memoization</a><a href="#4-dijkstra-shortest-path" data-toc="4-dijkstra-shortest-path"><span>04</span>Dijkstra Shortest Path</a><a href="#5-notes-inbox" data-toc="5-notes-inbox"><span>05</span>Notes Inbox</a><a href="#main-content" class="toc-top">↑ Back to top</a></nav></div>
+<footer class="site-footer"><span>Video & ML · Notes, code & questions.</span><a href="#main-content">Back to top ↑</a></footer></div></main>
+<dialog class="search-dialog" aria-label="Search all notes"><div class="search-head"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><input id="search-input" type="search" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" placeholder="Search concepts, questions, code…" aria-label="Search keywords" autocomplete="off"><button class="button" type="button" data-close-search>Esc</button></div><div class="search-filters" role="group" aria-label="Search scope"><button class="button active" type="button" data-scope="all">All</button><button class="button" type="button" data-scope="video">Video domain</button><button class="button" type="button" data-scope="ml">ML & LLMs</button><button class="button" type="button" data-scope="resume">Research & resume</button><button class="button" type="button" data-scope="leetcode">LeetCode Notes</button><button class="button" type="button" data-scope="system-design">System Design</button><button class="button" type="button" data-scope="interviews">Company Interviews</button><button class="button" type="button" data-scope="network">Networking & Streaming</button></div><p class="search-status" role="status" aria-live="polite">Enter keywords to search all books</p><div class="search-results" id="search-results" role="listbox" aria-label="Search results"></div><div class="search-footer">↑ ↓ Select · Enter Open · Esc Close</div></dialog><div class="toast" role="status" aria-live="polite"></div></body></html>

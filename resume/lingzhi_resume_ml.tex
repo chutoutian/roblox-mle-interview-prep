@@ -1,0 +1,302 @@
+%!TEX program = xelatex
+\documentclass[10pt, letterpaper]{article}
+
+% ── Packages ──────────────────────────────────────────────────
+\usepackage[margin=0.65in, top=0.6in, bottom=0.6in]{geometry}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{parskip}
+
+
+% ── Colors ────────────────────────────────────────────────────
+\definecolor{navy}{HTML}{1A3A5C}
+\definecolor{linkblue}{HTML}{2E5E9E}
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{midgray}{HTML}{555555}
+\definecolor{lightgray}{HTML}{888888}
+\definecolor{rulecol}{HTML}{2E5E9E}
+
+% ── Hyperref ──────────────────────────────────────────────────
+\hypersetup{
+  colorlinks=true,
+  urlcolor=linkblue,
+  linkcolor=linkblue,
+  pdftitle={Lingzhi Zhao -- CV},
+  pdfauthor={Lingzhi Zhao}
+}
+
+% ── Fonts ─────────────────────────────────────────────────────
+\renewcommand{\familydefault}{\sfdefault}   % sans-serif throughout
+
+% ── Section styling ───────────────────────────────────────────
+\titleformat{\section}
+  {\large\bfseries\color{navy}}
+  {}{0em}{\MakeUppercase}
+  [\color{rulecol}\titlerule]
+\titlespacing{\section}{0pt}{8pt}{4pt}
+
+% ── List styling ──────────────────────────────────────────────
+\setlist[itemize]{
+  leftmargin=1.4em,
+  itemsep=1pt,
+  parsep=0pt,
+  topsep=2pt,
+  label=\textcolor{navy}{\textbullet}
+}
+
+% ── Helpers ───────────────────────────────────────────────────
+% Role entry: {Institution}{Role}{Date}
+\newcommand{\roleentry}[3]{%
+  \vspace{4pt}%
+  \noindent
+  \begin{tabularx}{\linewidth}{@{}X r@{}}
+    \textbf{\color{darkgray}#1} & \textcolor{lightgray}{\small #3}
+  \end{tabularx}\\[1pt]
+  \noindent\textit{\color{midgray}\small #2}%
+  \vspace{2pt}
+}
+
+% Project label
+\newcommand{\project}[1]{%
+  \vspace{2pt}%
+  \noindent\textbf{\color{navy}\small #1}%
+  \vspace{1pt}
+}
+
+% Skills row label
+\newcommand{\skills}[1]{\textbf{\color{darkgray}\small #1}}
+
+% Publication entry
+\newcommand{\pub}[3]{%
+  \vspace{3pt}%
+  \noindent\hangindent=1.6em\hangafter=1
+  \hypertarget{pub#1}{}%
+  \textbf{\color{navy}[#1]}\enspace #2 \textit{\color{midgray}#3}\par
+}
+
+% ── No paragraph indent ───────────────────────────────────────
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+%══════════════════════════════════════════════════════════════
+\begin{document}
+%══════════════════════════════════════════════════════════════
+
+% ── Header ────────────────────────────────────────────────────
+\begin{center}
+  {\Huge\bfseries\color{navy} Lingzhi Zhao}\\[2pt]
+  {\small\color{midgray}
+    Ph.D.\ Candidate in Computer Science \,|\, University of Illinois Urbana-Champaign}\\[1pt]
+  {\small
+    +1 (217) 979-9381 \,|\,
+    \href{mailto:lz26@illinois.edu}{lz26@illinois.edu} \,|\,
+    \href{https://chutoutian.github.io}{Website} \,|\,
+    \href{https://linkedin.com/in/lingzhizhao}{LinkedIn}
+  }
+\end{center}
+
+%──────────────────────────────────────────────────────────────
+\section{Research Interests}
+%──────────────────────────────────────────────────────────────
+\iffalse
+{\small\color{midgray}
+  Networked multimedia systems (video streaming, XR, egocentric AI)
+  $\cdot$ Intelligent mobile systems $\cdot$ Generative streaming\par}
+  \fi
+
+%My research broadly focuses on \textbf{networked multimedia systems (video on demand, live streaming, XR)} and \textbf{intelligent mobile systems}. 
+%I am interested in designing efficient systems for emerging media systems, including XR, egocentric AI assistants, AI-mediated communication systems.
+%My research lies at the \textbf{intersection of emerging media systems} (e.g., XR) \textbf{and multimodal AI}. I am interested in designing efficient and intelligent systems that bring multimodal understanding to real-world interactive and streaming applications.
+
+My research bridges \textbf{multimodal AI} and \textbf{multimedia systems}. I am interested in adapting vision–language models (VLMs) via post-training and efficient on-device deployment, which brings multimodal understanding to emerging media systems such as XR.
+
+%──────────────────────────────────────────────────────────────
+\section{Education}
+%──────────────────────────────────────────────────────────────
+
+\roleentry{University of Illinois Urbana-Champaign}
+  {Ph.D.\ in Computer Science $\cdot$ Advisor: Prof.\ Klara Nahrstedt}
+  {2022 Aug. -- 2026 Dec. (expected) }
+
+\roleentry{Shanghai Jiao Tong University}
+  {M.S.\ in Electrical and Computer Engineering $\cdot$ Advisor: Prof.\ Ying Cui}
+  {2019 -- 2022}
+
+\roleentry{Shanghai University}
+  {B.S.\ in Electrical and Computer Engineering}
+  {2015 -- 2019}
+
+%──────────────────────────────────────────────────────────────
+\section{Skills}
+%──────────────────────────────────────────────────────────────
+
+\begin{tabular}{@{}l@{\hspace{6pt}}l@{\hspace{6pt}}l@{}}
+  \skills{Machine Learning}      && PyTorch, Transformers, VLM/MLLM, SFT \& RL Post-training, On-device Inference Optimization \\
+  \skills{Tools and Languages}   && Python, C++, MATLAB, Swift, Java, C\#, Rust \\[2pt]
+  \skills{(Video) Systems \& Dev.} && FFmpeg, DASH, ABR \& Rate Control, NVCodec, Wireshark, iperf3, tc, Git, NS-3 \\[2pt]
+
+\end{tabular}
+
+%──────────────────────────────────────────────────────────────
+\section{Research Experience}
+%──────────────────────────────────────────────────────────────
+
+\roleentry{Multimedia Operating Systems and Networking (MONET) Lab, UIUC}
+  {Graduate Research Assistant $\cdot$ Advisor: Prof.\ Klara Nahrstedt}
+  {Aug.\ 2022 -- Present}
+
+\project{AquaVLM: VLM-powered Intelligent Mobile Communication Systems \hfill
+  \normalfont\textit{\hyperlink{pub4}{\textcolor{linkblue}{[ACM UbiComp 2027]}}} \textit{\href{https://chutoutian.github.io/aquavlm.github.io/}{\textcolor{linkblue}{[Website]}}}}
+\begin{itemize}
+    \item Built an end-to-end interactive VR application that lets divers auto-generate and exchange context-aware messages underwater, using edge-side VLM inference over real-time multimodal capture (first-person imagery + sensor readings).
+  \item Constructed an 85K-sample multimodal dataset with conversations generated by ChatGPT-4o via few-shot prompting.
+  \item SFT MobileVLM-V2 (3B) on self-collected dataset and designed a hierarchical message-generation pipeline to align user intent (align rate > 80\%) while reducing inference latency (60\%-70\%).
+  \item Deployed on-device model via 4-bit quantization (LLMFarm) in an iOS prototype with a customized communication protocol.
+\end{itemize}
+
+
+\project{AquaScope: Generative Codec-based Image Transmission on Mobile Devices \hfill
+  \normalfont\textit{\hyperlink{pub2}{\textcolor{linkblue}{[ACM MobiSys 2026]}}} \textit{\href{https://chutoutian.github.io/aquascope.github.io/}{\textcolor{linkblue}{[Website]}}}}
+\begin{itemize}
+  \item Developed the first acoustic-based system enabling reliable image transmission between mobile devices via generative compression (TiTok, VQGAN) in resource-constrained environments.
+  \item Improved bandwidth efficiency by 40\% and transmission error resilience via token clustering and fine-tuning, outperforming PNG, JPEG, and classic neural compression; reduced bit error rate (BER) from 19\% to below 2\% on average.
+\end{itemize}
+
+\par\project{GenStream: Generative Codec-based Real-time Video Streaming \hfill
+  %\normalfont\textit{\textcolor{lightgray}{[Under review, ACM Multimedia 2026]}}}
+  \normalfont\textit{\textcolor{lightgray}{}}}
+\begin{itemize}
+  \item Optimized a generative video compression model (Cosmos Tokenizer) on a single RTX 4090 GPU for real-time streaming, achieving 50\%--78\% bandwidth savings over H.264/H.265 and prior neural codecs at comparable quality.
+  \item Proposed a practical token adaptation approach by exploiting video context diversity to handle network dynamics.
+  \item Improved perceptual quality (LPIPS) by 38\%--59\% at matched bitrates and loss patterns compared to state-of-the-art streaming systems.
+\end{itemize}
+
+
+\vspace{4pt}
+\roleentry{TikTok, San Jose, CA}
+  {Machine Learning Engineer Intern $\cdot$ Manager: Prof. Feng Qian}
+  {May 2026 -- Present }
+
+\project{UGC Short Video Quality Assessment via MLLM\hfill
+  \normalfont\textit{[Submitted to ICLR 2027]}}
+\begin{itemize}
+\item Built a large-scale short-video quality benchmark spanning diverse source resolutions,
+      transcoding settings, and mobile devices; benchmarked SOTA MLLM scorers and systematically
+      analyzed their failure modes.
+\item Post-trained a context-aware MLLM scorer for short-video quality assessment via SFT with motion-artifact fusion, achieving SOTA performance on both the new benchmark and open-source dataset.
+\end{itemize}
+
+\project{Scalable Ad Video Insertion for UGC Short Videos\hfill
+   \normalfont\textit{[In Preparation for ACM MMSys 2027]}}
+\begin{itemize}
+  \item Built an end-to-end pipeline for automatic video insertion, including video similarity matching, insertable surface detection, and composition.
+\item Designed an adaptive frame sampling method for SAM3 surface detection, $8.5\times$ faster than the vanilla version, and SFT-ed Qwen3-VL embedding model for accurate brand-conflict and context similarity checks.
+\end{itemize}
+
+
+
+
+
+
+\iffalse
+\project{360LiveCast: Low-Latency Multicast for Live 360\textdegree{} Video  \hfill
+  \normalfont\textit{\hyperlink{pub5}{\textcolor{linkblue}{[IEEE MIPR 2025]}}}}
+\begin{itemize}
+  \item Designed a multicast framework for live 360\textdegree{} video streaming with low end-to-end latency over wireless networks.
+\end{itemize}
+\fi
+
+
+
+\vspace{4pt}
+\roleentry{Multimedia Lab, ByteDance Inc., San Diego, CA}
+  {Research Intern $\cdot$ Manager: Dr. Shu Shi}
+  {May 2024 -- Aug.\ 2025}
+
+\project{MARS: Motion-Aware ABR for Real-Time VR \hfill
+  \normalfont\textit{\hyperlink{pub1}{\textcolor{linkblue}{[Submitted to ACM MMSys 2027]}}}}
+\begin{itemize}
+  \item Developed a perceptually-guided bitrate adaptation algorithm for a real-time VR streaming system, achieving 15\% bandwidth reduction without degrading QoE, supported by a user study with real-world VR applications.
+  \item Designed a kinematics-based state machine that synchronizes bitrate adaptation with head motion phases.
+  \item Extended the system to support multiple rate control modes (CBR, VBR, CQP) and integrated motion vector for rate adaptation optimization.
+\end{itemize}
+
+\project{Trinity: Low-latency Cloud VR Gaming \hfill
+  \normalfont\textit{\hyperlink{pub3}{\textcolor{linkblue}{[ACM MMSys 2026]}}} \textit{\href{https://chutoutian.github.io/trinity.github.io/}{\textcolor{linkblue}{[Website]}}}}
+\begin{itemize}
+  \item Validated that users exhibit different latency tolerance across action types (head, hand, body motion) using an open-source first-person shooter VR game.
+  \item Developed a delayed-rendering strategy for hand motion to bridge latency gaps and a customized rendering approach to generate partial panoramas for head motion.
+  \item Prototyped an end-to-end cloud VR gaming system, achieving comparable QoE to local streaming systems while reducing bandwidth cost and GPU utilization by 60\% and 40\%, respectively.
+\end{itemize}
+
+
+
+\iffalse
+\vspace{4pt}
+\roleentry{Institute of Wireless Communications Technology, Shanghai Jiao Tong University}
+  {Graduate Research Assistant $\cdot$ Advisor: Prof.\ Ying Cui}
+  {Aug.\ 2020 -- Mar.\ 2022}
+
+\project{RL-based Adaptive Wireless Video Streaming \hfill
+  \normalfont\textit{\hyperlink{pub6}{\textcolor{linkblue}{[IEEE Trans.\ Multimedia 2025]}}}}
+\begin{itemize}
+  \item Theoretically analyzed and optimized actor-critic reinforcement learning (RL) algorithm, accelerating training convergence; applied the RL algorithm to adaptive bitrate in video streaming.
+  \item Incorporated and mathematically modeled physical-layer network information (PRB count, MCS) into the optimized RL framework, improving QoE by 14.4\%.
+  \item Designed an online tuning approach via progressive neural networks to balance generalizability and environment-specific adaptation across diverse network conditions.
+  \item Deployed the optimized algorithm in Tencent’s production video streaming system.
+\end{itemize}
+\fi
+
+\iffalse
+\project{Rate Splitting for General Multicast \hfill
+  \normalfont\textit{\hyperlink{pub7}{\textcolor{linkblue}{[IEEE Trans.\ Wireless Commun.\ 2022]}}}}
+\begin{itemize}
+  \item Developed an optimization framework for general rate splitting in multicast systems, reducing interference and improving spectral efficiency in multi-user wireless networks.
+\end{itemize}
+\fi
+
+%\project{Adaptive 360\textdegree{} Video Streaming \hfill
+%  \normalfont\textit{\hyperlink{pub8}{\textcolor{linkblue}{[IEEE Trans.\ Image Process.\ 2021]}}}}
+%\begin{itemize}
+%  \item Designed adaptive streaming strategies for 360\textdegree{} video under perfect, imperfect, and unknown field-of-view viewing probabilities in wireless networks.
+%\end{itemize}
+
+%──────────────────────────────────────────────────────────────
+\section{Selected Publications}
+%──────────────────────────────────────────────────────────────
+
+\pub{1}{\textbf{Lingzhi Zhao}, Yongqiang Gui, Yanyan Suo, Sandesh Dhawaskar Sathyanarayana, Mingyuan Wu, Bo Chen, Ruixiao Zhang, Klara Nahrstedt, and Shu Shi. MARS: Streaming How You Move with Motion-Aware ABR for Real-Time VR.}{ACM Multimedia 2026, under review.}
+
+\pub{2}{Beitong Tian*, \textbf{Lingzhi Zhao*}, Bo Chen, Mingyuan Wu, Haozhen Zheng, Deepak Vasisht, Francis Y.\ Yan, and Klara Nahrstedt. AquaScope: Reliable Underwater Image Transmission on Mobile Devices. (*: equal contributions)}{ACM MobiSys 2026. (corresponding author)}
+
+\pub{3}{\textbf{Lingzhi Zhao}, Yongqiang Gui, Yanyan Suo, Sandesh Dhawaskar Sathyanarayana, Ruixiao Zhang, Shu Shi, and Klara Nahrstedt. Trinity: Exploiting Latency Sensitivity to Improve Quality of Experience on Cloud VR Gaming.}{ACM MMSys 2026.}
+
+\pub{4}{Beitong Tian*, \textbf{Lingzhi Zhao*}, Bo Chen, Haozhen Zheng, Jingcheng Yang, Mingyuan Wu, Deepak Vasisht, and Klara Nahrstedt. AquaVLM: Improving Underwater Situation Awareness with Mobile Vision Language Models. (*: equal contributions)}{ACM UbiComp 2027. (corresponding author) }
+
+\pub{5}{\textbf{Lingzhi Zhao}, Qian Zhou, Bo Chen, and Klara Nahrstedt. 360LiveCast: A Low-Latency and Bandwidth-efficient Multicast Framework for Live 360 Video.}{IEEE MIPR 2025.}
+
+\pub{6}{\textbf{Lingzhi Zhao}, Ying Cui, Yuhang Jia, Yunfei Zhang, and Klara Nahrstedt. Enhancing Neural Adaptive Wireless Video Streaming via Lower-Layer Information Exposure and Online Tuning.}{IEEE Transactions on Multimedia 2025.}
+
+\pub{7}{\textbf{Lingzhi Zhao}, Ying Cui, Sheng Yang, and Shlomo Shamai (Shitz). An Optimization Framework for General Rate Splitting for General Multicast.}{IEEE Transactions on Wireless Communications 2022.}
+
+\pub{8}{\textbf{Lingzhi Zhao}, Ying Cui, Zhi Liu, Yunfei Zhang, and Sheng Yang. Adaptive Streaming of 360 Videos with Perfect, Imperfect, and Unknown FoV Viewing Probabilities in Wireless Networks.}{IEEE Transactions on Image Processing 2021.}
+
+%──────────────────────────────────────────────────────────────
+\section{Thesis Committee}
+%──────────────────────────────────────────────────────────────
+
+\begin{tabular}{@{}l@{\hspace{16pt}}l@{}}
+  \textbf{\color{darkgray}Klara Nahrstedt} \textit{\color{midgray}(Chair)} & University of Illinois Urbana-Champaign \\[2pt]
+  \textbf{\color{darkgray}Francis Y.\ Yan}                                 & University of Illinois Urbana-Champaign \\[2pt]
+  \textbf{\color{darkgray}Philip Brighten Godfrey}                         & University of Illinois Urbana-Champaign \\[2pt]
+  \textbf{\color{darkgray}Shu Shi}                                         & ByteDance \\
+\end{tabular}
+
+\end{document}

@@ -1,0 +1,83 @@
+/* Local document companions; colors and typography follow the existing study book. */
+body[data-design] { font-size: 14px; line-height: 1.8; overflow-x: clip; }
+.design-topbar { position: sticky; z-index: 5; top: 0; display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 10px 28px; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 12px; }
+.design-topbar > div { margin-left: auto; display: flex; gap: 8px; }
+.design-topbar a { text-decoration: none; }
+.design-topbar button { padding: 5px 10px; color: var(--text-soft); border: 1px solid var(--border); border-radius: 5px; background: var(--bg); cursor: pointer; }
+.design-layout { display: grid; grid-template-columns: 235px minmax(0, 820px) 195px; gap: 42px; max-width: 1420px; padding: 0 28px; margin: 0 auto; align-items: start; }
+.design-layout > main { min-width: 0; padding: 42px 0 28px; }
+.design-sidebar { position: sticky; top: 86px; min-width: 0; padding: 0 14px 20px 0; border-right: 1px solid var(--border); max-height: calc(100vh - 100px); overflow-y: auto; font-size: 12px; }
+.design-home { display: block; margin-bottom: 23px; color: var(--text); font-weight: 600; text-decoration: none; }
+.case-nav { margin: 0 0 25px; }
+.case-nav p { color: var(--text-soft); margin: 0 0 5px; }
+.case-nav a { display: block; padding: 4px 8px; margin: 2px 0; text-decoration: none; border-left: 2px solid transparent; }
+.case-nav a[aria-current] { background: var(--accent-soft); border-left-color: var(--accent); color: var(--text); }
+.source-nav { padding-top: 15px; border-top: 1px solid var(--border); }
+.source-nav a { display: block; margin: 8px 0; }
+.design-header { padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+.design-header h1 { font-size: clamp(25px, 3vw, 34px); line-height: 1.35; letter-spacing: -1px; margin: 10px 0 15px; }
+.design-header .eyebrow { margin: 0; font-size: 11px; letter-spacing: 1.3px; color: var(--text-muted); }
+.design-meta { color: var(--text-muted); font-size: 12px; margin: 0 0 18px; }
+.document-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 12px; }
+.document-tabs a { padding: 6px 12px; border: 1px solid var(--border); border-radius: 5px; text-decoration: none; font-size: 12px; }
+.document-tabs a[aria-current] { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
+.source-download { font-size: 11px; color: var(--text-muted); }
+.design-review-count { font-size: 12px; color: var(--text-muted); margin: 15px 0 0; }
+.design-prose { min-width: 0; overflow-wrap: anywhere; }
+.design-prose h2 { font-size: 21px; padding-top: 14px; margin: 30px 0 14px; line-height: 1.4; }
+.design-prose h3 { font-size: 18px; margin: 28px 0 13px; line-height: 1.45; }
+.design-prose p { margin: 0 0 16px; }
+.design-prose li { margin: 8px 0; }
+.design-prose blockquote { padding: 4px 0 4px 18px; margin: 20px 0; border-left: 3px solid var(--accent); color: var(--text-soft); }
+.design-diagram { max-width: 100%; overflow-x: auto; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 6px; margin: 24px 0; padding: 16px; }
+.design-diagram pre { margin: 0; font-size: 11px; line-height: 1.8; white-space: pre; overflow-wrap: normal; }
+.design-prose .table-scroll { max-width: 100%; }
+.prose.design-prose .table-scroll table { width: 100%; min-width: 0; table-layout: fixed; }
+.prose.design-prose .table-scroll :is(th, td) { min-width: 0; white-space: normal; overflow-wrap: break-word; padding: 10px 11px; font-size: 12px; }
+.prose.design-prose .table-scroll th:first-child { width: 25%; }
+.prose.design-prose .table-scroll table:has(th:nth-child(4)) th:nth-child(2),
+.prose.design-prose .table-scroll table:has(th:nth-child(4)) th:nth-child(3) { width: 17%; }
+.prose.design-prose .design-diagram pre { margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.design-prose .math-block { max-width: 100%; overflow-x: auto; padding: 10px 2px; margin: 16px 0 24px; }
+.design-prose .katex-display { margin: 0; }
+.design-prose .katex { font-size: 1.06em; }
+.design-prose .design-question { position: relative; list-style: none; margin: 16px 0; padding-left: 27px; }
+.design-check { position: absolute; left: 0; top: 2px; }
+.design-check input { width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer; }
+.design-question.reviewed { color: var(--text-muted); }
+.followup-answer { border-left: 2px solid var(--border); padding-left: 14px; }
+.design-toc { position: sticky; top: 86px; font-size: 11px; max-height: calc(100vh - 100px); overflow-y: auto; padding-left: 17px; border-left: 1px solid var(--border); }
+.design-toc a { display: block; text-decoration: none; color: var(--text-muted); line-height: 1.5; margin: 10px 0; }
+.design-toc a:hover { color: var(--accent); }
+.design-footer { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 12px; }
+@media (max-width: 1200px) { .design-layout { grid-template-columns: 210px minmax(0, 800px); gap: 30px; } .design-toc { display: none; } }
+@media (max-width: 800px) {
+  .design-topbar { padding: 10px 16px; gap: 8px; font-size: 10px; flex-wrap: wrap; }
+  .design-topbar > div { gap: 5px; }
+  .design-layout { display: block; padding: 0 18px; }
+  .design-sidebar { position: static; max-height: none; border-right: none; border-bottom: 1px solid var(--border); padding: 15px 0 6px; }
+  .design-home { margin-bottom: 8px; }
+  .case-nav { display: inline-block; vertical-align: top; width: 31%; margin: 0 1% 10px 0; font-size: 10px; }
+  .source-nav { display: none; }
+  .design-layout > main { padding-top: 28px; }
+  .design-header h1 { font-size: 25px; letter-spacing: -.5px; }
+  .design-meta { line-height: 1.6; }
+  .design-prose h2 { font-size: 19px; }
+  .design-prose h3 { font-size: 17px; }
+  .prose.design-prose .table-scroll table { min-width: 600px; }
+  .prose.design-prose .table-scroll :is(th, td) { font-size: 11px; padding: 8px 9px; }
+}
+@media print {
+  .design-topbar, .design-sidebar, .design-toc, .document-tabs, .source-download, .design-review-count, .design-footer, .design-check, .heading-anchor { display: none !important; }
+  .design-layout { display: block; max-width: none; padding: 0; }
+  .design-layout > main { padding: 0; }
+  body[data-design] { font-size: 10pt; color: #000; background: #fff; }
+  .design-header h1 { font-size: 21pt; }
+  .design-prose :is(h2,h3) { break-after: avoid; }
+  .design-diagram { break-inside: avoid; overflow: visible; }
+  .design-diagram pre { white-space: pre-wrap; font-size: 8pt; }
+  .design-prose .math-block { overflow: visible; }
+  .design-prose .katex-display { white-space: normal; }
+  .prose.design-prose .table-scroll table { min-width: 0; width: 100%; }
+  .design-question { padding-left: 0 !important; }
+}

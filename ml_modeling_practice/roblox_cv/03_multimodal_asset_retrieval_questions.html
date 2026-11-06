@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>Mock 3 — Text and Image Search for 3D Assets · Video &amp; ML</title><link rel="stylesheet" href="../../assets/book.css"><link rel="stylesheet" href="../../assets/katex/katex.min.css"><link rel="stylesheet" href="../../assets/cv-modeling.css"><script src="../../assets/cv-modeling.js" defer></script></head>
+<body data-page="ml-design" data-design="03_multimodal_asset_retrieval" data-mode="questions"><a class="skip-link" href="#main-content">Skip to content</a>
+<header class="design-topbar"><a href="../../index.html">Video &amp; ML</a><span>/</span><a href="index.html">ML Modeling Knowledge</a><div><button type="button" data-design-theme aria-label="Toggle color theme">Theme</button><button type="button" data-design-print>Print / PDF</button></div></header>
+<div class="design-layout"><aside class="design-sidebar"><a class="design-home" href="index.html">CV design practice</a><section class="case-nav"><p>01 · Visual safety moderation</p><a href="01_visual_moderation_questions.html">Questions</a><a href="01_visual_moderation_solution.html">Reference answer</a><a href="01_visual_moderation_detailed.html">Detailed walkthrough</a></section><section class="case-nav"><p>02 · Game genre classification</p><a href="02_game_genre_questions.html">Questions</a><a href="02_game_genre_solution.html">Reference answer</a><a href="02_game_genre_detailed.html">Detailed walkthrough</a></section><section class="case-nav"><p>03 · Text / image asset retrieval</p><a href="03_multimodal_asset_retrieval_questions.html" aria-current="page">Questions</a><a href="03_multimodal_asset_retrieval_solution.html">Reference answer</a><a href="03_multimodal_asset_retrieval_detailed.html">Detailed walkthrough</a></section><div class="source-nav"><a href="../../08_company_interviews.html#13-system-design">Company interview topics ↗</a><a href="../../02_ml_domain.html#26-interview-questions--computer-vision">CV foundations · 2.6 ↗</a></div></aside>
+<main id="main-content"><header class="design-header"><p class="eyebrow">PRACTICE · QUESTIONS ONLY</p><h1>Mock 3 — Text and Image Search for 3D Assets</h1><p class="design-meta">45 minutes · 35-minute technical core · English · CV / multimodal</p><div class="document-tabs"><a href="03_multimodal_asset_retrieval_questions.html" aria-current="page">Question document</a><a href="03_multimodal_asset_retrieval_solution.html">Reference answer</a><a href="03_multimodal_asset_retrieval_detailed.html">Detailed walkthrough</a></div><a class="source-download" href="03_multimodal_asset_retrieval_questions.md" download>Download Markdown source ↗</a><p class="design-review-count" aria-live="polite">Review checks are available when JavaScript is enabled.</p></header><article class="prose design-prose"><p>This is an original ML Modeling Knowledge practice question, adapted from collected recommender/two-tower topics and the CV retrieval notes. It is <strong>not a reported Roblox interview prompt</strong>. Use a 45-minute session: five minutes of introduction, 35 minutes of technical discussion, and five minutes for your questions. This is a model-centered design discussion, not a pandas coding exercise.</p>
+<h2 id="open-prompt">Open prompt<a class="heading-anchor" href="#open-prompt" aria-label="Link to section">#</a></h2>
+<p>Design a system that helps a creator find reusable 3D assets using either a natural-language description or a reference image. A creator might type “a small red wooden chair” or upload a screenshot containing a chair and expect relevant assets, not necessarily identical images.</p>
+<p>Explain the whole ML approach: what the system should predict, how you obtain training examples, a first working model, how you improve and train it, how you evaluate it, and how predictions reach the user. State assumptions and justify choices rather than naming an architecture immediately.</p>
+<h2 id="illustrative-constraints">Illustrative constraints<a class="heading-anchor" href="#illustrative-constraints" aria-label="Link to section">#</a></h2>
+<p>The following are <strong>invented interview assumptions, not Roblox statistics or requirements</strong>:</p>
+<ul>
+<li>The catalog contains two million assets, including new uploads and edited versions of existing assets.</li>
+<li>Each asset has a mesh, optional descriptive metadata, and up to six rendered views. Descriptions can be vague, incorrect, or missing.</li>
+<li>You have a modest set of reviewed query–asset relevance judgments and historical search/exposure logs. Different assets may all satisfy one query.</li>
+<li>Both text queries and reference-image queries matter. Uploaded images may have clutter, text overlays, or multiple objects.</li>
+<li>The interface displays 20 results. The initial target is 150 ms server-side p95 latency, excluding an upload&#39;s network transfer.</li>
+<li>New assets should become searchable without waiting for interaction history. Catalog eligibility restrictions still apply.</li>
+</ul>
+<p>Clarify any assumption that changes your design. You are not expected to design every storage service or write training code during this interview.</p>
+<h2 id="1-problem-formulation--technical-minutes-04">1. Problem formulation — technical minutes 0–4<a class="heading-anchor" href="#1-problem-formulation--technical-minutes-04" aria-label="Link to section">#</a></h2>
+<p><strong>Main question:</strong> What exactly does “a relevant asset” mean for this product, and what should one prediction contain?</p>
+<p>Follow-up questions:</p>
+<ul>
+<li class="design-question" id="q1"><label class="design-check"><input type="checkbox" data-question="q1" aria-label="Mark follow-up Q1 as reviewed"></label><strong>Q1.</strong> How would you distinguish finding an exact duplicate from finding a semantically suitable substitute?</li>
+<li class="design-question" id="q2"><label class="design-check"><input type="checkbox" data-question="q2" aria-label="Mark follow-up Q2 as reviewed"></label><strong>Q2.</strong> What should happen when a query contains several requested attributes or an image contains several objects?</li>
+<li class="design-question" id="q3"><label class="design-check"><input type="checkbox" data-question="q3" aria-label="Mark follow-up Q3 as reviewed"></label><strong>Q3.</strong> Which product requirements would you clarify before deciding how to represent the inputs?</li>
+</ul>
+<h2 id="2-data-and-labels--technical-minutes-410">2. Data and labels — technical minutes 4–10<a class="heading-anchor" href="#2-data-and-labels--technical-minutes-410" aria-label="Link to section">#</a></h2>
+<p><strong>Main question:</strong> What examples and labels would you collect, and how would you construct evaluation sets that reflect unfamiliar future content?</p>
+<p>Follow-up questions:</p>
+<ul>
+<li class="design-question" id="q4"><label class="design-check"><input type="checkbox" data-question="q4" aria-label="Mark follow-up Q4 as reviewed"></label><strong>Q4.</strong> Does a search result that was not clicked necessarily mean the asset is irrelevant?</li>
+<li class="design-question" id="q5"><label class="design-check"><input type="checkbox" data-question="q5" aria-label="Mark follow-up Q5 as reviewed"></label><strong>Q5.</strong> If two distinct assets both match the query, how should that affect training examples?</li>
+<li class="design-question" id="q6"><label class="design-check"><input type="checkbox" data-question="q6" aria-label="Mark follow-up Q6 as reviewed"></label><strong>Q6.</strong> How would you prevent leakage from creators, copied assets, changing metadata, and later asset versions?</li>
+</ul>
+<h2 id="3-baseline--technical-minutes-1015">3. Baseline — technical minutes 10–15<a class="heading-anchor" href="#3-baseline--technical-minutes-1015" aria-label="Link to section">#</a></h2>
+<p><strong>Main question:</strong> What is the simplest complete system you could evaluate for both query types before committing to expensive training?</p>
+<p>Follow-up questions:</p>
+<ul>
+<li class="design-question" id="q7"><label class="design-check"><input type="checkbox" data-question="q7" aria-label="Mark follow-up Q7 as reviewed"></label><strong>Q7.</strong> What can an off-the-shelf image model do with a raw 3D mesh?</li>
+<li class="design-question" id="q8"><label class="design-check"><input type="checkbox" data-question="q8" aria-label="Mark follow-up Q8 as reviewed"></label><strong>Q8.</strong> How would you test whether rendering choices, rather than asset semantics, drive matching?</li>
+<li class="design-question" id="q9"><label class="design-check"><input type="checkbox" data-question="q9" aria-label="Mark follow-up Q9 as reviewed"></label><strong>Q9.</strong> What would count as evidence that your first system needs domain adaptation rather than simply more engineering?</li>
+</ul>
+<h2 id="4-model-design--technical-minutes-1520">4. Model design — technical minutes 15–20<a class="heading-anchor" href="#4-model-design--technical-minutes-1520" aria-label="Link to section">#</a></h2>
+<p><strong>Main question:</strong> Describe the inputs, intermediate representations, and scores. Show how one query can be compared with a very large asset catalog.</p>
+<p>Follow-up questions:</p>
+<ul>
+<li class="design-question" id="q10"><label class="design-check"><input type="checkbox" data-question="q10" aria-label="Mark follow-up Q10 as reviewed"></label><strong>Q10.</strong> How would you combine different views of one asset while preserving distinctive details?</li>
+<li class="design-question" id="q11"><label class="design-check"><input type="checkbox" data-question="q11" aria-label="Mark follow-up Q11 as reviewed"></label><strong>Q11.</strong> Why might a model that predicts a fixed set of object classes be insufficient for this search task?</li>
+<li class="design-question" id="q12"><label class="design-check"><input type="checkbox" data-question="q12" aria-label="Mark follow-up Q12 as reviewed"></label><strong>Q12.</strong> Where would you allow richer interaction between a query and an asset, and what limits the number of candidates you can process that way?</li>
+</ul>
+<h2 id="5-loss-and-training--technical-minutes-2026">5. Loss and training — technical minutes 20–26<a class="heading-anchor" href="#5-loss-and-training--technical-minutes-2026" aria-label="Link to section">#</a></h2>
+<p><strong>Main question:</strong> Specify a training objective and explain what a batch contains, what makes an example difficult, and which parameters you would update.</p>
+<p>Follow-up questions:</p>
+<ul>
+<li class="design-question" id="q13"><label class="design-check"><input type="checkbox" data-question="q13" aria-label="Mark follow-up Q13 as reviewed"></label><strong>Q13.</strong> How do you choose nonmatching examples without repeatedly training against valid alternatives?</li>
+<li class="design-question" id="q14"><label class="design-check"><input type="checkbox" data-question="q14" aria-label="Mark follow-up Q14 as reviewed"></label><strong>Q14.</strong> What prevents a model from improving similarity scores merely by increasing representation magnitudes?</li>
+<li class="design-question" id="q15"><label class="design-check"><input type="checkbox" data-question="q15" aria-label="Mark follow-up Q15 as reviewed"></label><strong>Q15.</strong> If reviewed training data is limited, what would you train first and how would you decide whether to update more parameters?</li>
+</ul>
+<h2 id="6-evaluation--technical-minutes-2631">6. Evaluation — technical minutes 26–31<a class="heading-anchor" href="#6-evaluation--technical-minutes-2631" aria-label="Link to section">#</a></h2>
+<p><strong>Main question:</strong> How would you decide whether an improvement helps users find appropriate assets, including when several results are valid?</p>
+<p>Follow-up questions:</p>
+<ul>
+<li class="design-question" id="q16"><label class="design-check"><input type="checkbox" data-question="q16" aria-label="Mark follow-up Q16 as reviewed"></label><strong>Q16.</strong> How would you separate errors in the initial candidate search from errors in the final ordering?</li>
+<li class="design-question" id="q17"><label class="design-check"><input type="checkbox" data-question="q17" aria-label="Mark follow-up Q17 as reviewed"></label><strong>Q17.</strong> Could a good aggregate score conceal poor image-query or new-creator performance?</li>
+<li class="design-question" id="q18"><label class="design-check"><input type="checkbox" data-question="q18" aria-label="Mark follow-up Q18 as reviewed"></label><strong>Q18.</strong> Why might stronger offline results fail to improve the live product?</li>
+</ul>
+<h2 id="7-serving-and-trade-offs--technical-minutes-3135">7. Serving and trade-offs — technical minutes 31–35<a class="heading-anchor" href="#7-serving-and-trade-offs--technical-minutes-3135" aria-label="Link to section">#</a></h2>
+<p><strong>Main question:</strong> Walk through one actual query, then explain how new uploads, deletions, and model updates change what is searchable.</p>
+<p>Follow-up questions:</p>
+<ul>
+<li class="design-question" id="q19"><label class="design-check"><input type="checkbox" data-question="q19" aria-label="Mark follow-up Q19 as reviewed"></label><strong>Q19.</strong> How would you estimate representation memory and identify the dominant latency components?</li>
+<li class="design-question" id="q20"><label class="design-check"><input type="checkbox" data-question="q20" aria-label="Mark follow-up Q20 as reviewed"></label><strong>Q20.</strong> Why might vectors produced by two different model versions be incompatible even when their lengths match?</li>
+<li class="design-question" id="q21"><label class="design-check"><input type="checkbox" data-question="q21" aria-label="Mark follow-up Q21 as reviewed"></label><strong>Q21.</strong> How does the system handle a brand-new asset with no clicks or usage history?</li>
+</ul>
+<h2 id="optional-constraint-changes">Optional constraint changes<a class="heading-anchor" href="#optional-constraint-changes" aria-label="Link to section">#</a></h2>
+<ol>
+<li>The catalog grows 100 times larger, but the latency target stays unchanged. What would you measure and change first?</li>
+<li>Users care strongly about attribute combinations such as “red wooden chair,” but the results often satisfy only “chair.” How would you diagnose and improve this?</li>
+<li>You lose access to click logs and can afford only a small set of reviewed examples. What would you retain, simplify, and evaluate next?</li>
+</ol>
+<h2 id="source-boundary">Source boundary<a class="heading-anchor" href="#source-boundary" aria-label="Link to section">#</a></h2>
+<p>The collected <a href="../../08_company_interviews.html#two-tower-models">two-tower reports</a> concern senior/principal candidates; PhD new-grad reports include recommender features, samples, loss, optimization, and evaluation. This specific asset-search task is our adaptation. The <a href="../../02_ml_domain.html#cv-case02">CV retrieval case</a> provides related learning notes, not independent interview-report evidence.</p>
+</article><footer class="design-footer"><a href="index.html">All three mocks</a><a href="#main-content">Back to top ↑</a></footer></main>
+<nav class="design-toc" aria-label="Document sections"><p class="nav-label">ON THIS PAGE</p><a href="#open-prompt">Open prompt</a><a href="#illustrative-constraints">Illustrative constraints</a><a href="#1-problem-formulation--technical-minutes-04">1. Problem formulation — technical minutes 0–4</a><a href="#2-data-and-labels--technical-minutes-410">2. Data and labels — technical minutes 4–10</a><a href="#3-baseline--technical-minutes-1015">3. Baseline — technical minutes 10–15</a><a href="#4-model-design--technical-minutes-1520">4. Model design — technical minutes 15–20</a><a href="#5-loss-and-training--technical-minutes-2026">5. Loss and training — technical minutes 20–26</a><a href="#6-evaluation--technical-minutes-2631">6. Evaluation — technical minutes 26–31</a><a href="#7-serving-and-trade-offs--technical-minutes-3135">7. Serving and trade-offs — technical minutes 31–35</a><a href="#optional-constraint-changes">Optional constraint changes</a><a href="#source-boundary">Source boundary</a></nav></div>
+</body></html>

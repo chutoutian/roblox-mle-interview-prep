@@ -1,0 +1,115 @@
+/* Original tensor-flow figures, scoped to the ML chapter; host theme variables. */
+.transformer-diagram {
+  min-width: 0;
+  margin: 28px 0;
+  padding: 20px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.transformer-diagram *, .transformer-diagram *::before, .transformer-diagram *::after { box-sizing: border-box; }
+.transformer-diagram figcaption { display: flex; flex-direction: column; gap: 3px; margin: 0 0 13px; text-align: left; }
+.transformer-diagram figcaption strong { color: var(--text); font-size: 16px; line-height: 1.4; }
+.transformer-diagram figcaption > span { color: var(--text-soft); font-size: 10px; letter-spacing: .07em; }
+.transformer-diagram p { margin: 10px 0; }
+.transformer-diagram .tf-intro { margin-bottom: 18px; color: var(--text-soft); }
+.transformer-diagram .tf-note { margin: 18px 0 0; padding-top: 12px; border-top: 1px solid var(--border); color: var(--text-soft); font-size: 11px; }
+.transformer-diagram :not(pre) > code { padding: 0; border: 0; background: transparent; color: inherit; white-space: normal; font-size: 11px; overflow-wrap: anywhere; }
+.transformer-diagram .tf-shape { display: inline-block; color: var(--accent); font-size: 11px; font-weight: 700; }
+.tf-architecture { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: start; gap: 20px; }
+.tf-lane { min-width: 0; }
+.transformer-diagram .tf-lane-label { margin: 0 0 12px; padding-bottom: 10px; border-bottom: 2px solid var(--accent); color: var(--accent); font-size: 10px; letter-spacing: .045em; font-weight: 700; }
+.transformer-diagram .tf-encoder .tf-lane-label { border-color: var(--green); color: var(--green); }
+.tf-stage { min-width: 0; padding: 12px; border: 1px solid var(--border-strong); border-radius: 5px; background: var(--bg); }
+.tf-stage-title { display: flex; flex-direction: column; gap: 4px; }
+.tf-stage-title > strong { font-size: 12px; line-height: 1.5; }
+.tf-stage > p { font-size: 11px; color: var(--text-soft); }
+.tf-stage > p:last-child { margin-bottom: 0; }
+.transformer-diagram .tf-source { border-color: var(--green); }
+.transformer-diagram .tf-source .tf-stage-title { color: var(--green); }
+.transformer-diagram .tf-target { border-color: var(--accent); }
+.transformer-diagram .tf-target .tf-stage-title { color: var(--accent); }
+.transformer-diagram .tf-memory { border-color: var(--amber); background: var(--amber-soft); }
+.transformer-diagram .tf-memory .tf-stage-title { color: var(--amber); }
+.tf-down { margin: 2px 0; color: var(--text-soft); font-size: 19px; text-align: center; line-height: 1.5; }
+.tf-residual { display: flex; flex-direction: column; gap: 7px; padding: 10px 0 0 10px; border-left: 2px dashed var(--border-strong); }
+.tf-residual > span { color: var(--text-soft); font-size: 10px; }
+.transformer-diagram .tf-residual > code { font-size: 11px; }
+.tf-memory-link { display: flex; flex-direction: column; gap: 4px; padding-top: 10px; border-top: 1px dashed var(--amber); }
+.tf-memory-link > strong { color: var(--amber); font-size: 11px; }
+.tf-memory-link > span { font-size: 10px; color: var(--text-soft); }
+.tf-summary-strip { display: flex; flex-direction: column; gap: 5px; margin-top: 18px; padding: 13px; border-left: 3px solid var(--accent); background: var(--accent-soft); }
+.tf-summary-strip strong { font-size: 11px; color: var(--accent); }
+.tf-summary-strip > span { color: var(--text-soft); font-size: 11px; }
+.transformer-diagram .tf-controls { display: none; flex-wrap: wrap; gap: 7px; margin: 17px 0; }
+.transformer-diagram[data-transformer-ready] .tf-controls { display: flex; }
+.tf-controls button { min-height: 40px; padding: 7px 11px; border: 1px solid var(--border-strong); border-radius: 4px; background: var(--bg); color: var(--text-soft); font: inherit; cursor: pointer; }
+.tf-controls button[aria-pressed='true'] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
+.tf-controls button:hover { background: var(--bg-hover); }
+.tf-controls button:focus-visible, .tf-table-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.transformer-diagram .tf-panel { margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--border-strong); }
+.transformer-diagram .tf-panel[hidden] { display: none; }
+.transformer-diagram .tf-panel-title { margin: 0 0 12px; color: var(--accent); font-weight: 700; }
+.transformer-diagram .tf-explanation { color: var(--text-soft); }
+.tf-qkv-origins { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-bottom: 16px; }
+.tf-qkv-origins > div { display: flex; flex-direction: column; gap: 5px; padding: 12px; border: 1px solid var(--border-strong); border-radius: 5px; background: var(--bg); }
+.tf-qkv-origins > div > span { color: var(--text-soft); font-size: 11px; }
+.transformer-diagram .tf-shape-flow { padding: 0; margin: 0; list-style: none; border-top: 1px solid var(--border); }
+.tf-shape-flow > li { display: grid; grid-template-columns: minmax(0,1.4fr) minmax(0,1fr); gap: 18px; margin: 0; padding: 15px 0; border-bottom: 1px solid var(--border); }
+.tf-shape-flow > li > div { min-width: 0; }
+.tf-shape-flow > li > div:last-child { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 6px; }
+.tf-shape-flow strong { font-size: 11px; }
+.tf-shape-flow p { margin: 5px 0 0; color: var(--text-soft); font-size: 11px; }
+.tf-shape-flow small { color: var(--text-soft); font-size: 10px; }
+.tf-mask-example + .tf-mask-example { margin-top: 22px; }
+.tf-table-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; border: 1px solid var(--border-strong); border-radius: 5px; background: var(--bg); }
+.transformer-diagram .tf-mask-table { display: table; width: 100%; min-width: 410px; max-width: none; margin: 0; overflow: visible; border: 0; border-collapse: collapse; font-size: 11px; }
+.tf-mask-table caption { padding: 10px; text-align: left; color: var(--text-soft); font-size: 10px; }
+.transformer-diagram .tf-mask-table :is(th, td) { padding: 10px 8px; border: 1px solid var(--border); text-align: center; white-space: normal; }
+.tf-mask-table th { background: var(--bg-muted); color: var(--text-soft); font-size: 10px; }
+.tf-mask-table th > span { margin-right: 4px; color: var(--text-muted); }
+.transformer-diagram .tf-mask-table .tf-allowed { background: var(--green-soft); color: var(--green); font-weight: 700; }
+.transformer-diagram .tf-mask-table .tf-blocked { background: var(--bg-subtle); color: var(--text-muted); }
+.tf-mask-table .tf-active-query > :is(th,td) { box-shadow: inset 0 2px 0 var(--accent), inset 0 -2px 0 var(--accent); }
+.tf-mask-table .tf-active-query > :first-child { box-shadow: inset 3px 0 0 var(--accent), inset 0 2px 0 var(--accent), inset 0 -2px 0 var(--accent); color: var(--accent); }
+.tf-mask-shapes { margin-top: 16px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg); }
+.tf-mask-shapes p { font-size: 11px; color: var(--text-soft); }
+.transformer-diagram .tf-query-summary { padding: 12px; border-left: 3px solid var(--accent); background: var(--accent-soft); color: var(--text-soft); font-size: 11px; }
+.tf-tokens { display: flex; flex-wrap: wrap; gap: 6px; }
+.tf-tokens > span { display: inline-flex; min-height: 33px; justify-content: center; align-items: center; padding: 5px 9px; border: 1px solid var(--accent); border-radius: 4px; color: var(--accent); background: var(--accent-soft); font-size: 11px; font-weight: 700; }
+.tf-label-tokens > span { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+.tf-training-rows { display: grid; gap: 13px; margin: 12px 0 18px; }
+.tf-training-rows > div { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
+.tf-training-rows > div > strong { width: 100%; font-size: 11px; }
+.tf-decode-steps { display: flex; flex-direction: column; align-items: stretch; gap: 4px; margin-top: 17px; text-align: center; }
+.tf-decode-steps > span { padding: 10px; border: 1px solid var(--border-strong); border-radius: 4px; background: var(--bg); font-size: 11px; }
+.tf-decode-steps > b { color: var(--accent); font-size: 17px; font-weight: 400; }
+.tf-fixed-memory { display: flex; flex-wrap: wrap; gap: 5px 10px; padding: 12px; border: 1px solid var(--amber); border-radius: 5px; background: var(--amber-soft); }
+.tf-fixed-memory > strong { color: var(--amber); font-size: 11px; }
+.tf-fixed-memory > span { width: 100%; color: var(--text-soft); font-size: 11px; }
+.tf-prefix { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-top: 18px; }
+.tf-prefix > strong { width: 100%; font-size: 11px; }
+.transformer-diagram .tf-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@media (max-width: 700px) {
+  .transformer-diagram { padding: 14px; font-size: 11px; }
+  .tf-architecture { grid-template-columns: minmax(0,1fr); gap: 28px; }
+  .tf-qkv-origins { grid-template-columns: minmax(0,1fr); gap: 8px; }
+  .tf-shape-flow > li { grid-template-columns: minmax(0,1fr); gap: 9px; }
+  .tf-shape-flow > li > div:last-child { padding: 9px; border-left: 2px solid var(--accent); background: var(--accent-soft); }
+  .tf-controls button { padding: 7px 9px; font-size: 11px; }
+}
+@media print {
+  .transformer-diagram { break-inside: auto; padding: 14px; background: white; color: #222; border-color: #aaa; }
+  .transformer-diagram .tf-controls, .transformer-diagram .tf-sr-only { display: none !important; }
+  .transformer-diagram .tf-panel[hidden] { display: block !important; }
+  .tf-architecture { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .tf-stage, .tf-shape-flow > li, .tf-mask-example, .tf-decode-steps > span { break-inside: avoid; }
+  .tf-table-scroll { overflow: visible; }
+  .transformer-diagram .tf-mask-table { min-width: 0; }
+  .tf-mask-table .tf-active-query > :is(th,td) { box-shadow: none; }
+}

@@ -1,0 +1,54 @@
+.bs-lab { margin: 27px 0; padding: 20px; border: 1px solid var(--border-strong); border-radius: 7px; background: var(--bg-subtle); font-size: 12px; line-height: 1.65; overflow-wrap: anywhere; }
+.bs-lab * { box-sizing: border-box; }
+.bs-lab figcaption { display: flex; flex-direction: column; gap: 4px; margin-bottom: 13px; text-align: left; }
+.bs-lab figcaption strong { font-size: 17px; color: var(--text); }
+.bs-lab figcaption > span { font-size: 10px; letter-spacing: .08em; color: var(--text-soft); }
+.bs-lab p { margin: 10px 0; }
+.bs-lab .bs-controls, .bs-lab .bs-playback { display: none; flex-wrap: wrap; align-items: center; gap: 7px; margin: 14px 0; }
+.bs-lab[data-bs-ready] .bs-controls, .bs-lab[data-bs-ready] .bs-playback { display: flex; }
+.bs-lab button { min-height: 40px; padding: 7px 10px; border: 1px solid var(--border-strong); border-radius: 4px; background: var(--bg); color: var(--text-soft); cursor: pointer; font: inherit; }
+.bs-lab button[aria-pressed='true'] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); box-shadow: inset 0 -2px var(--accent); }
+.bs-lab button:hover:not(:disabled) { background: var(--bg-hover); }
+.bs-lab button:disabled { opacity: .4; cursor: default; }
+.bs-lab button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.bs-playback > span { color: var(--text-soft); font-size: 11px; }
+.bs-lab .bs-case { margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-strong); }
+.bs-lab [hidden] { display: none; }
+.bs-case-title { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px; }
+.bs-case-title > span { color: var(--accent); font-weight: 700; }
+.bs-array { display: flex; flex-wrap: wrap; gap: 5px; margin: 15px 0; }
+.bs-array > span { display: flex; flex: 1 1 45px; flex-direction: column; align-items: center; gap: 2px; min-width: 0; padding: 8px; border: 1px solid var(--border-strong); border-radius: 4px; background: var(--bg); }
+.bs-array small { color: var(--text-soft); font-size: 10px; }
+.bs-array b { font-size: 15px; }
+.bs-array .bs-sentinel { flex-basis: 75px; border-style: dashed; background: transparent; color: var(--accent); }
+.bs-array .bs-sentinel b { font-size: 11px; }
+.bs-lab .bs-note { font-size: 11px; color: var(--text-soft); }
+.bs-methods { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin: 18px 0; }
+.bs-method { min-width: 0; padding: 12px; border: 1px solid var(--border-strong); border-radius: 5px; background: var(--bg); }
+.bs-lab .bs-method h4 { margin: 0 0 8px; border: 0; font-size: 13px; line-height: 1.5; }
+.bs-lab .bs-method > code { display: block; min-height: 40px; padding: 0; border: 0; background: transparent; color: var(--accent); white-space: normal; font-size: 11px; line-height: 1.8; }
+.bs-method > p { min-height: 59px; font-size: 11px; color: var(--text-soft); }
+.bs-lab .bs-table-wrap { min-width: 0; }
+.bs-lab table { display: table; width: 100%; max-width: none; margin: 12px 0; overflow: visible; border-collapse: collapse; border: 0; font-size: 10px; }
+.bs-lab :is(th,td) { padding: 7px 3px; border: 1px solid var(--border); text-align: center; white-space: normal; min-width: 0; }
+.bs-lab th { color: var(--text-soft); background: var(--bg-muted); }
+.bs-lab tr.bs-active-step > * { background: var(--accent-soft); color: var(--accent); }
+.bs-lab .bs-explanations { list-style: none; margin: 12px 0 0; padding: 0; font-size: 11px; }
+.bs-lab .bs-explanations li { margin: 9px 0; color: var(--text-soft); }
+.bs-lab .bs-explanations li > strong { color: var(--green); }
+.bs-lab .bs-takeaway { margin-top: 16px; padding: 12px; border-left: 3px solid var(--accent); background: var(--accent-soft); color: var(--text-soft); font-size: 11px; }
+.bs-lab .bs-live { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+@media (max-width: 760px) {
+  .bs-methods { grid-template-columns: minmax(0,1fr); }
+  .bs-method > p { min-height: 0; }
+  .bs-lab { padding: 13px; }
+  .bs-lab table { font-size: 11px; }
+}
+@media print {
+  .bs-lab { background: #fff; break-inside: auto; }
+  .bs-lab .bs-controls, .bs-lab .bs-playback, .bs-lab .bs-live { display: none !important; }
+  .bs-lab [hidden] { display: block !important; }
+  .bs-methods { grid-template-columns: minmax(0,1fr); }
+  .bs-method { break-inside: avoid; }
+  .bs-lab tr.bs-active-step > * { color: inherit; background: transparent; }
+}
