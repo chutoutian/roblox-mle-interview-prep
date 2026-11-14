@@ -413,7 +413,27 @@ This encourages the preferred candidate's reranker score to be higher. It cannot
 
 ### 6.1 Define the evaluation universe and metrics
 
-Fix the query set, catalog snapshot, eligibility rules, and relevance judgments. Let $R_q$ be the known relevant assets for query $q$:
+Fix the query set, catalog snapshot, eligibility rules, and relevance judgments. The **evaluation universe** is the set of queries and eligible assets against which every model is compared. A catalog snapshot fixes which asset versions exist; eligibility rules determine which of them may be returned. Otherwise, a changed score could reflect a changed catalog rather than a better model.
+
+**Model scores determine the order; human judgments evaluate that order.** The model might output similarities such as 0.82, 0.75, and 0.61. Sort by those scores, then look up the human relevance label of the asset at each position. These ranking metrics do not require mapping model similarity onto the human 0–3 scale. Any strictly increasing transformation of the scores preserves the ranking and therefore preserves these metrics, with the same tie handling.
+
+**Shared notation and labels**
+
+| Notation | Meaning in this section |
+| --- | --- |
+| $q$ | One evaluation query, either text or a reference image. Here it identifies the query, not its embedding vector. |
+| $\mathcal Q$ | The set of evaluation queries included in an aggregate metric. |
+| $Q$ | The number of queries in that set: $Q=\lvert\mathcal Q\rvert$. Lowercase $q$ is one query; uppercase $Q$ is a count. |
+| $a$ | One candidate asset from the fixed eligible catalog. |
+| $g(q,a)$ | The human relevance grade for query–asset pair $(q,a)$, for example 0: irrelevant, 1: weak partial match, 2: useful match, 3: excellent match. This is a label, not the model similarity. |
+| $R_q$ | The set of assets judged relevant to query $q$ under a fixed binary relevance rule. The subscript $q$ means this set depends on the query. |
+| $K$ | A positive integer cutoff, such as 20. The notation `@K` means only the first $K$ ranked results are considered. |
+| $\operatorname{TopK}(q)$ | The set of the first $K$ assets in the model's ranking for query $q$. Recall and precision count membership in this set rather than the positions within it. |
+| $r$ | A rank position, counted from 1: the first result has $r=1$. It is not a relevance score. |
+
+For binary metrics, define which human grades count as relevant. For example, use grades 2 and 3 as positives when they mean a usable result; grade 1 remains a partial match that does not meet this threshold. This choice defines $R_q$ and must stay fixed across comparisons. NDCG instead retains the relevance grades. An unjudged asset is unknown, not automatically grade 0; specify the judgment and evaluation policy before scoring.
+
+**Recall and precision: coverage versus result quality**
 
 $$
 \operatorname{Recall@K}(q)=
@@ -423,17 +443,43 @@ $$
 \frac{|\operatorname{TopK}(q)\cap R_q|}{K}.
 $$
 
-Define how fewer than $K$ eligible results are handled. For queries with no known positives, recall is undefined; specify exclusion or a separate no-match evaluation rather than silently dividing by zero.
+Read the set operations as follows:
 
-MRR focuses on the first relevant result:
+- $\cap$ means **intersection**: the assets that belong to both sets.
+- $\lvert S\rvert$ means the **number of distinct elements in set $S$**, not a vector norm or a numerical absolute value here.
+- $\lvert\operatorname{TopK}(q)\cap R_q\rvert$ is the number of relevant assets among the first $K$ results. It is the numerator in both metrics.
+- $\lvert R_q\rvert$ is the total number of known relevant assets for this query. Recall asks what fraction of them were retrieved.
+- $K$ in the precision denominator is the number of result slots evaluated. Precision asks what fraction of those slots contain a relevant asset.
+- The argument $(q)$ means the metric is for one query. To report mean recall or precision, calculate it per query and then average over the declared query set.
+
+For example, if $R_q=\{A,C,D\}$ and the first two results are A and B, the intersection is $\{A\}$. Recall@2 is $1/3$ and Precision@2 is $1/2$.
+
+The displayed precision formula uses $K$ result slots. Define how fewer than $K$ eligible results are handled, such as counting missing slots as nonrelevant, or explicitly reporting a different denominator. For queries with no known positives, recall is undefined; specify exclusion or a separate no-match evaluation rather than silently dividing by zero. Report the number of queries included in each aggregate.
+
+**RR and MRR: how soon does the first useful result appear?**
+
+RR means **Reciprocal Rank** for one query. MRR means **Mean Reciprocal Rank** across queries:
 
 $$
-\operatorname{MRR}=\frac1Q\sum_q\frac1{r_q},
+\operatorname{RR}(q)=
+\begin{cases}
+1/r_q & \text{if a relevant result is found},\\
+0 & \text{otherwise},
+\end{cases}
+\qquad
+\operatorname{MRR}=\frac1Q\sum_{q\in\mathcal Q}\operatorname{RR}(q).
 $$
 
-with contribution zero if there is no hit, and an explicit cutoff if reporting MRR@K. It does not reward retrieving many valid alternatives after the first hit.
+- $r_q$ is the position of the **first** relevant result for query $q$. If the first hit is at rank 4, its RR is $1/4$; if there is no hit, use the zero case rather than an undefined rank.
+- $\sum_{q\in\mathcal Q}$ means add one contribution for every query in the evaluation set. The symbol $\in$ means "belongs to."
+- $1/Q$ converts the sum into an arithmetic mean: each included query has equal weight.
+- MRR@K searches for that first hit only within the first $K$ positions; a query with no relevant result there contributes zero.
 
-NDCG uses relevance grades and rank discounts:
+MRR does not reward retrieving many valid alternatives after the first hit. Rankings beginning with a relevant asset all have RR 1, regardless of how good their remaining results are.
+
+**DCG, IDCG, and NDCG: put the most relevant assets earliest**
+
+For one fixed query, use its human relevance grades and discount results at later positions:
 
 $$
 \operatorname{DCG@K}=\sum_{r=1}^{K}
@@ -441,7 +487,37 @@ $$
 \operatorname{NDCG@K}=\frac{\operatorname{DCG@K}}{\operatorname{IDCG@K}}.
 $$
 
-IDCG is the DCG of the ideal ordering under the same judgments. Define the convention when IDCG is zero. The exponential gain is a common choice; the gain rule should match how product values relevance levels.
+| Notation | Meaning |
+| --- | --- |
+| $g_r$ | The human grade of the asset that the **model placed at rank $r$**. It is shorthand for that asset's $g(q,a)$; it is not the model's score. |
+| $2^{g_r}-1$ | The relevance **gain** assigned to that grade. Grades 0, 1, 2, 3 become gains 0, 1, 3, 7. The superscript is an exponent. |
+| $\log_2(r+1)$ | The base-2 logarithm of the rank plus one. It is the discount denominator; $r+1$ makes the first-position denominator $\log_2 2=1$. |
+| $1/\log_2(r+1)$ | The position weight, approximately 1, 0.631, and 0.5 at ranks 1, 2, and 3. Later results contribute less. |
+| $\sum_{r=1}^{K}$ | Add the discounted gains at positions 1 through $K$, including both endpoints. |
+| $\operatorname{DCG@K}$ | **Discounted Cumulative Gain**: the total relevance gain of the model's first $K$ results after applying the position discounts. |
+| $\operatorname{IDCG@K}$ | **Ideal DCG**: the maximum DCG under the same catalog and human judgments, obtained by putting the highest-grade assets first. Use the best available judged assets, not only a reordered version of the model's retrieved candidates. |
+| $\operatorname{NDCG@K}$ | **Normalized DCG**: the model's DCG divided by the ideal DCG for that query and cutoff. With nonnegative gains and a positive IDCG, it lies between 0 and 1; 1 achieves the ideal score. |
+
+The query argument is omitted from these three metric names for readability; each is still computed for one query. A reported mean NDCG averages these per-query ratios, rather than dividing a sum of DCGs by a sum of IDCGs. Define the convention when IDCG is zero, for example excluding those queries and reporting their count separately. The exponential gain is a common choice, not a probability calibration: grade 3 does not mean 75% relevance. A linear gain is another possible policy; choose the gain rule to match how the product values relevance levels.
+
+**AP and mAP: reward multiple relevant results appearing early**
+
+The next example also uses **Average Precision (AP)**. For an evaluated ranking with $N_q$ positions and binary relevance labels:
+
+$$
+\operatorname{AP}(q)=\frac1{|R_q|}
+\sum_{r=1}^{N_q}y_r\operatorname{Precision@r}(q),
+\qquad
+\operatorname{mAP}=\frac1Q\sum_{q\in\mathcal Q}\operatorname{AP}(q).
+$$
+
+- $N_q$ is the number of positions in the evaluated ranking for this query; $\sum_{r=1}^{N_q}$ adds over those positions.
+- $y_r$ is 1 if the asset at rank $r$ is relevant under the binary rule, and 0 if it is nonrelevant. This formula assumes those binary labels are available under the declared judgment policy.
+- $\operatorname{Precision@r}(q)$ means precision with the cutoff set to the current rank $r$. Multiplication by $y_r$ keeps this contribution only at relevant positions.
+- $|R_q|$ is the number of known relevant assets, including those missed by the evaluated ranking. Missed positives contribute nothing to the numerator while remaining in the denominator.
+- mAP means **mean AP**: average the per-query AP values over the $Q$ queries. It does not mean an average over asset classes in this retrieval setting.
+
+This formula uses $|R_q|$ as the denominator. If reporting a truncated AP@K, explicitly state the cutoff and denominator convention, since implementations differ. As with recall, define how queries with no known positives and unjudged assets are handled. See 6.2 for a complete numerical example.
 
 ### 6.2 Work through one ranked list
 

@@ -4,6 +4,8 @@ Three English, model-centered mock interviews for the user-supplied **ML Modelin
 
 The task is to turn a product goal into training examples, a model, a loss, an evaluation plan and a workable inference path. Be ready to explain equations and tensor shapes. These mocks do not require implementation; the actual interviewer can choose different questions or ask for pseudocode. The CV/multimodal focus is our preparation choice, not confirmation of the assigned vertical.
 
+**After completing the three mocks:** read [04 · Interview playbook](04_interview_playbook.md) for a Chinese summary with English speaking templates: alignment with the supplied Roblox preview, opening clarifications, a practical 35-minute pacing plan, what to say at each stage, and the key differences across the three cases.
+
 ## The three cases
 
 | Mock | Questions | Reference answer | Main modeling decision |
@@ -29,6 +31,8 @@ Each case also has an English detailed walkthrough with explanations, spoken int
 | 31–35 | Serving and trade-offs | Inference path, latency, freshness, memory, failures and monitoring |
 
 This is a flexible allocation, not an official rubric. A real interviewer selects follow-ups; the 21-question bank is not an instruction to answer everything in 35 minutes. After showing the complete path, ask which trade-off they would like to explore.
+
+The table above follows the walkthroughs' teaching sections. For live delivery, the [04 pacing plan](04_interview_playbook.md) gives the baseline a shorter introduction and reserves more time for modeling, training, serving, and follow-up questions.
 
 ## What to say before choosing components
 
